@@ -1,0 +1,17 @@
+{
+    "name": "ModelInterface",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d9627c355e8131a43b3fdb2c5c363bc2",
+        "GUID:057b6ea880ed3e133a39ba8babd31b91"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
