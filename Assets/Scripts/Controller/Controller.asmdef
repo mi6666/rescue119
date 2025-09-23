@@ -1,3 +1,22 @@
 {
-	"name": "Controller"
+    "name": "Controller",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f555402b89b947d458987696e47ed22e",
+        "GUID:7ed0e774be9ad0e42831f43a36c8f4ae",
+        "GUID:570da09292deae64da20b6b9e645a9cf",
+        "GUID:3a0fbf7c03af7c34a8616afcd8db2dfb",
+        "GUID:8f953d635790a5e529ca6f38acd32b8a",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
