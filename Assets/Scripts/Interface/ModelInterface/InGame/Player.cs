@@ -1,0 +1,41 @@
+namespace Interface.ModelInterface.InGame
+{
+    /// <summary>
+    /// 移動処理における一時的な値を持つ
+    /// </summary>
+    public interface ILocomotionModel
+    {
+        /// <summary>
+        /// 最大速度
+        /// </summary>
+        public float MaxSpeed { get; }
+
+        /// <summary>
+        /// 加速にかかる時間
+        /// </summary>
+        public float AccelerationDuration { get; }
+
+        /// <summary>
+        /// 加速曲線
+        /// </summary>
+        /// <param name="ratio">0.0~1.0</param>
+        public float GetSpeedCurve(float ratio);
+
+        /// <summary>
+        /// 壁に接触している際の減速割合
+        /// </summary>
+        public float WallFriction { get; }
+
+        /// <summary>
+        /// 入力が反転しているとみなす角度の閾値
+        /// </summary>
+        public float ReverseAngleThreshold { get; }
+        /// <summary>
+        /// 加速・減速中にカウントアップ・カウントダウンされる時間量
+        /// </summary>
+        public float AccelerationTime { get; }
+
+        public void DecreaseTime(float deltaTime);
+        public void IncreaseTime(float deltaTime);
+    }
+}

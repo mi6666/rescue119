@@ -1,0 +1,13 @@
+using System;
+using UnityEngine;
+
+namespace Interface.ViewInterface.InGame
+{
+    public interface IPlayerView
+    {
+        public void ApplyVelocity(Vector2 moveTo);
+        
+        public Vector2 CurrentVelocity { get; }
+        public ReadOnlySpan<RaycastHit2D> CastFront();
+    }
+}

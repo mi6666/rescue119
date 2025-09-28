@@ -1,0 +1,23 @@
+{
+    "name": "Presenter",
+    "rootNamespace": "",
+    "references": [
+        "View",
+        "ViewInterface",
+        "PresenterInterface",
+        "Structure",
+        "Option",
+        "SceneReference",
+        "VContainer",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

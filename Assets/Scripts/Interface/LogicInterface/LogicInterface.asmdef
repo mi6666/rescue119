@@ -2,6 +2,7 @@
     "name": "LogicInterface",
     "rootNamespace": "",
     "references": [
+        "GUID:3a0fbf7c03af7c34a8616afcd8db2dfb",
         "GUID:f51ebe6a0ceec4240a699833d6309b23"
     ],
     "includePlatforms": [],
