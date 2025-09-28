@@ -52,7 +52,6 @@ namespace Logic.InGame.Player
             var inputIsReverse = angle > LocomotionModel.ReverseAngleThreshold; // 入力は反転か
             var isReverse = isMoving & inputIsReverse;
             var deceleration = !hasInput | isReverse;
-            DebugLogger.Log("deceleration", deceleration.ToString());
 
             if (deceleration)
             {

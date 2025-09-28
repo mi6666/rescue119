@@ -1,6 +1,5 @@
 using System;
 using Interface.ModelInterface.InGame;
-using Module.EditorExtension.Runtime;
 using UnityEngine;
 
 namespace Model.InGame.Player
@@ -23,7 +22,6 @@ namespace Model.InGame.Player
 
         public float GetSpeedCurve(float ratio)
         {
-            DebugLogger.Log("ratio", ratio.ToString("F1"));
             return speedCurve.Evaluate(Mathf.Clamp01(ratio));
         }
 

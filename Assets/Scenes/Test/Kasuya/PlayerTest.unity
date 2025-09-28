@@ -250,7 +250,7 @@ MonoBehaviour:
   playerView: {fileID: 947120509}
   locomotionModel:
     maxSpeed: 5
-    accelerationDuration: 0.25
+    accelerationDuration: 0.125
     speedCurve:
       serializedVersion: 2
       m_Curve:

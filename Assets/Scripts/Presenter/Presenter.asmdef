@@ -2,7 +2,6 @@
     "name": "Presenter",
     "rootNamespace": "",
     "references": [
-        "View",
         "ViewInterface",
         "PresenterInterface",
         "Structure",

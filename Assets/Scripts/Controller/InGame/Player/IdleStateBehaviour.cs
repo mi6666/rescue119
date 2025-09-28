@@ -4,7 +4,6 @@ using Interface.ViewInterface.InGame;
 using Module.EditorExtension.Runtime;
 using Module.StateMachine;
 using Structure.InGame;
-using UnityEngine;
 
 namespace Controller.InGame.Player
 {
@@ -28,14 +27,9 @@ namespace Controller.InGame.Player
             Locomotion(deltaTime);
         }
 
-        /// <summary>
-        /// 移動処理
-        /// </summary>
         private void Locomotion(float deltaTime)
         {
-            // 入力受取
             var moveInput = MoveVectorView.Pool();
-            DebugLogger.Log("move input", moveInput.ToString());
             var currentVelocity = PlayerView.CurrentVelocity;
             var frontHit = PlayerView.CastFront();
 
@@ -47,6 +41,7 @@ namespace Controller.InGame.Player
             );
 
             var calculatedVelocity = LocomotionLogic.CalcVelocity(calcArg);
+            DebugLogger.Log("move input", moveInput.ToString());
             DebugLogger.Log("calculated velocity", calculatedVelocity.ToString());
 
             PlayerView.ApplyVelocity(calculatedVelocity);

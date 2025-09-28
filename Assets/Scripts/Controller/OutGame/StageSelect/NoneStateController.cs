@@ -13,30 +13,31 @@ namespace Controller.OutGame.StageSelect
         (
             IClickStageEventView clickStageEventView,
             ISelectedStageModel selectedStageModel,
-            CompositeDisposable disposables,
+            CompositeDisposable compositeDisposable,
             IMutStateType<StageSelectState> innerState
         ) : base(StageSelectState.None, innerState)
         {
-            _clickStageEventView = clickStageEventView;
-            _selectedStageModel = selectedStageModel;
-            _disposables = disposables;
+            ClickStageEventView = clickStageEventView;
+            SelectedStageModel = selectedStageModel;
+            CompositeDisposable = compositeDisposable;
         }
 
         public void Start()
         {
-            _clickStageEventView.ClickStageEventObservable
-                .Where(this, (s, controller) => controller.IsInState())
+            ClickStageEventView.ClickStageEventObservable
+                .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (s, controller) => controller.OnSelect(s))
-                .AddTo(_disposables);
+                .AddTo(CompositeDisposable);
         }
 
         private void OnSelect(string selectedStage)
         {
-             _selectedStageModel.SetSelectedStage(selectedStage);
-             InnerState.ChangeState(StageSelectState.Some);
+            SelectedStageModel.SetSelectedStage(selectedStage);
+            InnerState.ChangeState(StageSelectState.Some);
         }
-        private CompositeDisposable _disposables; 
-        private IClickStageEventView _clickStageEventView;
-        private ISelectedStageModel _selectedStageModel;
+
+        private CompositeDisposable CompositeDisposable { get; }
+        private IClickStageEventView ClickStageEventView { get; }
+        private ISelectedStageModel SelectedStageModel { get; }
     }
 }

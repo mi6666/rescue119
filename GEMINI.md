@@ -43,8 +43,12 @@
     *   UIとゲームオブジェクトのレンダリング、およびユーザー入力への反応を担当します。
     *   `ViewInterface`および`Structure`を参照します。
 
+*   **`Presenter` レイヤー**:
+    *   ViewとModel/Logic間の調整役として機能します。シーンの読み込みやUIイベントの管理など、アプリケーション全体のフローを制御します。
+    *   `ViewInterface`, `LogicInterface`, `ModelInterface`, `Structure` を参照します。
+
 *   **`Controller` レイヤー**:
-    *   仲介役として機能し、Viewからの入力を受け取り、それをLogic/Modelへのコマンドに変換します。
+    *   ユーザー入力や特定のゲーム内イベントに応じて、`Logic`や`Model`を直接操作する、より具体的なコンポーネントです。ステートマシンを用いてキャラクターの振る舞いを管理するなど、特定のドメインロジックを担当します。
     *   `LogicInterface`、`ViewInterface`、`ModelInterface`、および`Structure`を参照します。
 
 *   **`Structure` レイヤー**:

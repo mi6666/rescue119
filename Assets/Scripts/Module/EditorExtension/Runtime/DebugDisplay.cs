@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Module.EditorExtension.Runtime
 {
-    public class DebugDisplay : MonoBehaviour
+    internal class DebugDisplay : MonoBehaviour
     {
         private static DebugDisplay _instance;
 
