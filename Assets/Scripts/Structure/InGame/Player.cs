@@ -8,8 +8,7 @@ namespace Structure.InGame
     /// </summary>
     public enum PlayerStateType
     {
-        Idle,
-        Walk,
+        Normal,
     }
 
     public readonly ref struct LocomotionArgument

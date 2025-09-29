@@ -7,15 +7,15 @@ using Structure.InGame;
 
 namespace Controller.InGame.Player
 {
-    public class IdleStateBehaviour : PlayerStateBehaviourBase
+    public class NormalStateBehaviour : PlayerStateBehaviourBase
     {
-        public IdleStateBehaviour
+        public NormalStateBehaviour
         (
             IPlayerView playerView,
             IInput_MoveVectorView moveVectorView,
             ILocomotionLogic locomotionLogic,
             IMutStateType<PlayerStateType> innerState
-        ) : base(PlayerStateType.Idle, innerState)
+        ) : base(PlayerStateType.Normal, innerState)
         {
             PlayerView = playerView;
             MoveVectorView = moveVectorView;

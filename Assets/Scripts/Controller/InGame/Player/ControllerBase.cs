@@ -30,7 +30,7 @@ namespace Controller.InGame.Player
 
     public class PlayerState : AbstractStateType<PlayerStateType>
     {
-        public PlayerState() : base(PlayerStateType.Idle)
+        public PlayerState() : base(PlayerStateType.Normal)
         {
         }
     }

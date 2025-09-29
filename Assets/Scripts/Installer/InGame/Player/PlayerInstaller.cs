@@ -28,7 +28,7 @@ namespace Installer.InGame.Player
             // Controller
             builder.Register<PlayerState>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.RegisterEntryPoint<PlayerStateMachine>();
-            builder.Register<IdleStateBehaviour>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<NormalStateBehaviour>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

@@ -24,16 +24,12 @@ namespace Controller.OutGame.StageSelect
 
         public void Start()
         {
-            ClickStageEventView.ClickStageEventObservable
-                .Where(this, (_, controller) => controller.IsInState())
-                .Subscribe(this, (s, controller) => controller.OnSelect(s))
-                .AddTo(CompositeDisposable);
+            // todo ステージ選択イベントを購読
         }
 
         private void OnSelect(string selectedStage)
         {
-            SelectedStageModel.SetSelectedStage(selectedStage);
-            InnerState.ChangeState(StageSelectState.Some);
+            // todo 選択されたステージを保持し、選択済み状態へ
         }
 
         private CompositeDisposable CompositeDisposable { get; }
