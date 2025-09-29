@@ -60,7 +60,7 @@ namespace Logic.InGame.Player
                 return result;
             }
 
-            LocomotionModel.IncreaseTime(deltaTime);
+            LocomotionModel.DecreaseTime(deltaTime);
             return GetSpeed();
         }
 
@@ -98,7 +98,7 @@ namespace Logic.InGame.Player
             DebugLogger.Log("curve result", currentSpeed.ToString("F1"));
             DebugLogger.Log("accel time", accelTime.ToString("F1"));
 
-            return maxSpeed * currentSpeed;
+            return maxSpeed + currentSpeed;
         }
 
         [BurstCompile]
