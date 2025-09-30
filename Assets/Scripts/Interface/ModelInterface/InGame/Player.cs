@@ -38,4 +38,10 @@ namespace Interface.ModelInterface.InGame
         public void DecreaseTime(float deltaTime);
         public void IncreaseTime(float deltaTime);
     }
+
+    public interface IHpModel
+    {
+        public int CurrentHp { get; }
+        public int MaxHp { get; }
+    }
 }

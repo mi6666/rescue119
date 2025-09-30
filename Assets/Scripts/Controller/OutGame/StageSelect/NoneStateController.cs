@@ -7,6 +7,8 @@ using VContainer.Unity;
 
 namespace Controller.OutGame.StageSelect
 {
+    /// todo
+    /// ステージ選択
     public class NoneStateController : StageSelectBehaviourBase, IStartable
     {
         public NoneStateController
@@ -24,12 +26,17 @@ namespace Controller.OutGame.StageSelect
 
         public void Start()
         {
-            // todo ステージ選択イベントを購読
+            ClickStageEventView.ClickStageEventObservable
+                .Where(this, (_, controller) => controller.IsInState())
+                .Subscribe(this, (s, controller) => controller.OnSelect(s))
+                .AddTo(CompositeDisposable);
         }
 
         private void OnSelect(string selectedStage)
         {
             // todo 選択されたステージを保持し、選択済み状態へ
+            
+            InnerState.ChangeState(StageSelectState.Some);
         }
 
         private CompositeDisposable CompositeDisposable { get; }

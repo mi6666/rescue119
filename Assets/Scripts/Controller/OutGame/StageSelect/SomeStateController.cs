@@ -7,6 +7,10 @@ using VContainer.Unity;
 
 namespace Controller.OutGame.StageSelect
 {
+    /// todo
+    /// ステージの詳細を表示
+    /// 難易度選択
+    /// 選択状態の解除
     public class SomeStateController : StageSelectBehaviourBase, IStartable
     {
         public SomeStateController
@@ -24,7 +28,6 @@ namespace Controller.OutGame.StageSelect
 
         public void Start()
         {
-            // todo ステージ選択
         }
         
         private CompositeDisposable CompositeDisposable { get; }

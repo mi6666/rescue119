@@ -7,9 +7,9 @@ using Structure.InGame;
 
 namespace Controller.InGame.Player
 {
-    public class NormalStateBehaviour : PlayerStateBehaviourBase
+    public class NormalStateController : PlayerStateBehaviourBase
     {
-        public NormalStateBehaviour
+        public NormalStateController
         (
             IPlayerView playerView,
             IInput_MoveVectorView moveVectorView,
