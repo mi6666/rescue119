@@ -2,6 +2,7 @@
     "name": "ModelInterface",
     "rootNamespace": "",
     "references": [
+        "GUID:3a0fbf7c03af7c34a8616afcd8db2dfb",
         "GUID:d9627c355e8131a43b3fdb2c5c363bc2",
         "GUID:057b6ea880ed3e133a39ba8babd31b91"
     ],
