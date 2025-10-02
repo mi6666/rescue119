@@ -7,10 +7,6 @@ namespace Logic.InGame.Stage
     {
         public void Update(FloorTileTip tileTip, UpdateArgument argument)
         {
-            if (tileTip.IsBurning)
-            {
-                // todo 耐久値減少・燃え広がり
-            }
         }
     }
 }

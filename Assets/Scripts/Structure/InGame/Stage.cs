@@ -5,6 +5,7 @@ namespace Structure.InGame
 {
     public enum StageStateType
     {
+        EntryPoint,
         Normal,
         FloorTransition,
         Stop,

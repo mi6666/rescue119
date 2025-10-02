@@ -2,7 +2,6 @@
     "name": "PresenterInterface",
     "rootNamespace": "",
     "references": [
-        "ViewInterface",
         "Structure",
         "Option",
         "SceneReference",

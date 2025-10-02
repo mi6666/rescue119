@@ -27,10 +27,13 @@ namespace Controller.InGame.Stage
 
         public override void StateUpdate(float deltaTime)
         {
+            if (StageTileMapModel.StageMaps is null) return;
+            
             var stageMap = StageTileMapModel.StageMaps[StageFloorModel.CurrentFloor];
-            for (int y = 0; y < stageMap.LengthY; y++)
+
+            for (var y = 0; y < stageMap.LengthY; y++)
             {
-                for (int x = 0; x < stageMap.LengthX; x++)
+                for (var x = 0; x < stageMap.LengthX; x++)
                 {
                     if (!stageMap.GetTip(x, y).TryGetValue(out var tip)) continue;
                     var arg = new UpdateArgument(

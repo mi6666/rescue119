@@ -8,8 +8,8 @@ namespace Interface.ViewInterface.InGame
         public int InstanceId { get; }
     }
 
-    public readonly struct StageTileInfo
+    public interface IStageTileMapView
     {
-        
+        public StageMap GetMap();
     }
 }

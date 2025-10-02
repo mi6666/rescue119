@@ -30,7 +30,7 @@ namespace Controller.InGame.Stage
 
     public class StageState : AbstractStateType<StageStateType>
     {
-        public StageState() : base(StageStateType.Normal)
+        public StageState() : base(StageStateType.EntryPoint)
         {
         }
     }
