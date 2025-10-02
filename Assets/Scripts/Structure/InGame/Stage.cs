@@ -6,6 +6,7 @@ namespace Structure.InGame
     public enum StageStateType
     {
         Normal,
+        FloorTransition,
         Stop,
     }
 
@@ -50,7 +51,7 @@ namespace Structure.InGame
                 return Option<StageTileTip>.None();
             }
 
-            return Option<StageTileTip>.Some(StageTileTips[x, y]);
+            return Option<StageTileTip>.Some(StageTileTips[y, x]);
         }
 
         public ReadOnlySpan<StageTileTip> GetAroundTips(int x, int y)
@@ -73,6 +74,9 @@ namespace Structure.InGame
 
             return TempBuffer.AsSpan(0, getCount);
         }
+
+        public int LengthX => StageTileTips.GetLength(1);
+        public int LengthY => StageTileTips.GetLength(0);
 
         private (int, int)[] Around { get; } = new[]
         {

@@ -18,7 +18,7 @@ namespace Interface.ModelInterface.InGame
         public StageMap[] StageMaps { get; }
     }
 
-    public interface IStageModel
+    public interface IStageFloorModel
     {
         public int CurrentFloor { get; }
 
