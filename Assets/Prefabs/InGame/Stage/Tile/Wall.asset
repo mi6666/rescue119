@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f71aced77d34472c914c16aa2b971d3b, type: 3}
-  m_Name: Test
-  m_EditorClassIdentifier: View::View.InGame.Stage.StageTileTip
+  m_Name: Wall
+  m_EditorClassIdentifier: View::View.InGame.Stage.StageTileTipData
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
@@ -35,3 +35,5 @@ MonoBehaviour:
   m_Flags: 1
   m_ColliderType: 1
   stageTileType: 0
+  isBurning: 0
+  objectHealth: 0

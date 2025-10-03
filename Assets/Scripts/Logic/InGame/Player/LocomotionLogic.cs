@@ -46,15 +46,17 @@ namespace Logic.InGame.Player
             var currentVelocity = argument.CurrentVelocity;
             var deltaTime = argument.DeltaTime;
             var angle = GetAngle(moveInput, currentVelocity);
+            DebugLogger.Log("angle", angle.ToString("F1"));
 
             var hasInput = math.lengthsq(moveInput) > Threshold; // 入力はあるか
             var isMoving = math.lengthsq(currentVelocity) > Threshold; // 移動中か
             var inputIsReverse = angle > LocomotionModel.ReverseAngleThreshold; // 入力は反転か
             var isReverse = isMoving & inputIsReverse;
-            var deceleration = !hasInput | isReverse;
+            var deceleration = !hasInput & isReverse;
 
             if (deceleration)
             {
+                Debug.Log($"deceleration: angle {angle}, move input {moveInput.ToString()}, current velocity {currentVelocity.ToString()}");
                 LocomotionModel.DecreaseTime(deltaTime);
                 var result = GetSpeed();
                 return result;
