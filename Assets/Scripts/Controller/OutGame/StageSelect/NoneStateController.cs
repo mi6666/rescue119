@@ -34,7 +34,7 @@ namespace Controller.OutGame.StageSelect
 
         private void OnSelect(string selectedStage)
         {
-            // todo 選択されたステージを保持し、選択済み状態へ
+            SelectedStageModel.SetSelectedStage(selectedStage);
             
             InnerState.ChangeState(StageSelectState.Some);
         }

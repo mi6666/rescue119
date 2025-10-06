@@ -2,6 +2,7 @@
     "name": "Controller",
     "rootNamespace": "",
     "references": [
+        "GUID:f7a39efacbb095da49052b6fec92cc4e",
         "GUID:f555402b89b947d458987696e47ed22e",
         "GUID:7ed0e774be9ad0e42831f43a36c8f4ae",
         "GUID:570da09292deae64da20b6b9e645a9cf",

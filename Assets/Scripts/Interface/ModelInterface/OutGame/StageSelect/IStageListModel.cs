@@ -1,10 +1,12 @@
 
 using System.Collections.Generic;
+using Structure.OutGame;
 
 namespace Interface.ModelInterface.OutGame.StageSelect
 {
-    public interface IStageListModel
+    public interface IStageInfoModel
     {
-        IReadOnlyList<string> StageNames { get; }
+        public DifficultyLevel DifficultyLevel { get; }
+        public void SetDifficultyLevel(DifficultyLevel difficultyLevel);
     }
 }

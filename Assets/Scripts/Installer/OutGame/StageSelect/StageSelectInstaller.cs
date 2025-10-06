@@ -1,5 +1,4 @@
 using Interface.ModelInterface.OutGame.StageSelect;
-using Model.OutGame.StageSelect;
 using Presenter.OutGame.StageSelect;
 using VContainer;
 using VContainer.Unity;
@@ -13,7 +12,6 @@ namespace Installer.OutGame.StageSelect
             // View
 
             // Model
-            builder.Register<StageListModel>(Lifetime.Singleton).As<IStageListModel>();
 
             // Presenter
             builder.RegisterEntryPoint<StageSelectPresenter>();
