@@ -6,9 +6,6 @@ using Object = UnityEngine.Object;
 
 namespace Module.SceneReference.Runtime
 {
-// Source: http://answers.unity.com/comments/1374414/view.html
-
-
     /// <summary>
     /// Unity editor-friendly scene reference field.
     /// </summary>

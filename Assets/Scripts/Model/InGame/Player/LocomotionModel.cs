@@ -9,12 +9,14 @@ namespace Model.InGame.Player
     {
         [SerializeField] private float maxSpeed;
         [SerializeField] private float accelerationDuration;
+        [SerializeField] private float directionChangeSpeed;
         [SerializeField] private AnimationCurve speedCurve;
         [SerializeField] private float wallFriction;
         [SerializeField] private float reverseAngleThreshold;
 
         public float MaxSpeed => maxSpeed;
         public float AccelerationDuration => accelerationDuration;
+        public float DirectionChangeSpeed => directionChangeSpeed;
         public float WallFriction => wallFriction;
         public float ReverseAngleThreshold => reverseAngleThreshold;
         public float AccelerationTime { get; private set; }

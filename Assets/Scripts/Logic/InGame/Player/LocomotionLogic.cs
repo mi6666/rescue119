@@ -23,12 +23,17 @@ namespace Logic.InGame.Player
         public Vector2 CalcVelocity(LocomotionArgument argument)
         {
             var moveTo = math.normalizesafe(argument.CurrentVelocity);
-            var speed = CalcSpeed(argument);
+            var acceleration = DoAccel(argument);
+            var directionChangeSpeed = LocomotionModel.DirectionChangeSpeed;
 
-            if (math.lengthsq(moveTo) < Threshold | math.lengthsq(speed) < Threshold)
+            if (acceleration)
             {
-                moveTo = argument.MoveInput;
+                var targetDirection = math.normalizesafe(argument.MoveInput);
+                moveTo = math.lerp(moveTo, targetDirection, directionChangeSpeed * argument.DeltaTime);
+                moveTo = math.normalizesafe(moveTo);
             }
+
+            var speed = CalcSpeed(acceleration, argument);
 
             var midSpeed = moveTo * speed;
             var result = PostProcess(midSpeed, LocomotionModel.WallFriction, argument);
@@ -41,11 +46,10 @@ namespace Logic.InGame.Player
             return result;
         }
 
-        private float CalcSpeed(LocomotionArgument argument)
+        private bool DoAccel(LocomotionArgument argument)
         {
             var moveInput = argument.MoveInput;
             var currentVelocity = argument.CurrentVelocity;
-            var deltaTime = argument.DeltaTime;
             var angle = GetAngle(moveInput, currentVelocity);
             DebugLogger.Log("angle", angle.ToString("F1"));
 
@@ -53,18 +57,24 @@ namespace Logic.InGame.Player
             var isMoving = math.lengthsq(currentVelocity) > Threshold; // 移動中か
             var inputIsReverse = angle > LocomotionModel.ReverseAngleThreshold; // 入力は反転か
             var isReverse = isMoving & inputIsReverse;
-            var deceleration = !hasInput | isReverse;
+            var acceleration = !(!hasInput | isReverse);
 
-            if (deceleration)
+            return acceleration;
+        }
+
+        private float CalcSpeed(bool acceleration, LocomotionArgument argument)
+        {
+            var deltaTime = argument.DeltaTime;
+
+            if (acceleration)
             {
-                // Debug.Log($"deceleration: angle {angle}, move input {moveInput.ToString()}, current velocity {currentVelocity.ToString()}");
-                LocomotionModel.DecreaseTime(deltaTime);
-                var result = GetSpeed();
-                return result;
+                LocomotionModel.IncreaseTime(deltaTime);
+                return GetSpeed();
             }
 
-            LocomotionModel.IncreaseTime(deltaTime);
-            return GetSpeed();
+            LocomotionModel.DecreaseTime(deltaTime);
+            var result = GetSpeed();
+            return result;
         }
 
 

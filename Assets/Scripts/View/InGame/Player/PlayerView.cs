@@ -7,6 +7,7 @@ namespace View.InGame.Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerView : MonoBehaviour, IPlayerView
     {
+        [SerializeField] private Transform lookAtObject;
         [SerializeField] private float rayCastDistance;
         [SerializeField] private ContactFilter2D rayCastFilter;
 
@@ -20,12 +21,20 @@ namespace View.InGame.Player
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 
+        private void Update()
+        {
+            var selfPosition = _selfTransform.position;
+
+            lookAtObject.position = (Vector2)selfPosition + _rigidbody.linearVelocity;
+        }
+
         public void ApplyVelocity(Vector2 moveTo)
         {
             _rigidbody.linearVelocity = moveTo;
         }
 
         public Vector2 CurrentVelocity => _rigidbody.linearVelocity;
+
         public ReadOnlySpan<RaycastHit2D> RayCast(Vector2 castTo)
         {
             Vector2 position = _selfTransform!.position;

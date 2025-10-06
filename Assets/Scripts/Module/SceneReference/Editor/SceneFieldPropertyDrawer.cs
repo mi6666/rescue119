@@ -11,56 +11,55 @@ namespace Module.SceneReference.Editor
     [CustomPropertyDrawer(typeof(SceneField))]
     public class SceneFieldPropertyDrawer : PropertyDrawer
     {
-        public override void OnGUI(
-            Rect position,
-            SerializedProperty property,
-            GUIContent label
-        )
-        {
-            EditorGUI.BeginProperty(position, GUIContent.none, property);
-            var sceneAsset = property.FindPropertyRelative("sceneAsset");
-            var scenePath = property.FindPropertyRelative("scenePath");
+        private GUIStyle _pathLabelStyle;
 
-            position = EditorGUI.PrefixLabel(
-                totalPosition: position,
-                id: GUIUtility.GetControlID(FocusType.Passive),
-                label: label
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.BeginProperty(position, label, property);
+
+            var sceneAssetProp = property.FindPropertyRelative("sceneAsset");
+            var scenePathProp = property.FindPropertyRelative("scenePath");
+
+            position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+
+            EditorGUI.BeginChangeCheck();
+            var newScene = EditorGUI.ObjectField(
+                position,
+                sceneAssetProp.objectReferenceValue,
+                typeof(SceneAsset),
+                false
             );
 
-            if (sceneAsset != null)
+            if (EditorGUI.EndChangeCheck())
             {
-                // warn if scene isn't in build settings
-                string path = AssetDatabase.GetAssetPath(
-                    assetObject: sceneAsset.objectReferenceValue
-                );
+                sceneAssetProp.objectReferenceValue = newScene;
+                scenePathProp.stringValue = newScene ? AssetDatabase.GetAssetPath(newScene) : "";
+            }
 
-                EditorGUI.BeginChangeCheck();
+            // Lazy initialize GUIStyle once
+            if (_pathLabelStyle == null)
+            {
+                _pathLabelStyle = new GUIStyle(EditorStyles.label);
+            }
 
-                var value = sceneAsset.objectReferenceValue;
-                value = EditorGUI.ObjectField(
-                    position: position,
-                    obj: value,
-                    objType: typeof(SceneAsset),
-                    allowSceneObjects: false
-                );
+            // 色を判定
+            if (!string.IsNullOrEmpty(scenePathProp.stringValue)
+                && !EditorBuildSettings.scenes.Any(s => s.path == scenePathProp.stringValue))
+            {
+                _pathLabelStyle.normal.textColor = Color.red;
+            }
+            else
+            {
+                _pathLabelStyle.normal.textColor = EditorStyles.label.normal.textColor;
+            }
 
-                var valuePath = value ? AssetDatabase.GetAssetPath(value) : null;
-
-                if (value && (EditorGUI.EndChangeCheck() || valuePath != scenePath.stringValue))
-                {
-                    sceneAsset.objectReferenceValue = value;
-                    scenePath.stringValue = valuePath;
-                }
-
-                // name label
+            // パス表示
+            if (!string.IsNullOrEmpty(scenePathProp.stringValue))
+            {
+                var labelPos = position;
+                labelPos.x += position.width + 5;
                 EditorGUI.BeginDisabledGroup(true);
-                var style = new GUIStyle(EditorStyles.label);
-                if (EditorBuildSettings.scenes.All(s => s.path == path))
-                {
-                    style.normal.textColor = Color.red;
-                }
-
-                EditorGUI.LabelField(position, null, scenePath.stringValue, style);
+                EditorGUI.LabelField(labelPos, scenePathProp.stringValue, _pathLabelStyle);
                 EditorGUI.EndDisabledGroup();
             }
 

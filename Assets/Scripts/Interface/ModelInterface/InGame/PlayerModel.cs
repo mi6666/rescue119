@@ -16,6 +16,11 @@ namespace Interface.ModelInterface.InGame
         public float AccelerationDuration { get; }
 
         /// <summary>
+        /// 移動方向の変化速度
+        /// </summary>
+        public float DirectionChangeSpeed { get; }
+
+        /// <summary>
         /// 加速曲線
         /// </summary>
         /// <param name="ratio">0.0~1.0</param>
@@ -30,6 +35,7 @@ namespace Interface.ModelInterface.InGame
         /// 入力が反転しているとみなす角度の閾値
         /// </summary>
         public float ReverseAngleThreshold { get; }
+
         /// <summary>
         /// 加速・減速中にカウントアップ・カウントダウンされる時間量
         /// </summary>
