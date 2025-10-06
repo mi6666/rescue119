@@ -33,9 +33,10 @@ namespace Logic.InGame.Player
             var midSpeed = moveTo * speed;
             var result = PostProcess(midSpeed, LocomotionModel.WallFriction, argument);
 
-            DebugLogger.Log("speed", speed.ToString("F1"));
             DebugLogger.Log("move to", moveTo.ToString());
+            DebugLogger.Log("speed", speed.ToString("F1"));
             DebugLogger.Log("mid speed", midSpeed.ToString());
+            DebugLogger.Log("result speed", result.ToString());
 
             return result;
         }
@@ -52,11 +53,11 @@ namespace Logic.InGame.Player
             var isMoving = math.lengthsq(currentVelocity) > Threshold; // 移動中か
             var inputIsReverse = angle > LocomotionModel.ReverseAngleThreshold; // 入力は反転か
             var isReverse = isMoving & inputIsReverse;
-            var deceleration = !hasInput & isReverse;
+            var deceleration = !hasInput | isReverse;
 
             if (deceleration)
             {
-                Debug.Log($"deceleration: angle {angle}, move input {moveInput.ToString()}, current velocity {currentVelocity.ToString()}");
+                // Debug.Log($"deceleration: angle {angle}, move input {moveInput.ToString()}, current velocity {currentVelocity.ToString()}");
                 LocomotionModel.DecreaseTime(deltaTime);
                 var result = GetSpeed();
                 return result;

@@ -31,7 +31,7 @@ namespace Controller.InGame.Player
         {
             var moveInput = MoveVectorView.Pool();
             var currentVelocity = PlayerView.CurrentVelocity;
-            var frontHit = PlayerView.CastFront();
+            var frontHit = PlayerView.RayCast(moveInput);
 
             var calcArg = new LocomotionArgument(
                 moveInput,

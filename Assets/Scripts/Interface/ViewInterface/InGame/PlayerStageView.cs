@@ -8,6 +8,6 @@ namespace Interface.ViewInterface.InGame
         public void ApplyVelocity(Vector2 moveTo);
         
         public Vector2 CurrentVelocity { get; }
-        public ReadOnlySpan<RaycastHit2D> CastFront();
+        public ReadOnlySpan<RaycastHit2D> RayCast(Vector2 castTo);
     }
 }
