@@ -1,5 +1,6 @@
 using Interface.ModelInterface.OutGame.StageSelect;
 using Interface.ViewInterface.OutGame.StageSelect;
+using Module.SceneReference.Runtime;
 using Module.StateMachine;
 using R3;
 using Structure.OutGame;
@@ -32,7 +33,7 @@ namespace Controller.OutGame.StageSelect
                 .AddTo(CompositeDisposable);
         }
 
-        private void OnSelect(string selectedStage)
+        private void OnSelect(SceneGroup selectedStage)
         {
             SelectedStageModel.SetSelectedStage(selectedStage);
             

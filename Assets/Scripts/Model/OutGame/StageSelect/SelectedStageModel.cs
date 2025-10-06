@@ -1,20 +1,20 @@
 using Interface.ModelInterface.OutGame.StageSelect;
+using Module.SceneReference.Runtime;
 
 namespace Model.OutGame.StageSelect
 {
-
-    public class SelectedStageModel:ISelectedStageModel
+    public class SelectedStageModel : ISelectedStageModel
     {
-        public void SetSelectedStage(string stage)
+        public void SetSelectedStage(SceneGroup stage)
         {
             _selectedStage = stage;
         }
 
-        public string GetSelectedStage()
+        public SceneGroup GetSelectedStage()
         {
             return _selectedStage;
         }
 
-        private string _selectedStage;
-    }    
+        private SceneGroup _selectedStage;
+    }
 }

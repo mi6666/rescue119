@@ -1,3 +1,4 @@
+using Module.SceneReference.Runtime;
 using R3;
 using Structure.OutGame;
 
@@ -5,7 +6,7 @@ namespace Interface.ViewInterface.OutGame.StageSelect
 {
     public interface ISelectStageEventView
     {
-        public Observable<string> ClickStageEventObservable { get; }
+        public Observable<SceneGroup> ClickStageEventObservable { get; }
     }
 
     public interface IClickDifficultyLevel

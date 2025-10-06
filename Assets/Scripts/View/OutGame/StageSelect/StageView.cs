@@ -1,11 +1,12 @@
+using Module.SceneReference.Runtime;
 using UnityEngine;
 
 namespace View.OutGame.StageSelect
 {
     public class StageView : MonoBehaviour
     {
-        [SerializeField] private string stageName;
+        [SerializeField] private SceneGroup stageName;
 
-        public string StageName => stageName;
+        public SceneGroup StageName => stageName;
     }
 }
