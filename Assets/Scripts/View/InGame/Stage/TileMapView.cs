@@ -41,7 +41,7 @@ namespace View.InGame.Stage
                     stageTileTips[y, x] = tile.TileType switch
                     {
                         StageTileType.None => new NoneTileTip(),
-                        StageTileType.Floor => new FloorTileTip(instanceId, isBurning, objectHealth),
+                        StageTileType.Floor => new FloorTileTip(instanceId, objectHealth),
                         StageTileType.Wall => new WallTileTip(instanceId, isBurning, objectHealth),
                         StageTileType.Rubble => new RubbleTileTip(instanceId, isBurning, objectHealth),
                         _ => throw new NotImplementedException(),

@@ -17,12 +17,14 @@ namespace Controller.InGame.Stage
             IStageTileMapModel stageTileMapModel,
             IStageFloorModel stageFloorModel,
             IFloorUpdateLogic floorUpdateLogic,
+            IWallUpdateLogic wallUpdateLogic,
             IMutStateType<StageStateType> innerState
         ) : base(StageStateType.Normal, innerState)
         {
             StageTileMapModel = stageTileMapModel;
             StageFloorModel = stageFloorModel;
             FloorUpdateLogic = floorUpdateLogic;
+            WallUpdateLogic = wallUpdateLogic;
         }
 
         public override void StateUpdate(float deltaTime)
@@ -47,6 +49,9 @@ namespace Controller.InGame.Stage
                         case FloorTileTip floorTileTip:
                             FloorUpdateLogic.Update(floorTileTip, arg);
                             break;
+                        case WallTileTip wallTileTip:
+                            WallUpdateLogic.Update(wallTileTip,arg);
+                            break;
                     }
                 }
             }
@@ -55,5 +60,6 @@ namespace Controller.InGame.Stage
         private IStageTileMapModel StageTileMapModel { get; }
         private IStageFloorModel StageFloorModel { get; }
         private IFloorUpdateLogic FloorUpdateLogic { get; }
+        private IWallUpdateLogic WallUpdateLogic { get; }
     }
 }

@@ -19,6 +19,10 @@ namespace Structure.InGame
         Rubble, // 瓦礫
     }
 
+    public interface IBurnable
+    {
+        public void SetBurn();
+    }
     // ============================================================================================
     // Tile Tip
     // ============================================================================================
@@ -27,11 +31,28 @@ namespace Structure.InGame
 
     public record NoneTileTip : StageTileTip;
 
-    public record FloorTileTip(int InstanceId, bool IsBurning, int ObjectHealth) : StageTileTip;
+    public record FloorTileTip(int InstanceId, int ObjectHealth) : StageTileTip, IBurnable
+    {
+        public void SetBurn()
+        {
+            IsBurning = true;
+        }
+        public bool IsBurning { get; private set; }
+    }
 
-    public record WallTileTip(int InstanceId, bool IsBurning, int ObjectHealth) : StageTileTip;
+    public record WallTileTip(int InstanceId, bool IsBurning, int ObjectHealth) : StageTileTip, IBurnable
+    {
+        public void SetBurn()
+        {
+            IsBurning = true;
+        }
+        public bool IsBurning { get; private set; }
+    }
 
-    public record RubbleTileTip(int InstanceId, bool IsBurning, int ObjectHealth) : StageTileTip;
+    public record RubbleTileTip(int InstanceId, bool IsBurning, int ObjectHealth) : StageTileTip
+    {
+        
+    }
 
     public class StageMap
     {

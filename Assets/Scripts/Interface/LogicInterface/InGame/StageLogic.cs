@@ -8,6 +8,11 @@ namespace Interface.LogicInterface.InGame
         public void Update(FloorTileTip tileTip, UpdateArgument argument);
     }
 
+    public interface IWallUpdateLogic
+    {
+        public void Update(WallTileTip tileTip, UpdateArgument argument);
+    }
+
     public readonly ref struct UpdateArgument
     {
         public StageMap StageMap { get; }
