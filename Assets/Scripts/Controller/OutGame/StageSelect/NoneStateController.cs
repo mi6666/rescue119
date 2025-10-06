@@ -13,20 +13,20 @@ namespace Controller.OutGame.StageSelect
     {
         public NoneStateController
         (
-            IClickStageEventView clickStageEventView,
+            ISelectStageEventView selectStageEventView,
             ISelectedStageModel selectedStageModel,
             CompositeDisposable compositeDisposable,
             IMutStateType<StageSelectState> innerState
         ) : base(StageSelectState.None, innerState)
         {
-            ClickStageEventView = clickStageEventView;
+            SelectStageEventView = selectStageEventView;
             SelectedStageModel = selectedStageModel;
             CompositeDisposable = compositeDisposable;
         }
 
         public void Start()
         {
-            ClickStageEventView.ClickStageEventObservable
+            SelectStageEventView.ClickStageEventObservable
                 .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (s, controller) => controller.OnSelect(s))
                 .AddTo(CompositeDisposable);
@@ -34,13 +34,13 @@ namespace Controller.OutGame.StageSelect
 
         private void OnSelect(string selectedStage)
         {
-            // todo 選択されたステージを保持し、選択済み状態へ
+            SelectedStageModel.SetSelectedStage(selectedStage);
             
             InnerState.ChangeState(StageSelectState.Some);
         }
 
         private CompositeDisposable CompositeDisposable { get; }
-        private IClickStageEventView ClickStageEventView { get; }
+        private ISelectStageEventView SelectStageEventView { get; }
         private ISelectedStageModel SelectedStageModel { get; }
     }
 }

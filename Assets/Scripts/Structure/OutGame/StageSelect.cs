@@ -5,4 +5,11 @@ namespace Structure.OutGame
         None,
         Some,
     }
+
+    public enum DifficultyLevel
+    {
+        Easy,
+        Normal,
+        Hard,
+    }
 }
