@@ -8,37 +8,17 @@ namespace Module.SceneReference.Runtime
         [SerializeField] private SceneField primaryScene;
         [SerializeField] private SceneField[] subScenes;
 
-        private string[] _subScenePathsCache;
-        private bool _isCacheDirty = true;
-
         public string PrimaryScene => primaryScene;
-        public string[] SubScenes
-        {
-            get
-            {
-                if (_isCacheDirty || _subScenePathsCache == null)
-                {
-                    if (subScenes == null)
-                    {
-                        _subScenePathsCache = System.Array.Empty<string>();
-                    }
-                    else
-                    {
-                        _subScenePathsCache = new string[subScenes.Length];
-                        for (var i = 0; i < subScenes.Length; i++)
-                        {
-                            _subScenePathsCache[i] = subScenes[i];
-                        }
-                    }
-                    _isCacheDirty = false;
-                }
-                return _subScenePathsCache;
-            }
-        }
+        public string[] SubScenes { get; private set; }
 
-        private void OnValidate()
+        private void OnEnable()
         {
-            _isCacheDirty = true;
+            SubScenes = new string[subScenes.Length];
+
+            for (int i = 0; i < subScenes.Length; i++)
+            {
+                SubScenes[i] = subScenes[i];
+            }
         }
     }
 }
