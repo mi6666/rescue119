@@ -52,7 +52,7 @@ namespace Controller.InGame.UserInterface
 
         private void OnPause()
         {
-            // ポーズ
+            InnerState.ChangeState(UserInterfaceStateType.Pause);
         }
 
         private CompositeDisposable CompositeDisposable { get; }
