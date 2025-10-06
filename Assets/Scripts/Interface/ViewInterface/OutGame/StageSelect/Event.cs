@@ -3,7 +3,7 @@ using Structure.OutGame;
 
 namespace Interface.ViewInterface.OutGame.StageSelect
 {
-    public interface IClickStageEventView
+    public interface ISelectStageEventView
     {
         public Observable<string> ClickStageEventObservable { get; }
     }

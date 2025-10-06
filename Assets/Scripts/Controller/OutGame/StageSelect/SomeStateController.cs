@@ -16,7 +16,7 @@ namespace Controller.OutGame.StageSelect
     {
         public SomeStateController
         (
-            IClickStageEventView clickStageEventView,
+            ISelectStageEventView selectStageEventView,
             IClickDifficultyLevel clickDifficultyLevel,
             ISelectedStageModel selectedStageModel,
             IStageInfoModel stageInfoModel,
@@ -25,7 +25,7 @@ namespace Controller.OutGame.StageSelect
             IMutStateType<StageSelectState> innerState
         ) : base(StageSelectState.Some, innerState)
         {
-            ClickStageEventView = clickStageEventView;
+            SelectStageEventView = selectStageEventView;
             ClickDifficultyLevel = clickDifficultyLevel;
             SelectedStageModel = selectedStageModel;
             StageInfoModel = stageInfoModel;
@@ -50,7 +50,7 @@ namespace Controller.OutGame.StageSelect
         }
 
         private CompositeDisposable CompositeDisposable { get; }
-        private IClickStageEventView ClickStageEventView { get; }
+        private ISelectStageEventView SelectStageEventView { get; }
         private IClickDifficultyLevel ClickDifficultyLevel { get; }
         private ISelectedStageModel SelectedStageModel { get; }
         private IStageInfoModel StageInfoModel { get; }
