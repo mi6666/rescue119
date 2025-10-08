@@ -65,7 +65,7 @@ namespace Presenter.Global
 
             using var _ = LifetimeScope.EnqueueParent(rootScope);
 
-            for (int i = 0; i < group.SubScenes.Length; i++)
+            for (int i = 0; i < group.SubScenes.Count; i++)
             {
                 var subScenePath = group.SubScenes[i];
 
