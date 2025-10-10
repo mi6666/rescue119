@@ -13,10 +13,18 @@ namespace Controller.OutGame.StageSelect
         {
         }
     }
-    
-    public abstract class StageSelectBehaviourBase: AbstractStateBehaviour<StageSelectState>
+
+    public abstract class StageSelectBehaviourBase : AbstractStateBehaviour<StageSelectState>
     {
-        protected StageSelectBehaviourBase(StageSelectState state, IMutStateType<StageSelectState> innerState) : base(state, innerState)
+        protected StageSelectBehaviourBase(StageSelectState state, IMutStateType<StageSelectState> innerState) : base(
+            state, innerState)
+        {
+        }
+    }
+
+    public class StageSelectStateEntity : AbstractStateType<StageSelectState>
+    {
+        public StageSelectStateEntity() : base(StageSelectState.None)
         {
         }
     }

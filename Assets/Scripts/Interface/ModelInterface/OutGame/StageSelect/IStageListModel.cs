@@ -1,5 +1,3 @@
-
-using System.Collections.Generic;
 using Structure.OutGame;
 
 namespace Interface.ModelInterface.OutGame.StageSelect

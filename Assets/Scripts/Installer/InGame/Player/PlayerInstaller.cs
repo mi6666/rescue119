@@ -15,7 +15,6 @@ namespace Installer.InGame.Player
         
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.Log("configure");
             // View
             builder.RegisterInstance(playerView).AsImplementedInterfaces();
             

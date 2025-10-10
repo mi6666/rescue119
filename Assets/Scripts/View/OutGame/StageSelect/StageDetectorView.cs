@@ -6,10 +6,10 @@ using UnityEngine;
 namespace View.OutGame.StageSelect
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class ClickStageView : MonoBehaviour, ISelectStageEventView
+    public class StageDetectorView : MonoBehaviour, ISelectStageEventView
     {
         private readonly Subject<SceneGroup> _selectSubject = new ();
-        public Observable<SceneGroup> ClickStageEventObservable => _selectSubject;
+        public Observable<SceneGroup> SelectStageEventObservable => _selectSubject;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
