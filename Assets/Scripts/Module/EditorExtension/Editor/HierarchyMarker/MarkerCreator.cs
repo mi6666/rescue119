@@ -6,7 +6,7 @@ namespace Module.EditorExtension.Editor.HierarchyMarker
     public static class MarkerCreator
     {
         private const int TargetLength = 25;
-        public const string MarkerTag = "EditorMarker";
+        public const string MarkerTag = "EditorOnly";
 
         [MenuItem("GameObject/Create Empty Marker", false, 0)]
         private static void CreateEmptyMarker(MenuCommand menuCommand)

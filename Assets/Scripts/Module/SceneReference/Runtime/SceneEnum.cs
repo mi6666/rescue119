@@ -5,7 +5,7 @@
 public enum SceneEnum
 {
     Env_Stage,
-    Stage1,
+    Pri_Stage1,
     SampleScene,
     Test_Player,
     Ui_InGame,

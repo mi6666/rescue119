@@ -25,15 +25,15 @@ namespace View.InGame.Player
         {
             var selfPosition = _selfTransform.position;
 
-            lookAtObject.position = (Vector2)selfPosition + _rigidbody.linearVelocity;
+            lookAtObject.position = (Vector2)selfPosition + _rigidbody.velocity;
         }
 
         public void ApplyVelocity(Vector2 moveTo)
         {
-            _rigidbody.linearVelocity = moveTo;
+            _rigidbody.velocity = moveTo;
         }
 
-        public Vector2 CurrentVelocity => _rigidbody.linearVelocity;
+        public Vector2 CurrentVelocity => _rigidbody.velocity;
 
         public ReadOnlySpan<RaycastHit2D> RayCast(Vector2 castTo)
         {

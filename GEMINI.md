@@ -28,6 +28,7 @@
 *   **`Interface` レイヤー**:
     *   `LogicInterface`: ビジネスロジック層のインターフェースを定義します。
     *   `ModelInterface`: データおよび状態管理層のインターフェースを定義します。
+    *   `PresenterInterface`: 
     *   `ViewInterface`: プレゼンテーション層のインターフェースを定義します。
     このレイヤーは、アプリケーションの異なる部分間の疎結合を保証します。
 
@@ -44,8 +45,8 @@
     *   `ViewInterface`および`Structure`を参照します。
 
 *   **`Presenter` レイヤー**:
-    *   ViewとModel/Logic間の調整役として機能します。シーンの読み込みやUIイベントの管理など、アプリケーション全体のフローを制御します。
-    *   `ViewInterface`, `LogicInterface`, `ModelInterface`, `Structure` を参照します。
+    *   ViewとController間の調整役として機能します。シーンの読み込みやUIイベントの管理などを制御します。
+    *   `ViewInterface`, `PresenterInterface`, `Structure` を参照します。
 
 *   **`Controller` レイヤー**:
     *   ユーザー入力や特定のゲーム内イベントに応じて、`Logic`や`Model`を直接操作する、より具体的なコンポーネントです。ステートマシンを用いてキャラクターの振る舞いを管理するなど、特定のドメインロジックを担当します。
