@@ -11,17 +11,20 @@ namespace Installer.OutGame.StageSelect
     {
         [SerializeField] private StageDetectorView stageDetectorView;
         [SerializeField] private DifficultyLevelView difficultyLevelView;
+        [SerializeField] private StartGameButtonView startGameButtonView;
+
         protected override void Configure(IContainerBuilder builder)
         {
             // View
             builder.RegisterInstance(stageDetectorView).AsImplementedInterfaces();
             builder.RegisterInstance(difficultyLevelView).AsImplementedInterfaces();
+            builder.RegisterInstance(startGameButtonView).AsImplementedInterfaces();
 
             // Model
             builder.Register<SelectedStageModel>(Lifetime.Scoped).AsImplementedInterfaces();
 
             // Presenter
-            
+
             // Controller
             builder.Register<StageSelectStateEntity>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.RegisterEntryPoint<StageSelectStateMachine>();
