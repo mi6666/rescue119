@@ -1,4 +1,5 @@
-﻿using Interface.ModelInterface.InGame;
+﻿using Cysharp.Threading.Tasks;
+using Interface.ModelInterface.InGame;
 using Interface.ViewInterface.InGame.UserInterface;
 using Module.StateMachine;
 using R3;
@@ -11,6 +12,7 @@ namespace Controller.InGame.UserInterface
     {
         public NormalStateController
         (
+            INormalUiView normalUiView,
             IHpUiView hpUiView,
             ITimerView timerView,
             IPauseEventView pauseEventView,
@@ -21,6 +23,7 @@ namespace Controller.InGame.UserInterface
             IMutStateType<UserInterfaceStateType> innerState
         ) : base(UserInterfaceStateType.Normal, innerState)
         {
+            NormalUiView = normalUiView;
             HpUiView = hpUiView;
             TimerView = timerView;
             PauseEventView = pauseEventView;
@@ -40,7 +43,7 @@ namespace Controller.InGame.UserInterface
 
         public override void StateUpdate(float deltaTime)
         {
-            TimeModel.CountUpTime(deltaTime); // よろしくないかも
+            TimeModel.CountUpTime(deltaTime); // FIXME: UIの管理と直接関係ない
 
             var currentHp = HpModel.CurrentHp;
             var maxHp = HpModel.MaxHp;
@@ -55,7 +58,18 @@ namespace Controller.InGame.UserInterface
             InnerState.ChangeState(UserInterfaceStateType.Pause);
         }
 
+        public override void OnEnter()
+        {
+            NormalUiView.Show().Forget();
+        }
+
+        public override void OnExit()
+        {
+            NormalUiView.Hide().Forget();
+        }
+
         private CompositeDisposable CompositeDisposable { get; }
+        private INormalUiView NormalUiView { get; }
         private IHpUiView HpUiView { get; }
         private ITimerView TimerView { get; }
         private IPauseEventView PauseEventView { get; }
