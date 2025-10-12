@@ -4,6 +4,7 @@ using Module.SceneReference.Runtime;
 using Module.StateMachine;
 using R3;
 using Structure.OutGame;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace Controller.OutGame.StageSelect
@@ -27,7 +28,7 @@ namespace Controller.OutGame.StageSelect
 
         public void Start()
         {
-            SelectStageEventView.ClickStageEventObservable
+            SelectStageEventView.SelectStageEventObservable
                 .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (s, controller) => controller.OnSelect(s))
                 .AddTo(CompositeDisposable);
@@ -35,6 +36,7 @@ namespace Controller.OutGame.StageSelect
 
         private void OnSelect(SceneGroup selectedStage)
         {
+            Debug.Log("VAR");
             SelectedStageModel.SetSelectedStage(selectedStage);
             
             InnerState.ChangeState(StageSelectState.Some);

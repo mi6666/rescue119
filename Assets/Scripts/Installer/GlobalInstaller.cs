@@ -1,7 +1,10 @@
 using System;
+using Model.OutGame.StageSelect;
+using Presenter.Global;
 using R3;
 using VContainer;
 using View.Global.Input;
+using View.Global.Scene;
 
 namespace Installer
 {
@@ -15,6 +18,13 @@ namespace Installer
             
             // View
             builder.Register<InputWrapper>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<SceneLoaderView>(Lifetime.Singleton).AsImplementedInterfaces();
+            
+            // Model
+            builder.Register<StageInfoModel>(Lifetime.Singleton).AsImplementedInterfaces();
+            
+            // Presenter
+            builder.Register<ScenePresenter>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }
