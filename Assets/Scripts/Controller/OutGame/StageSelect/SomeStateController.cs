@@ -17,6 +17,7 @@ namespace Controller.OutGame.StageSelect
     {
         public SomeStateController
         (
+            ISomeStateUiView someStateUiView,
             ISelectStageEventView selectStageEventView,
             IDifficultyLevelView difficultyLevelView,
             IGameStartEventView gameStartEventView,
@@ -27,6 +28,7 @@ namespace Controller.OutGame.StageSelect
             IMutStateType<StageSelectState> innerState
         ) : base(StageSelectState.Some, innerState)
         {
+            SomeStateUiView = someStateUiView;
             SelectStageEventView = selectStageEventView;
             DifficultyLevelView = difficultyLevelView;
             GameStartEventView = gameStartEventView;
@@ -66,7 +68,19 @@ namespace Controller.OutGame.StageSelect
             ScenePresenter.LoadScene(selectedStage).Forget();
         }
 
+        public override void OnEnter()
+        {
+            SomeStateUiView.Show().Forget();
+        }
+
+        public override void OnExit()
+        {
+            SomeStateUiView.Hide().Forget();
+        }
+
+
         private CompositeDisposable CompositeDisposable { get; }
+        private ISomeStateUiView SomeStateUiView { get; }
         private ISelectStageEventView SelectStageEventView { get; }
         private IDifficultyLevelView DifficultyLevelView { get; }
         private IGameStartEventView GameStartEventView { get; }

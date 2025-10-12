@@ -1,4 +1,4 @@
-using Structure.InGame;
+using Structure.InGame.Stage;
 
 namespace Interface.PresenterInterface.InGame
 {

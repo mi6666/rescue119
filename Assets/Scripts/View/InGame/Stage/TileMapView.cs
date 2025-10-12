@@ -2,6 +2,7 @@
 using Interface.ViewInterface.InGame;
 using Module.EditorExtension.Runtime;
 using Structure.InGame;
+using Structure.InGame.Stage;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 

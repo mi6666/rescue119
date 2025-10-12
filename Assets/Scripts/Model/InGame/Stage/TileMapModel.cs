@@ -1,5 +1,6 @@
 using Interface.ModelInterface.InGame;
 using Structure.InGame;
+using Structure.InGame.Stage;
 
 namespace Model.InGame.Stage
 {

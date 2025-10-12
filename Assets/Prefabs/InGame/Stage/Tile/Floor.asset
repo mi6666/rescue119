@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f71aced77d34472c914c16aa2b971d3b, type: 3}
   m_Name: Floor
   m_EditorClassIdentifier: View::View.InGame.Stage.StageTileTipData
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 0dd93764ebad8bbb8bdeb61699aa3131, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -34,6 +34,6 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 7380733423083689654, guid: ed3b8414a18b924a49592f43bbb536d0, type: 3}
   m_Flags: 1
   m_ColliderType: 1
-  stageTileType: 0
+  stageTileType: 1
   isBurning: 0
   objectHealth: 0

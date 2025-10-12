@@ -28,9 +28,9 @@ namespace Controller.InGame.Stage
         }
     }
 
-    public class StageState : AbstractStateType<StageStateType>
+    public class StageStateEntity : AbstractStateType<StageStateType>
     {
-        public StageState() : base(StageStateType.EntryPoint)
+        public StageStateEntity() : base(StageStateType.EntryPoint)
         {
         }
     }
