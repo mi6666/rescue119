@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Interface.ModelInterface.OutGame.StageSelect;
 using Interface.PresenterInterface.Global;
 using Interface.ViewInterface.OutGame.StageSelect;
@@ -18,6 +19,7 @@ namespace Controller.OutGame.StageSelect
         (
             ISelectStageEventView selectStageEventView,
             IDifficultyLevelView difficultyLevelView,
+            IGameStartEventView gameStartEventView,
             ISelectedStageModel selectedStageModel,
             IStageInfoModel stageInfoModel,
             IScenePresenter scenePresenter,
@@ -27,6 +29,7 @@ namespace Controller.OutGame.StageSelect
         {
             SelectStageEventView = selectStageEventView;
             DifficultyLevelView = difficultyLevelView;
+            GameStartEventView = gameStartEventView;
             SelectedStageModel = selectedStageModel;
             StageInfoModel = stageInfoModel;
             ScenePresenter = scenePresenter;
@@ -38,6 +41,12 @@ namespace Controller.OutGame.StageSelect
             DifficultyLevelView.SelectObservable
                 .Subscribe(this, (level, controller) => controller.DifficultyLevelSelected(level))
                 .AddTo(CompositeDisposable);
+            SelectStageEventView.UnSelectObservable
+                .Subscribe(this, (_, controller) => controller.ExitSomeState())
+                .AddTo(CompositeDisposable);
+            GameStartEventView.StartObservable
+                .Subscribe(this, (_, controller) => controller.StartGame())
+                .AddTo(CompositeDisposable);
         }
 
         private void DifficultyLevelSelected(DifficultyLevel level)
@@ -45,13 +54,22 @@ namespace Controller.OutGame.StageSelect
             StageInfoModel.SetDifficultyLevel(level);
         }
 
+        private void ExitSomeState()
+        {
+            InnerState.ChangeState(StageSelectState.None);
+        }
+
         private void StartGame()
         {
+            var selectedStage = SelectedStageModel.GetSelectedStage();
+
+            ScenePresenter.LoadScene(selectedStage).Forget();
         }
 
         private CompositeDisposable CompositeDisposable { get; }
         private ISelectStageEventView SelectStageEventView { get; }
         private IDifficultyLevelView DifficultyLevelView { get; }
+        private IGameStartEventView GameStartEventView { get; }
         private ISelectedStageModel SelectedStageModel { get; }
         private IStageInfoModel StageInfoModel { get; }
         private IScenePresenter ScenePresenter { get; }

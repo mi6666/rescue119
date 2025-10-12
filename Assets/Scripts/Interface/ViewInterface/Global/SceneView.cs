@@ -9,7 +9,7 @@ namespace Interface.ViewInterface.Global
     /// </summary>
     public interface ISceneLoaderView
     {
-        public UniTask<AsyncOperation> LoadScene(string scenePath);
+        public AsyncOperation LoadScene(string scenePath);
         public void ActivateAsync(AsyncOperation sceneOperation);
         public void SetActiveScene(string scenePath);
         public UniTask UnLoadScene(string scenePath);

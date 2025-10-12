@@ -41,10 +41,11 @@ namespace Presenter.Global
 
         private async UniTask InnerLoadScene(SceneGroup group)
         {
-            var primarySceneOperation = await SceneLoaderView.LoadScene(group.PrimaryScene);
+            var primarySceneOperation = SceneLoaderView.LoadScene(group.PrimaryScene);
             SceneLoaderView.ActivateAsync(primarySceneOperation);
+            await primarySceneOperation;
 
-            var primaryScene = SceneManager.GetSceneByPath(group.PrimaryScene);
+            var primaryScene = SceneManager.GetSceneByName(group.PrimaryScene);
             var primarySceneRootObject = primaryScene.GetRootGameObjects();
             LifetimeScope rootScope = null;
 
@@ -69,8 +70,9 @@ namespace Presenter.Global
             {
                 var subScenePath = group.SubScenes[i];
 
-                var subSceneOperation = await SceneLoaderView.LoadScene(subScenePath);
+                var subSceneOperation = SceneLoaderView.LoadScene(subScenePath);
                 SceneLoaderView.ActivateAsync(subSceneOperation);
+                await subSceneOperation;
 
                 var subScene = SceneManager.GetSceneByPath(subScenePath);
                 var rootObjects = subScene.GetRootGameObjects();
@@ -90,6 +92,13 @@ namespace Presenter.Global
 
         private async UniTask UnLoadScene()
         {
+            if (_currentSceneGroup == null)
+            {
+                var currentScene = SceneManager.GetActiveScene();
+                await SceneLoaderView.UnLoadScene(currentScene.name);
+                return;
+            }
+
             foreach (var subScene in _currentSceneGroup.SubScenes)
             {
                 await SceneLoaderView.UnLoadScene(subScene);

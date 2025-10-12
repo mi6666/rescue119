@@ -28,7 +28,7 @@ namespace Controller.OutGame.StageSelect
 
         public void Start()
         {
-            SelectStageEventView.SelectStageEventObservable
+            SelectStageEventView.SelectStageObservable
                 .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (s, controller) => controller.OnSelect(s))
                 .AddTo(CompositeDisposable);
@@ -36,7 +36,7 @@ namespace Controller.OutGame.StageSelect
 
         private void OnSelect(SceneGroup selectedStage)
         {
-            Debug.Log("VAR");
+            Debug.Log(selectedStage.PrimaryScene);
             SelectedStageModel.SetSelectedStage(selectedStage);
             
             InnerState.ChangeState(StageSelectState.Some);

@@ -7,11 +7,9 @@ namespace View.Global.Scene
 {
     public class SceneLoaderView : ISceneLoaderView
     {
-        public async UniTask<AsyncOperation> LoadScene(string scenePath)
+        public AsyncOperation LoadScene(string scenePath)
         {
             var operation = SceneManager.LoadSceneAsync(scenePath, LoadSceneMode.Additive);
-            operation!.allowSceneActivation = false;
-            await operation.ToUniTask();
             return operation;
         }
 

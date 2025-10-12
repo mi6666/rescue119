@@ -9,7 +9,8 @@ namespace Interface.ViewInterface.OutGame.StageSelect
     /// </summary>
     public interface ISelectStageEventView
     {
-        public Observable<SceneGroup> SelectStageEventObservable { get; }
+        public Observable<SceneGroup> SelectStageObservable { get; }
+        public Observable<Unit> UnSelectObservable { get; }
     }
 
     
@@ -21,8 +22,11 @@ namespace Interface.ViewInterface.OutGame.StageSelect
         public Observable<DifficultyLevel> SelectObservable { get; }
     }
 
-    public interface IClickGameStart
+    /// <summary>
+    /// ゲーム開始が選択された際のイベントを提供する
+    /// </summary>
+    public interface IGameStartEventView
     {
-        public Observable<Unit> ClickGameStartObservable { get; }
+        public Observable<Unit> StartObservable { get; }
     }
 }
