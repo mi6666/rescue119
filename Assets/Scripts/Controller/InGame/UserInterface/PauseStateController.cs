@@ -1,4 +1,5 @@
-﻿using Interface.ViewInterface.InGame.UserInterface;
+﻿using Cysharp.Threading.Tasks;
+using Interface.ViewInterface.InGame.UserInterface;
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
@@ -13,21 +14,32 @@ namespace Controller.InGame.UserInterface
     {
         public PauseStateController
         (
+            IPauseUiView pauseUiView,
             IExitPauseEventView exitPauseEventView,
             CompositeDisposable compositeDisposable,
             IMutStateType<UserInterfaceStateType> innerState
         ) : base(UserInterfaceStateType.Pause, innerState)
         {
+            PauseUiView = pauseUiView;
             ExitPauseEventView = exitPauseEventView;
             CompositeDisposable = compositeDisposable;
         }
         
         public void Start()
         {
-            ExitPauseEventView.ExitPauseEvent
+            ExitPauseEventView.ExitPauseObservable
                 .Subscribe(this, (_, controller) => controller.OffPause())
                 .AddTo(CompositeDisposable);
+        }
 
+        public override void OnEnter()
+        {
+            PauseUiView.Show().Forget();
+        }
+
+        public override void OnExit()
+        {
+            PauseUiView.Hide().Forget();
         }
 
         public void OffPause()
@@ -41,6 +53,7 @@ namespace Controller.InGame.UserInterface
         }
         
         private CompositeDisposable CompositeDisposable { get; }
+        private IPauseUiView PauseUiView { get; }
         private IExitPauseEventView ExitPauseEventView { get; }
     }
 }
