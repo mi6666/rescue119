@@ -1,8 +1,12 @@
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
+using Interface.ViewInterface.InGame;
 using Module.StateMachine;
+using R3;
 using Structure.InGame;
+using Structure.InGame.Stage;
 using UnityEngine;
+using VContainer.Unity;
 
 namespace Controller.InGame.Stage
 {
@@ -10,21 +14,32 @@ namespace Controller.InGame.Stage
     /// <para>タイルの更新処理</para>
     /// <para></para>
     /// </summary>
-    public class NormalStateController : StageStateBehaviour
+    public class NormalStateController : StageStateBehaviour,IStartable
     {
         public NormalStateController
         (
             IStageTileMapModel stageTileMapModel,
             IStageFloorModel stageFloorModel,
-            IFloorUpdateLogic floorUpdateLogic,
-            IWallUpdateLogic wallUpdateLogic,
+            IBurnLogic burnLogic,
+            IGimmickEventView gimmickEventView,
+            CompositeDisposable compositeDisposable,
+            ISpawnRubbleView spawnRubbleView,
             IMutStateType<StageStateType> innerState
         ) : base(StageStateType.Normal, innerState)
         {
             StageTileMapModel = stageTileMapModel;
             StageFloorModel = stageFloorModel;
-            FloorUpdateLogic = floorUpdateLogic;
-            WallUpdateLogic = wallUpdateLogic;
+            BurnLogic = burnLogic;
+            GimmickEventView = gimmickEventView;
+            CompositeDisposable = compositeDisposable;
+            SpawnRubbleView = spawnRubbleView;
+        }
+        
+        public void Start()
+        {
+            GimmickEventView.GimmickEventObservable
+                .Subscribe(this, (context, controller) => controller.SpawnRubble(context))
+                .AddTo(CompositeDisposable);
         }
 
         public override void StateUpdate(float deltaTime)
@@ -46,20 +61,24 @@ namespace Controller.InGame.Stage
 
                     switch (tip)
                     {
-                        case FloorTileTip floorTileTip:
-                            FloorUpdateLogic.Update(floorTileTip, arg);
-                            break;
-                        case WallTileTip wallTileTip:
-                            WallUpdateLogic.Update(wallTileTip,arg);
+                        case ITipBurnable tipBurnable:
+                            BurnLogic.Update(tipBurnable, arg);
                             break;
                     }
                 }
             }
         }
 
+        private void SpawnRubble(EventContext context)
+        {
+            SpawnRubbleView.Spawn(context.SpawnPosition);
+        }
+
         private IStageTileMapModel StageTileMapModel { get; }
         private IStageFloorModel StageFloorModel { get; }
-        private IFloorUpdateLogic FloorUpdateLogic { get; }
-        private IWallUpdateLogic WallUpdateLogic { get; }
+        private IBurnLogic BurnLogic { get; }
+        private IGimmickEventView GimmickEventView { get; }
+        private CompositeDisposable CompositeDisposable { get; }
+        private ISpawnRubbleView SpawnRubbleView { get; }
     }
 }
