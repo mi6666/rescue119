@@ -53,6 +53,11 @@ namespace Structure.InGame.Stage
         }
 
         private int _health;
+
+        public InnerHealth(int objectHealth)
+        {
+            _health = objectHealth;
+        }
     }
 
     public enum HealthStateType

@@ -17,41 +17,12 @@ namespace Structure.InGame
         Floor,
         Wall,
         Rubble, // 瓦礫
+        Hole,
     }
 
     public interface IBurnable
     {
         public void SetBurn();
-    }
-    // ============================================================================================
-    // Tile Tip
-    // ============================================================================================
-
-    public abstract record StageTileTip;
-
-    public record NoneTileTip : StageTileTip;
-
-    public record FloorTileTip(int InstanceId, int ObjectHealth) : StageTileTip, IBurnable
-    {
-        public void SetBurn()
-        {
-            IsBurning = true;
-        }
-        public bool IsBurning { get; private set; }
-    }
-
-    public record WallTileTip(int InstanceId, bool IsBurning, int ObjectHealth) : StageTileTip, IBurnable
-    {
-        public void SetBurn()
-        {
-            IsBurning = true;
-        }
-        public bool IsBurning { get; private set; }
-    }
-
-    public record RubbleTileTip(int InstanceId, bool IsBurning, int ObjectHealth) : StageTileTip
-    {
-        
     }
 
 }

@@ -16,7 +16,7 @@ namespace View.InGame.Stage
         public StageMap GetMap()
         {
             var bounds = tilemap.cellBounds;
-            var stageTileTips = new StageTileTip[bounds.size.y, bounds.size.x];
+            var stageTileTips = new TipBase[bounds.size.y, bounds.size.x];
 
             for (var y = 0; y < bounds.size.y; y++)
             {
@@ -26,7 +26,7 @@ namespace View.InGame.Stage
 
                     if (tilemap.GetTile(cellPosition) is not StageTileTipData tile)
                     {
-                        stageTileTips[y, x] = new NoneTileTip();
+                        stageTileTips[y, x] = new NoneTip();
                         continue;
                     }
 
@@ -41,10 +41,11 @@ namespace View.InGame.Stage
 
                     stageTileTips[y, x] = tile.TileType switch
                     {
-                        StageTileType.None => new NoneTileTip(),
-                        StageTileType.Floor => new FloorTileTip(instanceId, objectHealth),
-                        StageTileType.Wall => new WallTileTip(instanceId, isBurning, objectHealth),
-                        StageTileType.Rubble => new RubbleTileTip(instanceId, isBurning, objectHealth),
+                        StageTileType.None => new NoneTip(),
+                        StageTileType.Floor => new FloorTip(new InnerBurn(), new InnerObject(instanceId), new InnerHealth(objectHealth)),
+                        StageTileType.Wall => new WallTip(new InnerBurn(), new InnerObject(instanceId), new InnerHealth(objectHealth)),
+                        StageTileType.Rubble => new RubbleTip(new InnerBurn(), new InnerObject(instanceId), new InnerHealth(objectHealth)),
+                        StageTileType.Hole => new HoleTip(new InnerObject(instanceId),new InnerHealth(objectHealth)),
                         _ => throw new NotImplementedException(),
                     };
                 }
