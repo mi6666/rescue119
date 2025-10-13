@@ -2,22 +2,30 @@ using UnityEngine;
 
 namespace Structure.InGame.Stage
 {
+    public interface ITipGameObject
+    {
+        public int InstanceId => InnerObject.InstanceId;
+        public InnerObject InnerObject { get; }
+    }
+
     public interface ITipBurnable
     {
-        public bool IsBurn => BurnCore.IsBurning;
-        public void SetBurn() => BurnCore.SetBurn();
-        public BurnCore BurnCore { get; }
+        public bool IsBurn => InnerBurn.IsBurning;
+        public void SetBurn() => InnerBurn.SetBurn();
+        public InnerBurn InnerBurn { get; }
     }
 
     public interface ITipHealth
     {
-        public int ObjectHealth => HealthCore.Health;
-        public HealthCore.HealthStateType CurrentState => HealthCore.State;
-        public HealthCore.HealthStateType Damage(int damageAmount) => HealthCore.Damage(damageAmount);
-        public HealthCore HealthCore { get; }
+        public int ObjectHealth => InnerHealth.Health;
+        public HealthStateType CurrentState => InnerHealth.State;
+        public HealthStateType Damage(int damageAmount) => InnerHealth.Damage(damageAmount);
+        public InnerHealth InnerHealth { get; }
     }
 
-    public record BurnCore
+    public record InnerObject(int InstanceId);
+
+    public record InnerBurn
     {
         public bool IsBurning => _isBurning;
 
@@ -29,7 +37,7 @@ namespace Structure.InGame.Stage
         private bool _isBurning;
     }
 
-    public record HealthCore
+    public record InnerHealth
     {
         public int Health => _health;
         public HealthStateType State => _health > 0 ? HealthStateType.Alive : HealthStateType.Dead;
@@ -44,12 +52,12 @@ namespace Structure.InGame.Stage
             return State;
         }
 
-        public enum HealthStateType
-        {
-            Alive, // 生きている
-            Dead, // 死んだ
-        }
-
         private int _health;
+    }
+
+    public enum HealthStateType
+    {
+        Alive, // 生きている
+        Dead, // 死んだ
     }
 }
