@@ -1,18 +1,23 @@
+using System.Buffers;
 using Interface.LogicInterface.InGame;
 using Interface.ViewInterface.Global;
 using Interface.ViewInterface.InGame;
+using JetBrains.Annotations;
 using Module.EditorExtension.Runtime;
 using Module.StateMachine;
+using R3;
 using Structure.InGame;
+using VContainer.Unity;
 
 namespace Controller.InGame.Player
 {
-    public class NormalStateController : PlayerStateBehaviourBase
+    public class NormalStateController : PlayerStateBehaviourBase, IStartable
     {
         public NormalStateController
         (
             IPlayerView playerView,
             IInput_MoveVectorView moveVectorView,
+            IInput_ActionEventView actionEventView,
             ILocomotionLogic locomotionLogic,
             IMutStateType<PlayerStateType> innerState
         ) : base(PlayerStateType.Normal, innerState)
@@ -21,7 +26,18 @@ namespace Controller.InGame.Player
             MoveVectorView = moveVectorView;
             LocomotionLogic = locomotionLogic;
         }
+        public void Start()
+        {
+            ActionEventView.ActionObservable
+                .Where(this, (_, controller) => controller.IsInState())
+                .Subscribe(this, (s, controller) => controller.OnAction())
+                .AddTo(CompositeDisposable);           
+        }
 
+        private void OnAction()
+        {
+            InnerState.ChangeState(PlayerStateType.Action);
+        }
         public override void StateUpdate(float deltaTime)
         {
             Locomotion(deltaTime);
@@ -49,6 +65,8 @@ namespace Controller.InGame.Player
 
         private IPlayerView PlayerView { get; }
         private IInput_MoveVectorView MoveVectorView { get; }
-        private ILocomotionLogic LocomotionLogic { get; }
+        private ILocomotionLogic LocomotionLogic { get; } 
+        private IInput_ActionEventView ActionEventView { get; }
+        private CompositeDisposable CompositeDisposable { get; }
     }
 }
