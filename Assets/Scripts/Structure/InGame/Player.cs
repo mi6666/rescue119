@@ -9,6 +9,7 @@ namespace Structure.InGame
     public enum PlayerStateType
     {
         Normal,
+        Action
     }
 
     public readonly ref struct LocomotionArgument

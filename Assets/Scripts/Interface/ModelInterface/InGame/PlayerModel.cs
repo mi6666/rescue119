@@ -50,4 +50,9 @@ namespace Interface.ModelInterface.InGame
         public int CurrentHp { get; }
         public int MaxHp { get; }
     }
+
+    public interface IActionLengthModel
+    {
+        public float ActionLength { get; }
+    }
 }
