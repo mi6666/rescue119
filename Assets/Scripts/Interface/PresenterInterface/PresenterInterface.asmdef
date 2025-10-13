@@ -1,0 +1,19 @@
+{
+    "name": "PresenterInterface",
+    "rootNamespace": "",
+    "references": [
+        "Structure",
+        "Option",
+        "SceneReference",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

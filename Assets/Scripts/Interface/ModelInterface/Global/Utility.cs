@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Module.Option.Runtime;
 
-namespace Interface.Model.Global
+namespace Interface.ModelInterface.Global
 {
 //====================================================================
 // Blocking Operation

@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace Interface.Logic.Global
+namespace Interface.LogicInterface.Global
 {
     public interface ILoadPrimarySceneLogic
     {

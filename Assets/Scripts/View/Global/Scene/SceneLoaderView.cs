@@ -1,6 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using Interface.View.Global;
-using Module.SceneReference.Runtime;
+using Interface.ViewInterface.Global;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,37 +7,33 @@ namespace View.Global.Scene
 {
     public class SceneLoaderView : ISceneLoaderView
     {
-        public async UniTask<SceneContext> LoadScene(string scenePath)
+        public AsyncOperation LoadScene(string scenePath)
         {
-            // アセットが存在しない
             var operation = SceneManager.LoadSceneAsync(scenePath, LoadSceneMode.Additive);
-            operation!.allowSceneActivation = false;
-            await operation.ToUniTask();
-            return SceneContext.SceneManagerContext(operation, scenePath);
+            return operation;
         }
 
-        public UniTask ActivateAsync(SceneContext scene)
+        public void ActivateAsync(AsyncOperation sceneOperation)
         {
-            scene.Operation.allowSceneActivation = true;
-            return UniTask.CompletedTask;
+            sceneOperation.allowSceneActivation = true;
         }
 
-        public void SetActiveScene(SceneContext scene)
+        public void SetActiveScene(string scenePath)
         {
-            var loadedScene = SceneManager.GetSceneByPath(scene.ScenePath);
+            var loadedScene = SceneManager.GetSceneByPath(scenePath);
             if (loadedScene.IsValid() && loadedScene.isLoaded)
             {
                 SceneManager.SetActiveScene(loadedScene);
             }
             else
             {
-                Debug.LogWarning($"シーン {scene.ScenePath} は有効でないかロードされていません。");
+                Debug.LogWarning($"シーン {scenePath} は有効でないかロードされていません。");
             }
         }
 
-        public async UniTask UnLoadScene(SceneContext sceneInstance)
+        public async UniTask UnLoadScene(string scenePath)
         {
-            await SceneManager.UnloadSceneAsync(sceneInstance.ScenePath);
+            await SceneManager.UnloadSceneAsync(scenePath);
         }
 
         public UnityEngine.SceneManagement.Scene CurrentScene => SceneManager.GetActiveScene();

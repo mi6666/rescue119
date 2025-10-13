@@ -1,5 +1,8 @@
 ﻿
-public class ModelInterface
+namespace Interface.ModelInterface
 {
+    public class ModelInterface
+    {
     
+    }
 }

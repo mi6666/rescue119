@@ -2,12 +2,12 @@
 using Module.SceneReference.Runtime;
 using R3;
 
-namespace Interface.Model.Global
+namespace Interface.ModelInterface.Global
 {
     public interface IPrimarySceneModel
     {
-        public SceneContext ToggleCurrentScene(SceneContext sceneInstance);
-        public SceneContext GetCurrentSceneContext { get; }
+        // public SceneContext ToggleCurrentScene(SceneContext sceneInstance);
+        // public SceneContext GetCurrentSceneContext { get; }
     }
 
     public interface ISceneLoadEventModel
@@ -36,8 +36,8 @@ namespace Interface.Model.Global
 
     public interface IResourceScenesModel
     {
-        public IReadOnlyList<string> GetResourceScenes();
-        public void PushReleaseContext(SceneContext sceneContext);
-        public IReadOnlyList<SceneContext> GetSceneReleaseContexts();
+        // public IReadOnlyList<string> GetResourceScenes();
+        // public void PushReleaseContext(SceneContext sceneContext);
+        // public IReadOnlyList<SceneContext> GetSceneReleaseContexts();
     }
 }
