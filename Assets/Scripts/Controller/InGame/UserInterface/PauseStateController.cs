@@ -1,4 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
+using Interface.ModelInterface.InGame;
+using Interface.PresenterInterface.Global;
 using Interface.ViewInterface.InGame.UserInterface;
 using Module.StateMachine;
 using R3;
@@ -15,20 +17,29 @@ namespace Controller.InGame.UserInterface
         public PauseStateController
         (
             IPauseUiView pauseUiView,
+            IExitStageEventView exitStageEventView,
             IExitPauseEventView exitPauseEventView,
+            IScenePresenter scenePresenter,
+            IExitGameSceneModel exitGameSceneModel,
             CompositeDisposable compositeDisposable,
             IMutStateType<UserInterfaceStateType> innerState
         ) : base(UserInterfaceStateType.Pause, innerState)
         {
             PauseUiView = pauseUiView;
+            ExitStageEventView = exitStageEventView;
             ExitPauseEventView = exitPauseEventView;
             CompositeDisposable = compositeDisposable;
+            ScenePresenter = scenePresenter;
+            ExitGameSceneModel = exitGameSceneModel;
         }
         
         public void Start()
         {
             ExitPauseEventView.ExitPauseObservable
                 .Subscribe(this, (_, controller) => controller.OffPause())
+                .AddTo(CompositeDisposable);
+            ExitStageEventView.ExitStageObservable
+                .Subscribe(this, (_, controller) => controller.Retire())
                 .AddTo(CompositeDisposable);
         }
 
@@ -42,18 +53,22 @@ namespace Controller.InGame.UserInterface
             PauseUiView.Hide().Forget();
         }
 
-        public void OffPause()
+        private void OffPause()
         {
             InnerState.ChangeState(UserInterfaceStateType.Normal);
         }
 
-        public void Retire()
+        private void Retire()
         {
             // todo シーン読み込み
+            ScenePresenter.LoadScene(ExitGameSceneModel.StageSelect);
         }
         
         private CompositeDisposable CompositeDisposable { get; }
         private IPauseUiView PauseUiView { get; }
         private IExitPauseEventView ExitPauseEventView { get; }
+        private IScenePresenter ScenePresenter { get; }
+        private IExitGameSceneModel ExitGameSceneModel { get; }
+        private IExitStageEventView ExitStageEventView { get; }
     }
 }

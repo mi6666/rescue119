@@ -1,6 +1,7 @@
 using Controller.InGame.UserInterface;
 using Model.InGame.Player;
 using Model.InGame.Stage;
+using Model.InGame.UserInterface;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -12,6 +13,7 @@ namespace Installer.InGame.UserInterface
     public class UiInstaller : InstallerBase
     {
         [SerializeField] private StageSettingModel stageSettingModel;
+        [SerializeField] private ExitGameSceneModel exitGameSceneModel;
         [SerializeField] private NormalUiView normalUiView;
         [SerializeField] private PauseUiView pauseUiView;
 
@@ -28,6 +30,7 @@ namespace Installer.InGame.UserInterface
             
             // Model
             builder.RegisterInstance(stageSettingModel).AsImplementedInterfaces();
+            builder.RegisterInstance(exitGameSceneModel).AsImplementedInterfaces();
             builder.Register<HpModel>(Lifetime.Singleton).AsImplementedInterfaces();    // 仮実装
             builder.Register<TimeModel>(Lifetime.Singleton).AsImplementedInterfaces();
             

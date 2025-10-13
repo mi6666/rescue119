@@ -1,4 +1,6 @@
-﻿using Interface.ViewInterface.InGame.UserInterface;
+﻿using Interface.ModelInterface.InGame;
+using Interface.PresenterInterface.Global;
+using Interface.ViewInterface.InGame.UserInterface;
 using Module.StateMachine;
 using Structure.InGame;
 using R3;
@@ -13,11 +15,17 @@ namespace Controller.InGame.UserInterface
         public GameOverStateController
         (
             IGameOverEventView gameOverEventView,
+            IScenePresenter scenePresenter,
+            IExitGameSceneModel exitGameSceneModel,
+            IExitStageEventView exitStageEventView,
             CompositeDisposable compositeDisposable,
             IMutStateType<UserInterfaceStateType> innerState
         ) : base(UserInterfaceStateType.GameOver, innerState)
         {
             GameOverEventView = gameOverEventView;
+            ScenePresenter = scenePresenter;
+            ExitGameSceneModel = exitGameSceneModel;
+            ExitStageEventView = exitStageEventView;
             CompositeDisposable = compositeDisposable;
         }
 
@@ -26,14 +34,25 @@ namespace Controller.InGame.UserInterface
             GameOverEventView.GameOverEvent
                 .Subscribe(this, (_, controller) => controller.GameOver())
                 .AddTo(CompositeDisposable);
+            ExitStageEventView.ExitStageObservable
+                .Subscribe(this, (_, controller) => controller.GameOverBack())
+                .AddTo(CompositeDisposable);
         }
 
-        public void GameOver()
+        private void GameOver()
         {
             InnerState.ChangeState(UserInterfaceStateType.GameOver);
+        }
+
+        private void GameOverBack()
+        {
+            ScenePresenter.LoadScene(ExitGameSceneModel.StageSelect);
         }
         
         private CompositeDisposable CompositeDisposable { get; }
         private IGameOverEventView GameOverEventView { get; }
+        private IScenePresenter ScenePresenter { get; }
+        private IExitGameSceneModel ExitGameSceneModel { get; }
+        private IExitStageEventView ExitStageEventView { get; }
     }
 }
