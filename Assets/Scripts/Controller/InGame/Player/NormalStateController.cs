@@ -19,12 +19,15 @@ namespace Controller.InGame.Player
             IInput_MoveVectorView moveVectorView,
             IInput_ActionEventView actionEventView,
             ILocomotionLogic locomotionLogic,
+            CompositeDisposable compositeDisposable,
             IMutStateType<PlayerStateType> innerState
         ) : base(PlayerStateType.Normal, innerState)
         {
             PlayerView = playerView;
             MoveVectorView = moveVectorView;
             LocomotionLogic = locomotionLogic;
+            ActionEventView = actionEventView;
+            CompositeDisposable = compositeDisposable;
         }
         public void Start()
         {
