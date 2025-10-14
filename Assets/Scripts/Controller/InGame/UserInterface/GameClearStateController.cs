@@ -4,6 +4,7 @@ using Interface.ViewInterface.InGame.UserInterface;
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
+using VContainer.Unity;
 
 namespace Controller.InGame.UserInterface
 {
@@ -12,7 +13,7 @@ namespace Controller.InGame.UserInterface
     /// クリアタイム表示
     /// ステージセレクトへ
     /// リスタート
-    public class GameClearStateController : UiStateBehaviour
+    public class GameClearStateController : UiStateBehaviour,IStartable
     {
         public GameClearStateController
         (
@@ -33,7 +34,7 @@ namespace Controller.InGame.UserInterface
 
         public void Start()
         {
-            GameClearEventView.GameClearEvent
+            GameClearEventView.GameClearObservable
                 .Subscribe(this, (_, controller) => controller.GameClear())
                 .AddTo(CompositeDisposable);
             ExitStageEventView.ExitStageObservable

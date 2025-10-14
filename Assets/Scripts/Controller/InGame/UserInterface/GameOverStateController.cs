@@ -4,13 +4,14 @@ using Interface.ViewInterface.InGame.UserInterface;
 using Module.StateMachine;
 using Structure.InGame;
 using R3;
+using VContainer.Unity;
 
 namespace Controller.InGame.UserInterface
 {
     /// todo
     /// リタイア
     /// リスタート
-    public class GameOverStateController : UiStateBehaviour
+    public class GameOverStateController : UiStateBehaviour,IStartable
     {
         public GameOverStateController
         (
