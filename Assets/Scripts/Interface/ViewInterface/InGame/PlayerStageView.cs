@@ -10,4 +10,11 @@ namespace Interface.ViewInterface.InGame
         public Vector2 CurrentVelocity { get; }
         public ReadOnlySpan<RaycastHit2D> RayCast(Vector2 castTo);
     }
+
+    public interface IWaterView
+    {
+        public void SpawnWater();
+        public void DespawnWater();
+        
+    }
 }
