@@ -888,6 +888,8 @@ MonoBehaviour:
   stageSettingModel:
     timeLength: 100
     maxFloorNum: 2
+  exitGameSceneModel:
+    stageSelectScene: {fileID: 0}
   normalUiView: {fileID: 1407310411}
   pauseUiView: {fileID: 944545407}
 --- !u!1 &944545405
@@ -1316,7 +1318,7 @@ GameObject:
   - component: {fileID: 1407310410}
   - component: {fileID: 1407310411}
   m_Layer: 5
-  m_Name: Nromal
+  m_Name: Normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
