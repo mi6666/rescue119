@@ -4,15 +4,12 @@ using UnityEngine;
 
 namespace Interface.LogicInterface.InGame
 {
-    public interface IFloorUpdateLogic
+
+    public interface IBurnLogic
     {
-        public void Update(FloorTileTip tileTip, UpdateArgument argument);
+        public void Update(ITipBurnable tipBurnable, UpdateArgument updateArgument);
     }
 
-    public interface IWallUpdateLogic
-    {
-        public void Update(WallTileTip tileTip, UpdateArgument argument);
-    }
 
     public readonly ref struct UpdateArgument
     {

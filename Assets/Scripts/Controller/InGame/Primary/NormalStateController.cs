@@ -6,9 +6,9 @@ using R3;
 using Structure.InGame;
 using VContainer.Unity;
 
-namespace Controller.InGame.UserInterface
+namespace Controller.InGame.Primary
 {
-    public class NormalStateController : UiStateBehaviour, IStartable
+    public class NormalStateController : PrimaryStateBehaviour, IStartable
     {
         public NormalStateController
         (
@@ -20,8 +20,8 @@ namespace Controller.InGame.UserInterface
             ITimeModel timeModel,
             IStageSettingModel stageSettingModel,
             CompositeDisposable compositeDisposable,
-            IMutStateType<UserInterfaceStateType> innerState
-        ) : base(UserInterfaceStateType.Normal, innerState)
+            IMutStateType<PrimaryStateType> innerState
+        ) : base(PrimaryStateType.Normal, innerState)
         {
             NormalUiView = normalUiView;
             HpUiView = hpUiView;
@@ -43,7 +43,7 @@ namespace Controller.InGame.UserInterface
 
         public override void StateUpdate(float deltaTime)
         {
-            TimeModel.CountUpTime(deltaTime); // FIXME: UIの管理と直接関係ない
+            TimeModel.CountUpTime(deltaTime);
 
             var currentHp = HpModel.CurrentHp;
             var maxHp = HpModel.MaxHp;
@@ -55,7 +55,7 @@ namespace Controller.InGame.UserInterface
 
         private void OnPause()
         {
-            InnerState.ChangeState(UserInterfaceStateType.Pause);
+            InnerState.ChangeState(PrimaryStateType.Pause);
         }
 
         public override void OnEnter()

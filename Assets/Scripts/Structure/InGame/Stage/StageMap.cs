@@ -8,25 +8,25 @@ namespace Structure.InGame.Stage
     {
         public StageMap
         (
-            StageTileTip[,] stageTileTips
+            TipBase[,] stageTileTips
         )
         {
             StageTileTips = stageTileTips;
-            TempBuffer = new StageTileTip[4];
+            TempBuffer = new TipBase[4];
         }
 
-        public Option<StageTileTip> GetTip(int x, int y)
+        public Option<TipBase> GetTip(int x, int y)
         {
             if (x < 0 || x >= StageTileTips.GetLength(0) ||
                 y < 0 || y >= StageTileTips.GetLength(1))
             {
-                return Option<StageTileTip>.None();
+                return Option<TipBase>.None();
             }
 
-            return Option<StageTileTip>.Some(StageTileTips[y, x]);
+            return Option<TipBase>.Some(StageTileTips[y, x]);
         }
 
-        public ReadOnlySpan<StageTileTip> GetAroundTips(int x, int y)
+        public ReadOnlySpan<TipBase> GetAroundTips(int x, int y)
         {
             var getCount = 0;
             foreach (var (dx, dy) in Around)
@@ -58,8 +58,8 @@ namespace Structure.InGame.Stage
             (0, -1),
         };
 
-        private StageTileTip[] TempBuffer { get; }
-        private StageTileTip[,] StageTileTips { get; }
+        private TipBase[] TempBuffer { get; }
+        private TipBase[,] StageTileTips { get; }
 
         public override string ToString()
         {
