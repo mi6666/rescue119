@@ -1,9 +1,11 @@
 ﻿using Interface.ModelInterface.InGame;
 using Interface.PresenterInterface.Global;
 using Interface.ViewInterface.InGame.UserInterface;
+using JetBrains.Annotations;
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
+using VContainer;
 using VContainer.Unity;
 
 namespace Controller.InGame.Primary
@@ -15,12 +17,13 @@ namespace Controller.InGame.Primary
     /// リスタート
     public class GameClearStateController : PrimaryStateBehaviour, IStartable
     {
+        [UsedImplicitly]
         public GameClearStateController
         (
             IGameClearEventView gameClearEventView,
-            IScenePresenter scenePresenter,
+            [Key(PrimaryStateType.GameClear)] IExitStageEventView exitStageEventView,
             IExitGameSceneModel exitGameSceneModel,
-            IExitStageEventView exitStageEventView,
+            IScenePresenter scenePresenter,
             CompositeDisposable compositeDisposable,
             IMutStateType<PrimaryStateType> innerState
         ) : base(PrimaryStateType.GameClear, innerState)

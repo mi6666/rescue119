@@ -36,6 +36,10 @@ namespace Logic.InGame.Stage
             }
         }
     */
+        
+        // FIXME:
+        // 燃えているなら
+        // インターフェースの移行
         public void Update(ITipBurnable tipBurnable, UpdateArgument updateArgument)
         {
             var toBurnAround = Random.Range(0, 100) >= 80;

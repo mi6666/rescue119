@@ -1,7 +1,4 @@
-﻿using System;
-using Module.Option.Runtime;
-
-namespace Structure.InGame
+﻿namespace Structure.InGame
 {
     public enum StageStateType
     {
@@ -24,5 +21,4 @@ namespace Structure.InGame
     {
         public void SetBurn();
     }
-
 }
