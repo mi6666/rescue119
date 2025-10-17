@@ -1,4 +1,6 @@
 using System;
+using R3;
+using Structure.InGame;
 using UnityEngine;
 
 namespace Interface.ViewInterface.InGame
@@ -9,6 +11,10 @@ namespace Interface.ViewInterface.InGame
         
         public Vector2 CurrentVelocity { get; }
         public ReadOnlySpan<RaycastHit2D> RayCast(Vector2 castTo);
+    }
+
+    public interface IPlayerCommandEventView
+    {
     }
 
     public interface IWaterView

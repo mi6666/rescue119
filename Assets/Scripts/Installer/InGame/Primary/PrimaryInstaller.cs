@@ -1,4 +1,4 @@
-using Controller.InGame.UserInterface;
+using Controller.InGame.Primary;
 using Model.InGame.Player;
 using Model.InGame.Stage;
 using Model.InGame.UserInterface;
@@ -8,9 +8,9 @@ using VContainer.Unity;
 using View.InGame.UserInterface.Normal;
 using View.InGame.UserInterface.Pause;
 
-namespace Installer.InGame.UserInterface
+namespace Installer.InGame.Primary
 {
-    public class UiInstaller : InstallerBase
+    public class PrimaryInstaller : InstallerBase
     {
         [SerializeField] private StageSettingModel stageSettingModel;
         [SerializeField] private ExitGameSceneModel exitGameSceneModel;
@@ -31,12 +31,12 @@ namespace Installer.InGame.UserInterface
             // Model
             builder.RegisterInstance(stageSettingModel).AsImplementedInterfaces();
             builder.RegisterInstance(exitGameSceneModel).AsImplementedInterfaces();
-            builder.Register<HpModel>(Lifetime.Singleton).AsImplementedInterfaces();    // 仮実装
+            builder.Register<HpModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<TimeModel>(Lifetime.Singleton).AsImplementedInterfaces();
             
             // Controller
-            builder.Register<UiStateEntity>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.RegisterEntryPoint<UiStateMachine>();
+            builder.Register<PrimaryStateEntity>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.RegisterEntryPoint<PrimaryStateMachine>();
             builder.Register<NormalStateController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<PauseStateController>(Lifetime.Singleton).AsImplementedInterfaces();
         }

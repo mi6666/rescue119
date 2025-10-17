@@ -2,16 +2,16 @@
 using Interface.PresenterInterface.Global;
 using Interface.ViewInterface.InGame.UserInterface;
 using Module.StateMachine;
-using Structure.InGame;
 using R3;
+using Structure.InGame;
 using VContainer.Unity;
 
-namespace Controller.InGame.UserInterface
+namespace Controller.InGame.Primary
 {
     /// todo
     /// リタイア
     /// リスタート
-    public class GameOverStateController : UiStateBehaviour,IStartable
+    public class GameOverStateController : PrimaryStateBehaviour, IStartable
     {
         public GameOverStateController
         (
@@ -20,8 +20,8 @@ namespace Controller.InGame.UserInterface
             IExitGameSceneModel exitGameSceneModel,
             IExitStageEventView exitStageEventView,
             CompositeDisposable compositeDisposable,
-            IMutStateType<UserInterfaceStateType> innerState
-        ) : base(UserInterfaceStateType.GameOver, innerState)
+            IMutStateType<PrimaryStateType> innerState
+        ) : base(PrimaryStateType.GameOver, innerState)
         {
             GameOverEventView = gameOverEventView;
             ScenePresenter = scenePresenter;
@@ -42,14 +42,14 @@ namespace Controller.InGame.UserInterface
 
         private void GameOver()
         {
-            InnerState.ChangeState(UserInterfaceStateType.GameOver);
+            InnerState.ChangeState(PrimaryStateType.GameOver);
         }
 
         private void GameOverBack()
         {
             ScenePresenter.LoadScene(ExitGameSceneModel.StageSelect);
         }
-        
+
         private CompositeDisposable CompositeDisposable { get; }
         private IGameOverEventView GameOverEventView { get; }
         private IScenePresenter ScenePresenter { get; }

@@ -6,14 +6,14 @@ using R3;
 using Structure.InGame;
 using VContainer.Unity;
 
-namespace Controller.InGame.UserInterface
+namespace Controller.InGame.Primary
 {
     /// todo
     /// スコア表示
     /// クリアタイム表示
     /// ステージセレクトへ
     /// リスタート
-    public class GameClearStateController : UiStateBehaviour,IStartable
+    public class GameClearStateController : PrimaryStateBehaviour, IStartable
     {
         public GameClearStateController
         (
@@ -22,8 +22,8 @@ namespace Controller.InGame.UserInterface
             IExitGameSceneModel exitGameSceneModel,
             IExitStageEventView exitStageEventView,
             CompositeDisposable compositeDisposable,
-            IMutStateType<UserInterfaceStateType> innerState
-        ) : base(UserInterfaceStateType.GameClear, innerState)
+            IMutStateType<PrimaryStateType> innerState
+        ) : base(PrimaryStateType.GameClear, innerState)
         {
             GameClearEventView = gameClearEventView;
             ScenePresenter = scenePresenter;
@@ -44,14 +44,14 @@ namespace Controller.InGame.UserInterface
 
         private void GameClear()
         {
-            InnerState.ChangeState(UserInterfaceStateType.GameClear);
+            InnerState.ChangeState(PrimaryStateType.GameClear);
         }
 
         private void GameClearNext()
         {
             ScenePresenter.LoadScene(ExitGameSceneModel.StageSelect);
         }
-        
+
         private IGameClearEventView GameClearEventView { get; }
         private CompositeDisposable CompositeDisposable { get; }
         private IScenePresenter ScenePresenter { get; }

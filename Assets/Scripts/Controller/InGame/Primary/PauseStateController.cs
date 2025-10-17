@@ -7,12 +7,12 @@ using R3;
 using Structure.InGame;
 using VContainer.Unity;
 
-namespace Controller.InGame.UserInterface
+namespace Controller.InGame.Primary
 {
     /// todo
     /// リタイア
     /// ポーズ終了
-    public class PauseStateController : UiStateBehaviour, IStartable
+    public class PauseStateController : PrimaryStateBehaviour, IStartable
     {
         public PauseStateController
         (
@@ -22,8 +22,8 @@ namespace Controller.InGame.UserInterface
             IScenePresenter scenePresenter,
             IExitGameSceneModel exitGameSceneModel,
             CompositeDisposable compositeDisposable,
-            IMutStateType<UserInterfaceStateType> innerState
-        ) : base(UserInterfaceStateType.Pause, innerState)
+            IMutStateType<PrimaryStateType> innerState
+        ) : base(PrimaryStateType.Pause, innerState)
         {
             PauseUiView = pauseUiView;
             ExitStageEventView = exitStageEventView;
@@ -32,7 +32,7 @@ namespace Controller.InGame.UserInterface
             ScenePresenter = scenePresenter;
             ExitGameSceneModel = exitGameSceneModel;
         }
-        
+
         public void Start()
         {
             ExitPauseEventView.ExitPauseObservable
@@ -55,15 +55,14 @@ namespace Controller.InGame.UserInterface
 
         private void OffPause()
         {
-            InnerState.ChangeState(UserInterfaceStateType.Normal);
+            InnerState.ChangeState(PrimaryStateType.Normal);
         }
 
         private void Retire()
         {
-            // todo シーン読み込み
-            ScenePresenter.LoadScene(ExitGameSceneModel.StageSelect);
+            ScenePresenter.LoadScene(ExitGameSceneModel.StageSelect).Forget();
         }
-        
+
         private CompositeDisposable CompositeDisposable { get; }
         private IPauseUiView PauseUiView { get; }
         private IExitPauseEventView ExitPauseEventView { get; }

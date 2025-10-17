@@ -1,6 +1,6 @@
 namespace Structure.InGame
 {
-    public enum UserInterfaceStateType
+    public enum PrimaryStateType
     {
         Normal,
         Pause,

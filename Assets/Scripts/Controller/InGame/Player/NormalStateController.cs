@@ -1,8 +1,6 @@
-using System.Buffers;
 using Interface.LogicInterface.InGame;
 using Interface.ViewInterface.Global;
 using Interface.ViewInterface.InGame;
-using JetBrains.Annotations;
 using Module.EditorExtension.Runtime;
 using Module.StateMachine;
 using R3;
@@ -33,7 +31,7 @@ namespace Controller.InGame.Player
         {
             ActionEventView.ActionObservable
                 .Where(this, (_, controller) => controller.IsInState())
-                .Subscribe(this, (s, controller) => controller.OnAction())
+                .Subscribe(this, (_, controller) => controller.OnAction())
                 .AddTo(CompositeDisposable);           
         }
 
