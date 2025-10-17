@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4b99d3de8943709adb561212babc88, type: 3}
   m_Name: SceneGroup
   m_EditorClassIdentifier: SceneReference::Module.SceneReference.Runtime.SceneGroup
-  primaryScene: 1
+  primaryScene: 0
   subScenes: 

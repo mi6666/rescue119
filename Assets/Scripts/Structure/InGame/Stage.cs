@@ -17,98 +17,12 @@ namespace Structure.InGame
         Floor,
         Wall,
         Rubble, // 瓦礫
+        Hole,
     }
 
     public interface IBurnable
     {
         public void SetBurn();
     }
-    // ============================================================================================
-    // Tile Tip
-    // ============================================================================================
 
-    public abstract record StageTileTip;
-
-    public record NoneTileTip : StageTileTip;
-
-    public record FloorTileTip(int InstanceId, int ObjectHealth) : StageTileTip, IBurnable
-    {
-        public void SetBurn()
-        {
-            IsBurning = true;
-        }
-        public bool IsBurning { get; private set; }
-    }
-
-    public record WallTileTip(int InstanceId, bool IsBurning, int ObjectHealth) : StageTileTip, IBurnable
-    {
-        public void SetBurn()
-        {
-            IsBurning = true;
-        }
-        public bool IsBurning { get; private set; }
-    }
-
-    public record RubbleTileTip(int InstanceId, bool IsBurning, int ObjectHealth) : StageTileTip
-    {
-        
-    }
-
-    public class StageMap
-    {
-        public StageMap
-        (
-            StageTileTip[,] stageTileTips
-        )
-        {
-            StageTileTips = stageTileTips;
-            TempBuffer = new StageTileTip[4];
-        }
-
-        public Option<StageTileTip> GetTip(int x, int y)
-        {
-            if (x < 0 || x >= StageTileTips.GetLength(0) ||
-                y < 0 || y >= StageTileTips.GetLength(1))
-            {
-                return Option<StageTileTip>.None();
-            }
-
-            return Option<StageTileTip>.Some(StageTileTips[y, x]);
-        }
-
-        public ReadOnlySpan<StageTileTip> GetAroundTips(int x, int y)
-        {
-            var getCount = 0;
-            foreach (var (dx, dy) in Around)
-            {
-                var cursorX = x + dx;
-                var cursorY = y + dy;
-
-                var tip = GetTip(cursorX, cursorY);
-                if (!tip.TryGetValue(out var tileTip))
-                {
-                    continue;
-                }
-
-                TempBuffer[getCount] = tileTip;
-                getCount++;
-            }
-
-            return TempBuffer.AsSpan(0, getCount);
-        }
-
-        public int LengthX => StageTileTips.GetLength(1);
-        public int LengthY => StageTileTips.GetLength(0);
-
-        private (int, int)[] Around { get; } = new[]
-        {
-            (1, 0),
-            (0, 1),
-            (-1, 0),
-            (0, -1),
-        };
-
-        private StageTileTip[] TempBuffer { get; }
-        private StageTileTip[,] StageTileTips { get; }
-    }
 }

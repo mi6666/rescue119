@@ -2,6 +2,7 @@ using Interface.ModelInterface.InGame;
 using Interface.PresenterInterface.InGame;
 using Module.StateMachine;
 using Structure.InGame;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace Controller.InGame.Stage
@@ -24,6 +25,11 @@ namespace Controller.InGame.Stage
             var map = StageTileMapPresenter.GetMap();
             
             StageTileMapModel.InitStageMap(map);
+
+            foreach (var stageMap in StageTileMapModel.StageMaps)
+            {
+                Debug.Log(stageMap);
+            }
         }
 
         private IStageTileMapPresenter StageTileMapPresenter { get; }
