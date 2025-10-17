@@ -12,6 +12,7 @@ namespace Installer.InGame.Player
     {
         [SerializeField] private PlayerView playerView;
         [SerializeField] private LocomotionModel locomotionModel;
+        [SerializeField] private ActionModel actionModel;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -20,6 +21,7 @@ namespace Installer.InGame.Player
             
             // Model
             builder.RegisterInstance(locomotionModel).AsImplementedInterfaces();
+            builder.RegisterInstance(actionModel).AsImplementedInterfaces();
             
             // Logic
             builder.Register<LocomotionLogic>(Lifetime.Singleton).AsImplementedInterfaces();
@@ -28,6 +30,7 @@ namespace Installer.InGame.Player
             builder.Register<PlayerState>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.RegisterEntryPoint<PlayerStateMachine>();
             builder.Register<NormalStateController>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<ActionStateController>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }
