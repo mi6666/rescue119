@@ -23,5 +23,6 @@ namespace Interface.ViewInterface.InGame
     public interface ITileView
     {
         public void ChangeTile(StageTileType stageTileType);
+        public void ChangeTileState(TileStateType tileStateType);
     }
 }

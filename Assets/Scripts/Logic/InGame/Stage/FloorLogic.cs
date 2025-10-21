@@ -1,57 +1,42 @@
-﻿using Interface.LogicInterface.InGame;
+﻿using System;
+using Interface.LogicInterface.InGame;
 using Structure.InGame;
 using Structure.InGame.Stage;
-using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Logic.InGame.Stage
 {
-    public class FloorLogic: IBurnLogic
+    public class FloorLogic : IBurnLogic
     {
-        /*public void Update(FloorTip tileTip, UpdateArgument argument)
+        public ReadOnlySpan<FeedBackCommand> Update(ITipBurnable tipBurnable, UpdateArgument updateArgument)
         {
-            if (tileTip.IsBurning)
-            {
-                var toBurnAround = Random.Range(0, 100) >= 80;
+            int count = 0;
 
-                if (toBurnAround)
+            var tipPos = updateArgument.MapIndex;
+            var aroundTip = updateArgument.StageMap.GetAroundTips(tipPos.x, tipPos.y);
+
+            for (int i = 0; i < aroundTip.Length; i++)
+            {
+                if (aroundTip[i] is ITipBurnable burnable)
                 {
-                    var tipPos = argument.MapIndex;
-                    var aroundTip = argument.StageMap.GetAroundTips(tipPos.x, tipPos.y);
-                    for (int i = 0; i < aroundTip.Length; i++)
+                    if (!burnable.IsBurn)
                     {
-                        if (aroundTip[i] is IBurnable burnable)
+                        var toBurnAround = Random.Range(0, 100) >= 80;
+                        if (toBurnAround)
                         {
                             burnable.SetBurn();
+                            commandbuffer[count] = new FeedBackCommand(burnable.InstanceId, TileStateType.Burning);
+                            count++;
                         }
+                        
                     }
                 }
             }
+
+
+            return commandbuffer.AsSpan(0, count);
         }
 
-        public void Update(WallTip tileTip, UpdateArgument argument)
-        {
-            if (tileTip.IsBurning)
-            {
-                
-            }
-        }
-    */
-        public void Update(ITipBurnable tipBurnable, UpdateArgument updateArgument)
-        {
-            var toBurnAround = Random.Range(0, 100) >= 80;
-
-            if (toBurnAround)
-            {
-                var tipPos = updateArgument.MapIndex;
-                var aroundTip = updateArgument.StageMap.GetAroundTips(tipPos.x, tipPos.y);
-                for (int i = 0; i < aroundTip.Length; i++)
-                {
-                    if (aroundTip[i] is IBurnable burnable)
-                    {
-                        burnable.SetBurn();
-                    }
-                }
-            }
-        }
+        private FeedBackCommand[] commandbuffer { get; }
     }
 }

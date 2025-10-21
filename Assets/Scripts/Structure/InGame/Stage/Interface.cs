@@ -8,7 +8,7 @@ namespace Structure.InGame.Stage
         public InnerObject InnerObject { get; }
     }
 
-    public interface ITipBurnable
+    public interface ITipBurnable : ITipGameObject
     {
         public bool IsBurn => InnerBurn.IsBurning;
         public void SetBurn() => InnerBurn.SetBurn();
