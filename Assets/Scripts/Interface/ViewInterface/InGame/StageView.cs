@@ -5,12 +5,6 @@ using UnityEngine;
 
 namespace Interface.ViewInterface.InGame
 {
-    public interface IStageTileView
-    {
-        public StageTileType TileType { get; }
-        public int InstanceId { get; }
-    }
-
     public interface IStageTileMapView
     {
         public StageMap GetMap();
@@ -24,5 +18,10 @@ namespace Interface.ViewInterface.InGame
     public interface ISpawnRubbleView
     {
         public void Spawn(Vector2 position);
+    }
+
+    public interface ITileView
+    {
+        public void ChangeTile(StageTileType stageTileType);
     }
 }

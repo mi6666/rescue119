@@ -1,15 +1,30 @@
-﻿using Structure.InGame;
+﻿using System;
+using Structure.InGame;
 using Structure.InGame.Stage;
 using UnityEngine;
 
 namespace Interface.LogicInterface.InGame
 {
-
     public interface IBurnLogic
     {
-        public void Update(ITipBurnable tipBurnable, UpdateArgument updateArgument);
+        public ReadOnlySpan<FeedBackCommand> Update(ITipBurnable tipBurnable, UpdateArgument updateArgument);
     }
 
+    public readonly struct FeedBackCommand
+    {
+        public Vector2Int MapIndex { get; }
+        public StageTileType TileType { get; }
+
+        public FeedBackCommand
+        (
+            Vector2Int mapIndex,
+            StageTileType tileType
+        )
+        {
+            MapIndex = mapIndex;
+            TileType = tileType;
+        }
+    }
 
     public readonly ref struct UpdateArgument
     {

@@ -1,6 +1,4 @@
 using System;
-using R3;
-using Structure.InGame;
 using UnityEngine;
 
 namespace Interface.ViewInterface.InGame
