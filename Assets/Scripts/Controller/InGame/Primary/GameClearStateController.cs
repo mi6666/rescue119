@@ -1,4 +1,5 @@
-﻿using Interface.ModelInterface.InGame;
+﻿using Cysharp.Threading.Tasks;
+using Interface.ModelInterface.InGame;
 using Interface.PresenterInterface.Global;
 using Interface.ViewInterface.InGame.UserInterface;
 using JetBrains.Annotations;
@@ -21,6 +22,7 @@ namespace Controller.InGame.Primary
         public GameClearStateController
         (
             IGameClearEventView gameClearEventView,
+            IGameClearUiView gameClearUiView,
             [Key(PrimaryStateType.GameClear)] IExitStageEventView exitStageEventView,
             IExitGameSceneModel exitGameSceneModel,
             IScenePresenter scenePresenter,
@@ -29,6 +31,7 @@ namespace Controller.InGame.Primary
         ) : base(PrimaryStateType.GameClear, innerState)
         {
             GameClearEventView = gameClearEventView;
+            GameClearUiView = gameClearUiView;
             ScenePresenter = scenePresenter;
             ExitGameSceneModel = exitGameSceneModel;
             ExitStageEventView = exitStageEventView;
@@ -55,7 +58,18 @@ namespace Controller.InGame.Primary
             ScenePresenter.LoadScene(ExitGameSceneModel.StageSelect);
         }
 
+        public override void OnEnter()
+        {
+            GameClearUiView.Show().Forget();
+        }
+
+        public override void OnExit()
+        {
+            GameClearUiView.Hide().Forget();
+        }
+
         private IGameClearEventView GameClearEventView { get; }
+        private IGameClearUiView GameClearUiView { get; }
         private CompositeDisposable CompositeDisposable { get; }
         private IScenePresenter ScenePresenter { get; }
         private IExitGameSceneModel ExitGameSceneModel { get; }
