@@ -12,6 +12,11 @@ namespace Structure.InGame
         Action
     }
 
+    public enum PawnType
+    {
+        People
+    }
+
     public readonly ref struct LocomotionArgument
     {
         public Vector2 MoveInput { get; }

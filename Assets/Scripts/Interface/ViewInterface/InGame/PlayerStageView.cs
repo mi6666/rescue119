@@ -23,4 +23,9 @@ namespace Interface.ViewInterface.InGame
         public void DespawnWater();
         
     }
+
+    public interface IPawnTypeView
+    {
+        public PawnType Detection();
+    }
 }
