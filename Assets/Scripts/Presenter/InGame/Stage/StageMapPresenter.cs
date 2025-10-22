@@ -3,6 +3,7 @@ using Interface.PresenterInterface.InGame;
 using Interface.ViewInterface.InGame;
 using Structure.InGame;
 using Structure.InGame.Stage;
+using UnityEditor.Build.Content;
 
 namespace Presenter.InGame.Stage
 {
@@ -22,9 +23,16 @@ namespace Presenter.InGame.Stage
             for (int i = 0; i < StageTileMapViews.Count; i++)
             {
                 StageMaps[i] = StageTileMapViews[i].GetMap();
+                var dic = new Dictionary<int, string>();
+                dic.Add();
             }
-
+            
             return StageMaps;
+        }
+
+        public int TipGameObject(int objectId)
+        {
+            
         }
 
         private StageMap[] StageMaps { get; }

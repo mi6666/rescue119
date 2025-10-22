@@ -12,17 +12,17 @@ namespace Interface.LogicInterface.InGame
 
     public readonly struct FeedBackCommand
     {
-        public Vector2Int MapIndex { get; }
-        public StageTileType TileType { get; }
+        public int  ObjectId { get; }
+        public TileStateType StateType { get; }
 
         public FeedBackCommand
         (
-            Vector2Int mapIndex,
-            StageTileType tileType
+            int objectId,
+            TileStateType stateType
         )
         {
-            MapIndex = mapIndex;
-            TileType = tileType;
+            ObjectId = objectId;
+            StateType = stateType;
         }
     }
 

@@ -20,6 +20,10 @@ namespace Structure.InGame
         Hole,
     }
 
+    public enum TileStateType
+    {
+        Burning,
+    }
     public interface IBurnable
     {
         public void SetBurn();

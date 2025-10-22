@@ -5,5 +5,8 @@ namespace Interface.PresenterInterface.InGame
     public interface IStageTileMapPresenter
     {
         public StageMap[] GetMap();
+
+        public int TipGameObject(int objectId);
+
     }
 }
