@@ -9,6 +9,6 @@ namespace Model.InGame.Player
     {
         [SerializeField] private float actionLength;
         
-        public float ActionLength => actionLength;
+        public float SplashWater => actionLength;
     }
 }

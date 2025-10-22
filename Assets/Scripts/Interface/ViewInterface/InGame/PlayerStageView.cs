@@ -1,4 +1,6 @@
 using System;
+using Module.Option.Runtime;
+using Structure.InGame;
 using UnityEngine;
 
 namespace Interface.ViewInterface.InGame
@@ -6,7 +8,7 @@ namespace Interface.ViewInterface.InGame
     public interface IPlayerView
     {
         public void ApplyVelocity(Vector2 moveTo);
-        
+
         public Vector2 CurrentVelocity { get; }
         public ReadOnlySpan<RaycastHit2D> RayCast(Vector2 castTo);
     }
@@ -19,11 +21,15 @@ namespace Interface.ViewInterface.InGame
     {
         public void SpawnWater();
         public void DespawnWater();
-        
     }
 
-    public interface IPawnTypeView
+    public interface IPawnDetectView
     {
-        public PawnType Detection();
+        public Option<PawnType> Detection();
+    }
+
+    public interface IPawnView
+    {
+        public PawnType Type { get; }
     }
 }

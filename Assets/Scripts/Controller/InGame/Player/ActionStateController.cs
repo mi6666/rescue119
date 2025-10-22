@@ -4,7 +4,6 @@ using Interface.ModelInterface.InGame;
 using Interface.ViewInterface.InGame;
 using Module.StateMachine;
 using Structure.InGame;
-using UnityEngine;
 
 namespace Controller.InGame.Player
 {
@@ -14,13 +13,13 @@ namespace Controller.InGame.Player
         (
             IActionLengthModel actionLengthModel,
             IWaterView waterView,
-            IPawnTypeView pawnTypeView,
+            IPawnDetectView pawnDetectView,
             IMutStateType<PlayerStateType> innerState
         ) : base(PlayerStateType.Action, innerState)
         {
             ActionLengthModel = actionLengthModel;
             WaterView = waterView;
-            PawnTypeView = pawnTypeView;
+            PawnDetectView = pawnDetectView;
         }
 
         public override void OnEnter()
@@ -36,7 +35,7 @@ namespace Controller.InGame.Player
 
         private async UniTask ExitAction()
         {
-            var duration = ActionLengthModel.ActionLength;
+            var duration = ActionLengthModel.SplashWater;
             
             await UniTask.Delay(TimeSpan.FromSeconds(duration));
             
@@ -45,6 +44,6 @@ namespace Controller.InGame.Player
 
         private IActionLengthModel ActionLengthModel { get; }
         private IWaterView WaterView { get; }
-        private IPawnTypeView PawnTypeView { get; }
+        private IPawnDetectView PawnDetectView { get; }
     }
 }
