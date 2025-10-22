@@ -19,7 +19,7 @@ namespace View.InGame.UserInterface.GameClear
 
         public UniTask Hide()
         {
-            exitStageButtonView.gameObject.SetActive(true);
+            exitStageButtonView.gameObject.SetActive(false);
             return UniTask.CompletedTask;
         }
     }

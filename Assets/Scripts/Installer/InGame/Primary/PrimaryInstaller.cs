@@ -7,6 +7,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using View.InGame.UserInterface.GameClear;
+using View.InGame.UserInterface.GameOver;
 using View.InGame.UserInterface.Normal;
 using View.InGame.UserInterface.Pause;
 
@@ -14,11 +15,13 @@ namespace Installer.InGame.Primary
 {
     public class PrimaryInstaller : InstallerBase
     {
-        [SerializeField] private ClearButtonView clearButtonView; 
+        [SerializeField] private ClearButtonView clearButtonView;
+        [SerializeField] private GameOverButtonView gameOverButtonView;
         [SerializeField] private StageSettingModel stageSettingModel;
         [SerializeField] private ExitGameSceneModel exitGameSceneModel;
         [SerializeField] private NormalUiView normalUiView;
         [SerializeField] private PauseUiView pauseUiView;
+        [SerializeField] private GameOverUiView gameOverUiView;
         [SerializeField] private GameClearUiView gameClearUiView;
 
         protected override void Configure(IContainerBuilder builder)
@@ -34,6 +37,9 @@ namespace Installer.InGame.Primary
             builder.RegisterInstance(gameClearUiView).AsImplementedInterfaces();
             builder.RegisterInstance(gameClearUiView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameClear);
             builder.RegisterInstance(clearButtonView).AsImplementedInterfaces();
+            builder.RegisterInstance(gameOverUiView).AsImplementedInterfaces();
+            builder.RegisterInstance(gameOverUiView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameOver);
+            builder.RegisterInstance(gameOverButtonView).AsImplementedInterfaces();
             
             // Model
             builder.RegisterInstance(stageSettingModel).AsImplementedInterfaces();

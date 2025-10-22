@@ -1,17 +1,18 @@
-﻿using Interface.ViewInterface.InGame.UserInterface;
+using Interface.ViewInterface.InGame.UserInterface;
 using Module.EditorExtension.Runtime;
 using R3;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace View.InGame.UserInterface.GameClear
+namespace View.InGame.UserInterface.GameOver
 {
     [RequireComponent(typeof(Button))]
-    public class ClearButtonView : MonoBehaviour, IGameClearEventView
+    public class GameOverButtonView : MonoBehaviour, IGameOverEventView
     {
         [SerializeField, AutoAssign] private Button clearButton;
-        public Observable<Unit> GameClearObservable => _clearSubject;
-        private readonly Subject<Unit> _clearSubject = new();
+
+        public Observable<Unit> GameOverEvent => _gameOverSubject;
+        private readonly Subject<Unit> _gameOverSubject = new();
 
         private void Awake()
         {
@@ -20,7 +21,7 @@ namespace View.InGame.UserInterface.GameClear
 
         private void Invoke()
         {
-            _clearSubject.OnNext(Unit.Default);
+            _gameOverSubject.OnNext(Unit.Default);
         }
     }
 }
