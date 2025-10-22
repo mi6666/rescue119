@@ -10,6 +10,11 @@ namespace Interface.ViewInterface.InGame
         public StageMap GetMap();
     }
 
+    public interface IStageTileView
+    {
+        public ITileView GetTileView(int instanceId);
+    }
+
     public interface IGimmickEventView
     {
         public Observable<EventContext> GimmickEventObservable { get; }

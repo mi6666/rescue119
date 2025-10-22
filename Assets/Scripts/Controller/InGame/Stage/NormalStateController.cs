@@ -14,27 +14,29 @@ namespace Controller.InGame.Stage
     /// <para>タイルの更新処理</para>
     /// <para></para>
     /// </summary>
-    public class NormalStateController : StageStateBehaviour,IStartable
+    public class NormalStateController : StageStateBehaviour, IStartable
     {
         public NormalStateController
         (
+            IGimmickEventView gimmickEventView,
+            ISpawnRubbleView spawnRubbleView,
+            IStageTileView stageTileView,
             IStageTileMapModel stageTileMapModel,
             IStageFloorModel stageFloorModel,
             IBurnLogic burnLogic,
-            IGimmickEventView gimmickEventView,
             CompositeDisposable compositeDisposable,
-            ISpawnRubbleView spawnRubbleView,
             IMutStateType<StageStateType> innerState
         ) : base(StageStateType.Normal, innerState)
         {
+            GimmickEventView = gimmickEventView;
+            SpawnRubbleView = spawnRubbleView;
+            StageTileView = stageTileView;
             StageTileMapModel = stageTileMapModel;
             StageFloorModel = stageFloorModel;
             BurnLogic = burnLogic;
-            GimmickEventView = gimmickEventView;
             CompositeDisposable = compositeDisposable;
-            SpawnRubbleView = spawnRubbleView;
         }
-        
+
         public void Start()
         {
             GimmickEventView.GimmickEventObservable
@@ -45,7 +47,7 @@ namespace Controller.InGame.Stage
         public override void StateUpdate(float deltaTime)
         {
             if (StageTileMapModel.StageMaps is null) return;
-            
+
             var stageMap = StageTileMapModel.StageMaps[StageFloorModel.CurrentFloor];
 
             for (var y = 0; y < stageMap.LengthY; y++)
@@ -62,7 +64,14 @@ namespace Controller.InGame.Stage
                     switch (tip)
                     {
                         case ITipBurnable tipBurnable:
-                            BurnLogic.Update(tipBurnable, arg);
+                            var result = BurnLogic.Update(tipBurnable, arg);
+                            foreach (var command in result)
+                            {
+                                StageTileView.GetTileView(command.ObjectId);
+                                
+                                // todo: 火をつける
+                            }
+
                             break;
                     }
                 }
@@ -74,11 +83,12 @@ namespace Controller.InGame.Stage
             SpawnRubbleView.Spawn(context.SpawnPosition);
         }
 
+        private CompositeDisposable CompositeDisposable { get; }
+        private IGimmickEventView GimmickEventView { get; }
+        private ISpawnRubbleView SpawnRubbleView { get; }
+        private IStageTileView StageTileView { get; }
         private IStageTileMapModel StageTileMapModel { get; }
         private IStageFloorModel StageFloorModel { get; }
         private IBurnLogic BurnLogic { get; }
-        private IGimmickEventView GimmickEventView { get; }
-        private CompositeDisposable CompositeDisposable { get; }
-        private ISpawnRubbleView SpawnRubbleView { get; }
     }
 }

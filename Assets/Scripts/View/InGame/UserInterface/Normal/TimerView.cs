@@ -12,7 +12,7 @@ namespace View.InGame.UserInterface.Normal
 
         public void SetTime(float time)
         {
-            timerText.text = time.ToString("F1");
+            timerText.SetText(time.ToString("F1"));
         }
     }
 }
