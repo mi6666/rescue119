@@ -27,18 +27,20 @@ namespace Controller.InGame.Player
             ActionEventView = actionEventView;
             CompositeDisposable = compositeDisposable;
         }
+
         public void Start()
         {
             ActionEventView.ActionObservable
                 .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (_, controller) => controller.OnAction())
-                .AddTo(CompositeDisposable);           
+                .AddTo(CompositeDisposable);
         }
 
         private void OnAction()
         {
             InnerState.ChangeState(PlayerStateType.Action);
         }
+
         public override void StateUpdate(float deltaTime)
         {
             Locomotion(deltaTime);
@@ -66,7 +68,7 @@ namespace Controller.InGame.Player
 
         private IPlayerView PlayerView { get; }
         private IInput_MoveVectorView MoveVectorView { get; }
-        private ILocomotionLogic LocomotionLogic { get; } 
+        private ILocomotionLogic LocomotionLogic { get; }
         private IInput_ActionEventView ActionEventView { get; }
         private CompositeDisposable CompositeDisposable { get; }
     }

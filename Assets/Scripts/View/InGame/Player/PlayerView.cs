@@ -8,6 +8,7 @@ namespace View.InGame.Player
     public class PlayerView : MonoBehaviour, IPlayerView
     {
         [SerializeField] private Transform lookAtObject;
+        [SerializeField] private float raycastSize = 1f;
         [SerializeField] private float rayCastDistance;
         [SerializeField] private ContactFilter2D rayCastFilter;
 
@@ -38,9 +39,10 @@ namespace View.InGame.Player
         public ReadOnlySpan<RaycastHit2D> RayCast(Vector2 castTo)
         {
             Vector2 position = _selfTransform!.position;
-            var hitCount = Physics2D.Raycast
+            var hitCount = Physics2D.CircleCast
             (
                 position,
+                raycastSize,
                 castTo,
                 rayCastFilter,
                 RaycastPool,

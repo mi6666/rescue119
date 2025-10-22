@@ -11,15 +11,19 @@ namespace Installer.InGame.Player
     public class PlayerInstaller: InstallerBase
     {
         [SerializeField] private PlayerView playerView;
+        [SerializeField] private WaterView waterView;
         [SerializeField] private LocomotionModel locomotionModel;
+        [SerializeField] private ActionModel actionModel;
         
         protected override void Configure(IContainerBuilder builder)
         {
             // View
             builder.RegisterInstance(playerView).AsImplementedInterfaces();
+            builder.RegisterInstance(waterView).AsImplementedInterfaces();
             
             // Model
             builder.RegisterInstance(locomotionModel).AsImplementedInterfaces();
+            builder.RegisterInstance(actionModel).AsImplementedInterfaces();
             
             // Logic
             builder.Register<LocomotionLogic>(Lifetime.Singleton).AsImplementedInterfaces();
@@ -28,6 +32,7 @@ namespace Installer.InGame.Player
             builder.Register<PlayerState>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.RegisterEntryPoint<PlayerStateMachine>();
             builder.Register<NormalStateController>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<ActionStateController>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }
