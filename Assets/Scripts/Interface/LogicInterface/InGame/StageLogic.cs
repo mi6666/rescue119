@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Structure.InGame;
 using Structure.InGame.Stage;
 using UnityEngine;

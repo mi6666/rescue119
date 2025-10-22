@@ -5,6 +5,7 @@ using Interface.ViewInterface.InGame.UserInterface;
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
+using VContainer;
 using VContainer.Unity;
 
 namespace Controller.InGame.Primary
@@ -17,7 +18,7 @@ namespace Controller.InGame.Primary
         public PauseStateController
         (
             IPauseUiView pauseUiView,
-            IExitStageEventView exitStageEventView,
+            [Key(PrimaryStateType.Pause)] IExitStageEventView exitStageEventView,
             IExitPauseEventView exitPauseEventView,
             IScenePresenter scenePresenter,
             IExitGameSceneModel exitGameSceneModel,

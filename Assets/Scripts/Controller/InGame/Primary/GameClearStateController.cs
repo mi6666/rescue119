@@ -1,9 +1,12 @@
-﻿using Interface.ModelInterface.InGame;
+﻿using Cysharp.Threading.Tasks;
+using Interface.ModelInterface.InGame;
 using Interface.PresenterInterface.Global;
 using Interface.ViewInterface.InGame.UserInterface;
+using JetBrains.Annotations;
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
+using VContainer;
 using VContainer.Unity;
 
 namespace Controller.InGame.Primary
@@ -15,17 +18,20 @@ namespace Controller.InGame.Primary
     /// リスタート
     public class GameClearStateController : PrimaryStateBehaviour, IStartable
     {
+        [UsedImplicitly]
         public GameClearStateController
         (
             IGameClearEventView gameClearEventView,
-            IScenePresenter scenePresenter,
+            IGameClearUiView gameClearUiView,
+            [Key(PrimaryStateType.GameClear)] IExitStageEventView exitStageEventView,
             IExitGameSceneModel exitGameSceneModel,
-            IExitStageEventView exitStageEventView,
+            IScenePresenter scenePresenter,
             CompositeDisposable compositeDisposable,
             IMutStateType<PrimaryStateType> innerState
         ) : base(PrimaryStateType.GameClear, innerState)
         {
             GameClearEventView = gameClearEventView;
+            GameClearUiView = gameClearUiView;
             ScenePresenter = scenePresenter;
             ExitGameSceneModel = exitGameSceneModel;
             ExitStageEventView = exitStageEventView;
@@ -52,7 +58,18 @@ namespace Controller.InGame.Primary
             ScenePresenter.LoadScene(ExitGameSceneModel.StageSelect);
         }
 
+        public override void OnEnter()
+        {
+            GameClearUiView.Show().Forget();
+        }
+
+        public override void OnExit()
+        {
+            GameClearUiView.Hide().Forget();
+        }
+
         private IGameClearEventView GameClearEventView { get; }
+        private IGameClearUiView GameClearUiView { get; }
         private CompositeDisposable CompositeDisposable { get; }
         private IScenePresenter ScenePresenter { get; }
         private IExitGameSceneModel ExitGameSceneModel { get; }

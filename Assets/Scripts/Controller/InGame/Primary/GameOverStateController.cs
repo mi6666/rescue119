@@ -1,29 +1,32 @@
-﻿using Interface.ModelInterface.InGame;
+﻿using Cysharp.Threading.Tasks;
+using Interface.ModelInterface.InGame;
 using Interface.PresenterInterface.Global;
 using Interface.ViewInterface.InGame.UserInterface;
+using JetBrains.Annotations;
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
+using VContainer;
 using VContainer.Unity;
 
 namespace Controller.InGame.Primary
 {
-    /// todo
-    /// リタイア
-    /// リスタート
     public class GameOverStateController : PrimaryStateBehaviour, IStartable
     {
+        [UsedImplicitly]
         public GameOverStateController
         (
             IGameOverEventView gameOverEventView,
-            IScenePresenter scenePresenter,
+            IGameOverUiView gameOverUiView,
+            [Key(PrimaryStateType.GameOver)] IExitStageEventView exitStageEventView,
             IExitGameSceneModel exitGameSceneModel,
-            IExitStageEventView exitStageEventView,
+            IScenePresenter scenePresenter,
             CompositeDisposable compositeDisposable,
             IMutStateType<PrimaryStateType> innerState
         ) : base(PrimaryStateType.GameOver, innerState)
         {
             GameOverEventView = gameOverEventView;
+            GameOverUiView = gameOverUiView;
             ScenePresenter = scenePresenter;
             ExitGameSceneModel = exitGameSceneModel;
             ExitStageEventView = exitStageEventView;
@@ -50,8 +53,19 @@ namespace Controller.InGame.Primary
             ScenePresenter.LoadScene(ExitGameSceneModel.StageSelect);
         }
 
+        public override void OnEnter()
+        {
+            GameOverUiView.Show().Forget();
+        }
+
+        public override void OnExit()
+        {
+            GameOverUiView.Hide().Forget();
+        }
+
         private CompositeDisposable CompositeDisposable { get; }
         private IGameOverEventView GameOverEventView { get; }
+        private IGameOverUiView GameOverUiView { get; }
         private IScenePresenter ScenePresenter { get; }
         private IExitGameSceneModel ExitGameSceneModel { get; }
         private IExitStageEventView ExitStageEventView { get; }
