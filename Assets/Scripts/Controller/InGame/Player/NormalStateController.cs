@@ -1,10 +1,12 @@
 using Interface.LogicInterface.InGame;
+using Interface.ModelInterface.InGame;
 using Interface.PresenterInterface.InGame;
 using Interface.ViewInterface.Global;
 using Interface.ViewInterface.InGame;
 using Module.EditorExtension.Runtime;
 using Module.StateMachine;
 using R3;
+using Structure.Global;
 using Structure.InGame;
 using VContainer.Unity;
 
@@ -18,6 +20,7 @@ namespace Controller.InGame.Player
             IPawnDetectView pawnDetectView,
             IInput_MoveVectorView moveVectorView,
             IInput_ActionEventView actionEventView,
+            ICurrentLookModel currentLookModel,
             IStageTileMapPresenter stageTileMapPresenter,
             ILocomotionLogic locomotionLogic,
             CompositeDisposable compositeDisposable,
@@ -28,6 +31,7 @@ namespace Controller.InGame.Player
             PawnDetectView = pawnDetectView;
             MoveVectorView = moveVectorView;
             ActionEventView = actionEventView;
+            CurrentLookModel = currentLookModel;
             StageTileMapPresenter = stageTileMapPresenter;
             LocomotionLogic = locomotionLogic;
             CompositeDisposable = compositeDisposable;
@@ -55,9 +59,15 @@ namespace Controller.InGame.Player
         private void Locomotion(float deltaTime)
         {
             var moveInput = MoveVectorView.Pool();
-
             var currentVelocity = PlayerView.CurrentVelocity;
             var frontHit = PlayerView.RayCast(moveInput);
+
+            var lookAt = Constants.Approx8Dir(moveInput);
+            if (lookAt.TryGetValue(out var value))
+            {
+                CurrentLookModel.SetLook(value);
+                DebugLogger.Log("look at", value.ToString());
+            }
 
             var calcArg = new LocomotionArgument(
                 moveInput,
@@ -75,7 +85,7 @@ namespace Controller.InGame.Player
 
         private void UpdatePawnDetectorPosition()
         {
-            var detectorPosition = PlayerView.Position;
+            var detectorPosition = PlayerView.Position + CurrentLookModel.LookTo;
             var refinedPosition = StageTileMapPresenter.ToMapPosition(0, detectorPosition);
             PawnDetectView.SetPosition(refinedPosition);
         }
@@ -84,6 +94,7 @@ namespace Controller.InGame.Player
         private IPawnDetectView PawnDetectView { get; }
         private IInput_MoveVectorView MoveVectorView { get; }
         private IInput_ActionEventView ActionEventView { get; }
+        private ICurrentLookModel CurrentLookModel { get; }
         private IStageTileMapPresenter StageTileMapPresenter { get; }
         private ILocomotionLogic LocomotionLogic { get; }
         private CompositeDisposable CompositeDisposable { get; }

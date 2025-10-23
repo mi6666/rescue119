@@ -11,6 +11,5 @@ namespace Interface.ViewInterface.Global
     public interface IInput_ActionEventView
     {
         public Observable<Unit> ActionObservable { get; }
-        
     }
 }

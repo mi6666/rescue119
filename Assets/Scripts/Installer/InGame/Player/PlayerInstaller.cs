@@ -26,6 +26,7 @@ namespace Installer.InGame.Player
             // Model
             builder.RegisterInstance(locomotionModel).AsImplementedInterfaces();
             builder.RegisterInstance(actionModel).AsImplementedInterfaces();
+            builder.Register<CurrentLookModel>(Lifetime.Singleton).AsImplementedInterfaces();
             
             // Logic
             builder.Register<LocomotionLogic>(Lifetime.Singleton).AsImplementedInterfaces();

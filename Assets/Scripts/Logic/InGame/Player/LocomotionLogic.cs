@@ -1,6 +1,7 @@
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
 using Module.EditorExtension.Runtime;
+using Structure.Global;
 using Structure.InGame;
 using Unity.Burst;
 using Unity.Mathematics;
@@ -17,8 +18,6 @@ namespace Logic.InGame.Player
         {
             LocomotionModel = locomotionModel;
         }
-
-        private const float Threshold = 0.01f;
 
         public Vector2 CalcVelocity(LocomotionArgument argument)
         {
@@ -53,8 +52,8 @@ namespace Logic.InGame.Player
             var angle = GetAngle(moveInput, currentVelocity);
             DebugLogger.Log("angle", angle.ToString("F1"));
 
-            var hasInput = math.lengthsq(moveInput) > Threshold; // 入力はあるか
-            var isMoving = math.lengthsq(currentVelocity) > Threshold; // 移動中か
+            var hasInput = math.lengthsq(moveInput) > Constants.Threshold; // 入力はあるか
+            var isMoving = math.lengthsq(currentVelocity) > Constants.Threshold; // 移動中か
             var inputIsReverse = angle > LocomotionModel.ReverseAngleThreshold; // 入力は反転か
             var isReverse = isMoving & inputIsReverse;
             var acceleration = !(!hasInput | isReverse);

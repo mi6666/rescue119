@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Interface.ModelInterface.InGame
 {
     /// <summary>
@@ -54,5 +56,11 @@ namespace Interface.ModelInterface.InGame
     public interface IActionLengthModel
     {
         public float SplashWater { get; }
+    }
+
+    public interface ICurrentLookModel
+    {
+        public Vector2 LookTo { get; }
+        public void SetLook(Vector2 lookTo);
     }
 }

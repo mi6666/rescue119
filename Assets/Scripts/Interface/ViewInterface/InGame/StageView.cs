@@ -32,4 +32,10 @@ namespace Interface.ViewInterface.InGame
         public void ChangeTile(StageTileType stageTileType);
         public void ChangeTileState(TileStateType tileStateType);
     }
+
+    public interface IStairsEventView
+    {
+        public Observable<StairType> StairsEventObservable { get; }
+        public void Invoke(StairType type);
+    }
 }

@@ -21,6 +21,13 @@
     {
         Burning,
     }
+
+    public enum StairType
+    {
+        Up,
+        Down,
+    }
+
     public interface IBurnable
     {
         public void SetBurn();

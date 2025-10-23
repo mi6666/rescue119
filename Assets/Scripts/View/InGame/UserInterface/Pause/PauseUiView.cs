@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Interface.ViewInterface.InGame.UserInterface;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace View.InGame.UserInterface.Pause
 {
