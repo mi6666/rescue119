@@ -6,7 +6,6 @@ using Module.EditorExtension.Runtime;
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace Controller.InGame.Player
@@ -56,10 +55,6 @@ namespace Controller.InGame.Player
         private void Locomotion(float deltaTime)
         {
             var moveInput = MoveVectorView.Pool();
-            if (moveInput.sqrMagnitude > 0.01f)
-            {
-                _facingDirection = moveInput.normalized;
-            }
 
             var currentVelocity = PlayerView.CurrentVelocity;
             var frontHit = PlayerView.RayCast(moveInput);
@@ -80,12 +75,10 @@ namespace Controller.InGame.Player
 
         private void UpdatePawnDetectorPosition()
         {
-            var detectorPosition = PlayerView.Position + _facingDirection * PawnDetectDistance;
-            PawnDetectView.SetPosition(detectorPosition);
+            var detectorPosition = PlayerView.Position;
+            var refinedPosition = StageTileMapPresenter.ToMapPosition(0, detectorPosition);
+            PawnDetectView.SetPosition(refinedPosition);
         }
-
-        private Vector2 _facingDirection = Vector2.down;
-        private const float PawnDetectDistance = 1.0f;
 
         private IPlayerView PlayerView { get; }
         private IPawnDetectView PawnDetectView { get; }

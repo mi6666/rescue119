@@ -14,6 +14,8 @@ namespace Installer.InGame
 {
     public class StageInstaller : InstallerBase
     {
+        [SerializeField] private SpawnRubbleView spawnRubbleView;
+        [SerializeField] private StageTileView stageTileView;
         [SerializeField] private List<TileMapView> tileMapViews;
 
         protected override void Configure(IContainerBuilder builder)
@@ -21,6 +23,9 @@ namespace Installer.InGame
             var converted = tileMapViews.Select(x => x as IStageTileMapView).ToList();
             // View
             builder.RegisterInstance(converted).AsImplementedInterfaces();
+            builder.RegisterInstance(spawnRubbleView).AsImplementedInterfaces();
+            builder.RegisterInstance(stageTileView).AsImplementedInterfaces();
+            builder.Register<GimmickEventView>(Lifetime.Singleton).AsImplementedInterfaces();
             
             // Model
             builder.Register<TileMapModel>(Lifetime.Singleton).AsImplementedInterfaces();

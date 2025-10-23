@@ -19,6 +19,7 @@ namespace Interface.ViewInterface.InGame
     public interface IGimmickEventView
     {
         public Observable<EventContext> GimmickEventObservable { get; }
+        public void Invoke(EventContext context);
     }
 
     public interface ISpawnRubbleView

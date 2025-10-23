@@ -442,7 +442,21 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      rescuer_worker_0: 629248190942498782
+      rescuer_worker_1: 168602575688742768
+      rescuer_worker_10: -777135420254469258
+      rescuer_worker_11: -272290680763257801
+      rescuer_worker_12: -5762797258317345475
+      rescuer_worker_13: 8220330997018748568
+      rescuer_worker_2: 6315432269866960168
+      rescuer_worker_3: 6779764937624246726
+      rescuer_worker_4: 8025460586744654118
+      rescuer_worker_5: -4758945772647579805
+      rescuer_worker_6: 8520426659849702412
+      rescuer_worker_7: -1203691117963876945
+      rescuer_worker_8: -4773652916191593919
+      rescuer_worker_9: 926397251641219646
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

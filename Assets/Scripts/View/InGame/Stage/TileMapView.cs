@@ -42,10 +42,13 @@ namespace View.InGame.Stage
                     stageTileTips[y, x] = tile.TileType switch
                     {
                         StageTileType.None => new NoneTip(),
-                        StageTileType.Floor => new FloorTip(new InnerBurn(), new InnerObject(instanceId), new InnerHealth(objectHealth)),
-                        StageTileType.Wall => new WallTip(new InnerBurn(), new InnerObject(instanceId), new InnerHealth(objectHealth)),
-                        StageTileType.Rubble => new RubbleTip(new InnerBurn(), new InnerObject(instanceId), new InnerHealth(objectHealth)),
-                        StageTileType.Hole => new HoleTip(new InnerObject(instanceId),new InnerHealth(objectHealth)),
+                        StageTileType.Floor => new FloorTip(new InnerBurn(), new InnerObject(instanceId),
+                            new InnerHealth(objectHealth)),
+                        StageTileType.Wall => new WallTip(new InnerBurn(), new InnerObject(instanceId),
+                            new InnerHealth(objectHealth)),
+                        StageTileType.Rubble => new RubbleTip(new InnerBurn(), new InnerObject(instanceId),
+                            new InnerHealth(objectHealth)),
+                        StageTileType.Hole => new HoleTip(new InnerObject(instanceId), new InnerHealth(objectHealth)),
                         _ => throw new NotImplementedException(),
                     };
                 }
@@ -56,8 +59,9 @@ namespace View.InGame.Stage
 
         public Vector2 ConvertToMapPosition(Vector2 position)
         {
-            var cellPosition = tilemap.WorldToCell(position);
-            return new Vector2(cellPosition.x - tilemap.cellBounds.x, cellPosition.y - tilemap.cellBounds.y);
+            Vector2 alignToCenter = new Vector2(0.5f, 0.5f);
+            var cellPosition = tilemap.WorldToCell(position + alignToCenter);
+            return new Vector2(cellPosition.x, cellPosition.y);
         }
     }
 }
