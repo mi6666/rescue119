@@ -1,4 +1,5 @@
 using Interface.ViewInterface.InGame;
+using Module.EditorExtension.Runtime;
 using Module.Option.Runtime;
 using Structure.InGame;
 using UnityEngine;
@@ -8,10 +9,16 @@ namespace View.InGame.Player
     [RequireComponent(typeof(BoxCollider2D))]
     public class PawnDetectView : MonoBehaviour, IPawnDetectView
     {
+        [SerializeField, AutoAssign] private Transform selfTransform;
         private PawnType _detectedPawn;
         private int _detectedId;
 
         private const int NotFound = -1;
+
+        public void SetPosition(Vector2 detectionPoint)
+        {
+            selfTransform.position = detectionPoint;
+        }
 
         public Option<PawnType> Detection()
         {

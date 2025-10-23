@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Interface.PresenterInterface.InGame;
 using Interface.ViewInterface.InGame;
 using Structure.InGame.Stage;
+using UnityEngine;
 
 namespace Presenter.InGame.Stage
 {
@@ -25,6 +26,11 @@ namespace Presenter.InGame.Stage
             }
 
             return StageMaps;
+        }
+
+        public Vector2 ToMapPosition(int floor, Vector2 position)
+        {
+            return StageTileMapViews[floor].ConvertToMapPosition(position);
         }
 
         private StageMap[] StageMaps { get; }

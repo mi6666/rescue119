@@ -8,6 +8,7 @@ namespace Interface.ViewInterface.InGame
     public interface IStageTileMapView
     {
         public StageMap GetMap();
+        public Vector2 ConvertToMapPosition(Vector2 position);
     }
 
     public interface IStageTileView

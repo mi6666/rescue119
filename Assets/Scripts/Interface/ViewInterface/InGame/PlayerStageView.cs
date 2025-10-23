@@ -7,6 +7,7 @@ namespace Interface.ViewInterface.InGame
 {
     public interface IPlayerView
     {
+        public Vector2 Position { get; }
         public void ApplyVelocity(Vector2 moveTo);
 
         public Vector2 CurrentVelocity { get; }
@@ -25,6 +26,7 @@ namespace Interface.ViewInterface.InGame
 
     public interface IPawnDetectView
     {
+        public void SetPosition(Vector2 detectionPoint);
         public Option<PawnType> Detection();
     }
 

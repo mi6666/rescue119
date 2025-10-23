@@ -53,5 +53,11 @@ namespace View.InGame.Stage
 
             return new StageMap(stageTileTips);
         }
+
+        public Vector2 ConvertToMapPosition(Vector2 position)
+        {
+            var cellPosition = tilemap.WorldToCell(position);
+            return new Vector2(cellPosition.x - tilemap.cellBounds.x, cellPosition.y - tilemap.cellBounds.y);
+        }
     }
 }

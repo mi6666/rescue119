@@ -34,6 +34,8 @@ namespace View.InGame.Player
             _rigidbody.velocity = moveTo;
         }
 
+        public Vector2 Position => _selfTransform.position;
+
         public Vector2 CurrentVelocity => _rigidbody.velocity;
 
         public ReadOnlySpan<RaycastHit2D> RayCast(Vector2 castTo)
