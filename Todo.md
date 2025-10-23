@@ -5,6 +5,10 @@
 * ゲーム内
   * UI
     * ゲームクリア状態でのスコア・クリアタイム表示
+    * フロア移動UI
+      * テキストで階層表示
+      * UiVeiw,EventVeiw
+      * State Normal->FloorMove->Nomal
   * ステージギミック
     * ステージタイル実装
     * ギミック系実装
