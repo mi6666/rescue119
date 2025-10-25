@@ -47,17 +47,26 @@ namespace Interface.ModelInterface.InGame
         public void IncreaseTime(float deltaTime);
     }
 
+    /// <summary>
+    /// 体力のモデル
+    /// </summary>
     public interface IHpModel
     {
         public int CurrentHp { get; }
         public int MaxHp { get; }
     }
 
+    /// <summary>
+    /// プレイヤーの挙動の長さを持つ
+    /// </summary>
     public interface IActionLengthModel
     {
         public float SplashWater { get; }
     }
 
+    /// <summary>
+    /// プレイヤーが向いている方向を持つ
+    /// </summary>
     public interface ICurrentLookModel
     {
         public Vector2 LookTo { get; }

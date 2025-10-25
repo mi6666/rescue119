@@ -51,6 +51,7 @@ namespace Module.Option.Runtime
             OperationHandles.Add(handle);
             return handle;
         }
+
         public string GetAllOperations()
         {
             var operations = new StringBuilder();

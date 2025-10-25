@@ -1,4 +1,6 @@
-﻿using Structure.InGame.Stage;
+﻿using Module.Option.Runtime;
+using Structure.InGame.Stage;
+using UnityEngine;
 
 namespace Interface.ModelInterface.InGame
 {
@@ -37,5 +39,15 @@ namespace Interface.ModelInterface.InGame
         public int CurrentFloor { get; }
 
         public void SetFloor(int floor);
+    }
+
+    /// <summary>
+    /// ステージ上に存在するタイルではないオブジェクトに関する情報を持つ
+    /// </summary>
+    public interface IStagePawnModel
+    {
+        public void StorePawn(GridCollider gridCollider);
+        public void RemovePawn(int id);
+        public Option<int> CastPosition(Vector2Int position);
     }
 }

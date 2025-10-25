@@ -17,7 +17,7 @@ namespace Controller.InGame.Player
         public NormalStateController
         (
             IPlayerView playerView,
-            IPawnDetectView pawnDetectView,
+            IDetectPositionView detectPositionView,
             IInput_MoveVectorView moveVectorView,
             IInput_ActionEventView actionEventView,
             ICurrentLookModel currentLookModel,
@@ -28,7 +28,7 @@ namespace Controller.InGame.Player
         ) : base(PlayerStateType.Normal, innerState)
         {
             PlayerView = playerView;
-            PawnDetectView = pawnDetectView;
+            DetectPositionView = detectPositionView;
             MoveVectorView = moveVectorView;
             ActionEventView = actionEventView;
             CurrentLookModel = currentLookModel;
@@ -87,11 +87,11 @@ namespace Controller.InGame.Player
         {
             var detectorPosition = PlayerView.Position + CurrentLookModel.LookTo;
             var refinedPosition = StageTileMapPresenter.ToMapPosition(0, detectorPosition);
-            PawnDetectView.SetPosition(refinedPosition);
+            DetectPositionView.SetPosition(refinedPosition);
         }
 
         private IPlayerView PlayerView { get; }
-        private IPawnDetectView PawnDetectView { get; }
+        private IDetectPositionView DetectPositionView { get; }
         private IInput_MoveVectorView MoveVectorView { get; }
         private IInput_ActionEventView ActionEventView { get; }
         private ICurrentLookModel CurrentLookModel { get; }

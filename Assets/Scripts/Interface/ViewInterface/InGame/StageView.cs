@@ -8,7 +8,16 @@ namespace Interface.ViewInterface.InGame
     public interface IStageTileMapView
     {
         public StageMap GetMap();
+
+        /// <summary>
+        /// マス目に座標を揃える
+        /// </summary>
         public Vector2 ConvertToMapPosition(Vector2 position);
+        
+        /// <summary>
+        /// マス目のインデックスを求める
+        /// </summary>
+        public Vector2Int WorldToCell(Vector2 worldPosition);
     }
 
     public interface IStageTileView

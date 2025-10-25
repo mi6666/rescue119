@@ -1,9 +1,12 @@
 using System;
 using Cysharp.Threading.Tasks;
+using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
+using Interface.PresenterInterface.InGame;
 using Interface.ViewInterface.InGame;
 using Module.StateMachine;
 using Structure.InGame;
+using UnityEngine;
 
 namespace Controller.InGame.Player
 {
@@ -11,39 +14,56 @@ namespace Controller.InGame.Player
     {
         public ActionStateController
         (
-            IActionLengthModel actionLengthModel,
             IWaterView waterView,
-            IPawnDetectView pawnDetectView,
+            IDetectPositionView detectPositionView,
+            IActionLengthModel actionLengthModel,
+            IStageFloorModel stageFloorModel,
+            IStageTileMapPresenter stageTileMapPresenter,
+            IGridCastLogic gridCastLogic,
             IMutStateType<PlayerStateType> innerState
         ) : base(PlayerStateType.Action, innerState)
         {
-            ActionLengthModel = actionLengthModel;
             WaterView = waterView;
-            PawnDetectView = pawnDetectView;
+            DetectPositionView = detectPositionView;
+            ActionLengthModel = actionLengthModel;
+            StageFloorModel = stageFloorModel;
+            StageTileMapPresenter = stageTileMapPresenter;
+            GridCastLogic = gridCastLogic;
         }
 
         public override void OnEnter()
         {
-            WaterView.SpawnWater();
-            ExitAction().Forget();
+            var detectPosition = DetectPositionView.DetectPosition;
+            var currentFloor = StageFloorModel.CurrentFloor;
+            var detectGridPosition = StageTileMapPresenter.ToMapIndex(currentFloor, detectPosition);
+            var castResult = GridCastLogic.CastGrid(detectGridPosition, Vector2Int.one);
+
+            if (castResult.Length == 0)
+            {
+                SpawnWater().Forget();
+            }
         }
 
         public override void OnExit()
         {
-            WaterView.DespawnWater();
         }
 
-        private async UniTask ExitAction()
+        private async UniTask SpawnWater()
         {
+            WaterView.SpawnWater();
             var duration = ActionLengthModel.SplashWater;
             
             await UniTask.Delay(TimeSpan.FromSeconds(duration));
             
+            WaterView.DespawnWater();
             InnerState.ChangeState(PlayerStateType.Normal);
         }
 
-        private IActionLengthModel ActionLengthModel { get; }
         private IWaterView WaterView { get; }
-        private IPawnDetectView PawnDetectView { get; }
+        private IDetectPositionView DetectPositionView { get; }
+        private IActionLengthModel ActionLengthModel { get; }
+        private IStageFloorModel StageFloorModel { get; }
+        private IStageTileMapPresenter StageTileMapPresenter { get; }
+        private IGridCastLogic GridCastLogic { get; }
     }
 }

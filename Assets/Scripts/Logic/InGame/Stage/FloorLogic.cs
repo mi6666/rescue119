@@ -10,6 +10,11 @@ namespace Logic.InGame.Stage
     {
         public ReadOnlySpan<FeedBackCommand> Update(ITipBurnable tipBurnable, UpdateArgument updateArgument)
         {
+            if (!tipBurnable.IsBurn)
+            {
+                return CommandBuffer.AsSpan(0, 0);
+            }
+
             int count = 0;
 
             var tipPos = updateArgument.MapIndex;
@@ -25,18 +30,17 @@ namespace Logic.InGame.Stage
                         if (toBurnAround)
                         {
                             burnable.SetBurn();
-                            commandbuffer[count] = new FeedBackCommand(burnable.InstanceId, TileStateType.Burning);
+                            CommandBuffer[count] = new FeedBackCommand(burnable.InstanceId, TileStateType.Burning);
                             count++;
                         }
-                        
                     }
                 }
             }
 
 
-            return commandbuffer.AsSpan(0, count);
+            return CommandBuffer.AsSpan(0, count);
         }
 
-        private FeedBackCommand[] commandbuffer { get; }
+        private FeedBackCommand[] CommandBuffer { get; } = new FeedBackCommand[8];
     }
 }

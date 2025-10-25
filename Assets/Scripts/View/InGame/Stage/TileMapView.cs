@@ -61,7 +61,13 @@ namespace View.InGame.Stage
         {
             Vector2 alignToCenter = new Vector2(0.5f, 0.5f);
             var cellPosition = tilemap.WorldToCell(position);
-            return new Vector2(cellPosition.x, cellPosition.y)+alignToCenter;
+            return new Vector2(cellPosition.x, cellPosition.y) + alignToCenter;
+        }
+
+        public Vector2Int WorldToCell(Vector2 worldPosition)
+        {
+            var cellPosition = tilemap.WorldToCell(worldPosition);
+            return new Vector2Int(cellPosition.x, cellPosition.y);
         }
     }
 }

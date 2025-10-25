@@ -24,10 +24,10 @@ namespace Interface.ViewInterface.InGame
         public void DespawnWater();
     }
 
-    public interface IPawnDetectView
+    public interface IDetectPositionView
     {
         public void SetPosition(Vector2 detectionPoint);
-        public Option<PawnType> Detection();
+        public Vector2 DetectPosition { get; }
     }
 
     public interface IPawnView

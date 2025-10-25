@@ -10,6 +10,11 @@ namespace Interface.LogicInterface.InGame
         public ReadOnlySpan<FeedBackCommand> Update(ITipBurnable tipBurnable, UpdateArgument updateArgument);
     }
 
+    public interface IGridCastLogic
+    {
+        public ReadOnlySpan<GridCollider> CastGrid(Vector2Int position, Vector2Int size);
+    }
+
     public readonly struct FeedBackCommand
     {
         public int  ObjectId { get; }

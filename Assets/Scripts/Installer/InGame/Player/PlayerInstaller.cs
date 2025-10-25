@@ -11,7 +11,7 @@ namespace Installer.InGame.Player
     public class PlayerInstaller: InstallerBase
     {
         [SerializeField] private PlayerView playerView;
-        [SerializeField] private PawnDetectView pawnDetectView;
+        [SerializeField] private DetectPositionView detectPositionView;
         [SerializeField] private WaterView waterView;
         [SerializeField] private LocomotionModel locomotionModel;
         [SerializeField] private ActionModel actionModel;
@@ -20,7 +20,7 @@ namespace Installer.InGame.Player
         {
             // View
             builder.RegisterInstance(playerView).AsImplementedInterfaces();
-            builder.RegisterInstance(pawnDetectView).AsImplementedInterfaces();
+            builder.RegisterInstance(detectPositionView).AsImplementedInterfaces();
             builder.RegisterInstance(waterView).AsImplementedInterfaces();
             
             // Model

@@ -33,6 +33,11 @@ namespace Presenter.InGame.Stage
             return StageTileMapViews[floor].ConvertToMapPosition(position);
         }
 
+        public Vector2Int ToMapIndex(int floor, Vector2 position)
+        {
+            return StageTileMapViews[floor].WorldToCell(position);
+        }
+
         private StageMap[] StageMaps { get; }
         private IReadOnlyList<IStageTileMapView> StageTileMapViews { get; }
     }
