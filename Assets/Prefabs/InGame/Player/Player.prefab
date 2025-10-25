@@ -403,7 +403,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   playerView: {fileID: 8256654763027665143}
-  pawnDetectView: {fileID: 2583464649292206259}
+  detectPositionView: {fileID: 2583464649292206259}
   waterView: {fileID: 5745911544867117455}
   locomotionModel:
     maxSpeed: 5
@@ -436,7 +436,7 @@ MonoBehaviour:
     wallFriction: 0.8
     reverseAngleThreshold: 100
   actionModel:
-    actionLength: 0
+    actionLength: 0.25
 --- !u!114 &7049297621115034803
 MonoBehaviour:
   m_ObjectHideFlags: 0

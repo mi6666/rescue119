@@ -12,7 +12,13 @@ namespace Interface.LogicInterface.InGame
 
     public interface IGridCastLogic
     {
-        public ReadOnlySpan<GridCollider> CastGrid(Vector2Int position, Vector2Int size);
+        public ReadOnlySpan<GridCollider> CastGrid(int floor, Vector2Int position, Vector2Int size, CastTargetType castTarget);
+    }
+
+    public enum CastTargetType
+    {
+        Pawn,
+        Tile,
     }
 
     public readonly struct FeedBackCommand

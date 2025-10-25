@@ -80,7 +80,7 @@ namespace Controller.InGame.Player
             DebugLogger.Log("move input", moveInput.ToString());
             DebugLogger.Log("calculated velocity", calculatedVelocity.ToString());
 
-            PlayerView.ApplyVelocity(calculatedVelocity);
+            PlayerView.ApplyVelocity(calculatedVelocity * deltaTime);
         }
 
         private void UpdatePawnDetectorPosition()

@@ -46,6 +46,7 @@ namespace Interface.ModelInterface.InGame
     /// </summary>
     public interface IStagePawnModel
     {
+        public System.Collections.Generic.IReadOnlyCollection<GridCollider> Pawns { get; }
         public void StorePawn(GridCollider gridCollider);
         public void RemovePawn(int id);
         public Option<int> CastPosition(Vector2Int position);

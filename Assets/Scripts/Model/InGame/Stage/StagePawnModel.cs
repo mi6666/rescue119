@@ -15,6 +15,8 @@ namespace Model.InGame.Stage
     {
         private readonly Dictionary<int, GridCollider> _pawns = new();
 
+        public IReadOnlyCollection<GridCollider> Pawns => _pawns.Values;
+
         public void StorePawn(GridCollider gridCollider)
         {
             _pawns[gridCollider.PawnId] = gridCollider;

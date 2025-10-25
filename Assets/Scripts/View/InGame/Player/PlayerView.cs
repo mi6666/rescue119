@@ -31,7 +31,7 @@ namespace View.InGame.Player
 
         public void ApplyVelocity(Vector2 moveTo)
         {
-            _rigidbody.velocity = moveTo;
+            _selfTransform.Translate(moveTo);
         }
 
         public Vector2 Position => _selfTransform.position;
