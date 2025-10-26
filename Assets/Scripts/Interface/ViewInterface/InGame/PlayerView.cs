@@ -1,5 +1,5 @@
 using System;
-using Module.Option.Runtime;
+using System.Collections.Generic;
 using Structure.InGame;
 using UnityEngine;
 
@@ -30,8 +30,23 @@ namespace Interface.ViewInterface.InGame
         public Vector2 DetectPosition { get; }
     }
 
+    /// <summary>
+    /// シーン上のPawnが持つインターフェース
+    /// </summary>
     public interface IPawnView
     {
+        public int InstanceId { get; }
         public PawnType Type { get; }
+        public Vector2 Position { get; }
+        public Vector2Int Size { get; }
+        public int Floor { get; }
+    }
+
+    /// <summary>
+    /// シーンに存在する全てのPawnを取得するインターフェース
+    /// </summary>
+    public interface IScenePawnsView
+    {
+        public IReadOnlyList<IPawnView> GetPawns();
     }
 }

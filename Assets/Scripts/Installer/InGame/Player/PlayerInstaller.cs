@@ -2,7 +2,6 @@ using Controller.InGame.Player;
 using Logic.InGame.Player;
 using Logic.InGame.Stage;
 using Model.InGame.Player;
-using Model.InGame.Stage;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -29,14 +28,13 @@ namespace Installer.InGame.Player
             builder.RegisterInstance(locomotionModel).AsImplementedInterfaces();
             builder.RegisterInstance(actionModel).AsImplementedInterfaces();
             builder.Register<CurrentLookModel>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<StagePawnModel>(Lifetime.Singleton).AsImplementedInterfaces();
             
             // Logic
             builder.Register<LocomotionLogic>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<GridCastLogic>(Lifetime.Singleton).AsImplementedInterfaces();
             
             // Controller
-            builder.Register<PlayerState>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<PlayerStateEntity>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.RegisterEntryPoint<PlayerStateMachine>();
             builder.Register<NormalStateController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<ActionStateController>(Lifetime.Singleton).AsImplementedInterfaces();

@@ -1,4 +1,5 @@
 using System;
+using Module.Option.Runtime;
 using Structure.InGame;
 using Structure.InGame.Stage;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace Interface.LogicInterface.InGame
     public interface IGridCastLogic
     {
         public ReadOnlySpan<GridCollider> CastGrid(int floor, Vector2Int position, Vector2Int size, CastTargetType castTarget);
+        public Option<GridCollider> CastGridFirst(int floor, Vector2Int position, Vector2Int size, CastTargetType castTarget);
     }
 
     public enum CastTargetType

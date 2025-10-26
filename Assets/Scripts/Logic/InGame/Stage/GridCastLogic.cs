@@ -1,7 +1,8 @@
 using System;
-using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
+using Module.Option.Runtime;
 using Structure.InGame.Stage;
 using UnityEngine;
 using VContainer;
@@ -19,35 +20,63 @@ namespace Logic.InGame.Stage
             StagePawnModel = stagePawnModel;
         }
 
-        public ReadOnlySpan<GridCollider> CastGrid(int floor, Vector2Int position, Vector2Int size, CastTargetType castTargetType)
+        public ReadOnlySpan<GridCollider> CastGrid
+        (
+            int floor,
+            Vector2Int position,
+            Vector2Int size,
+            CastTargetType castTargetType
+        )
         {
-            if (castTargetType != CastTargetType.Pawn)
-            {
-                return ReadOnlySpan<GridCollider>.Empty;
-            }
+            Debug.Assert(castTargetType == CastTargetType.Pawn, "Not Implemented");
 
+            var count = 0;
             var castArea = new RectInt(position, size);
-            var foundColliders = new List<GridCollider>();
 
-            // NOTE: This assumes IStagePawnModel has a "Pawns" property, which needs to be added.
             foreach (var pawnCollider in StagePawnModel.Pawns)
             {
-                if (pawnCollider.Floor != floor)
+                var isOverlap = InnerCast(floor, castArea, pawnCollider);
+                if (isOverlap)
                 {
-                    continue;
-                }
-
-                var pawnArea = new RectInt(pawnCollider.Position, pawnCollider.Size);
-                if (pawnArea.Overlaps(castArea))
-                {
-                    foundColliders.Add(pawnCollider);
+                    FoundColliders[count] = pawnCollider;
+                    count++;
                 }
             }
-            
-            // Consider using CollectionsMarshal.AsSpan(foundColliders) if performance is critical
-            return new ReadOnlySpan<GridCollider>(foundColliders.ToArray());
+
+            return FoundColliders.AsSpan(0, count);
         }
 
+        public Option<GridCollider> CastGridFirst(int floor, Vector2Int position, Vector2Int size, CastTargetType castTarget)
+        {
+            Debug.Assert(castTarget == CastTargetType.Pawn, "Not Implimented");
+
+            var castArea = new RectInt(position, size);
+
+            foreach (var pawnCollider in StagePawnModel.Pawns)
+            {
+                var isOverlap = InnerCast(floor, castArea, pawnCollider);
+                if (isOverlap)
+                {
+                    return Option<GridCollider>.Some(pawnCollider);
+                }
+            }
+
+            return Option<GridCollider>.None();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool InnerCast(int floor, RectInt castArea, GridCollider other)
+        {
+            if (other.Floor != floor)
+            {
+                return false;
+            }
+
+            var pawnArea = new RectInt(other.Position, other.Size);
+            return pawnArea.Overlaps(castArea);
+        }
+
+        private GridCollider[] FoundColliders { get; } = new GridCollider[8];
         private IStagePawnModel StagePawnModel { get; }
     }
 }

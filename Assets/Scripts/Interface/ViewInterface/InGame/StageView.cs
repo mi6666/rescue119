@@ -13,7 +13,7 @@ namespace Interface.ViewInterface.InGame
         /// マス目に座標を揃える
         /// </summary>
         public Vector2 ConvertToMapPosition(Vector2 position);
-        
+
         /// <summary>
         /// マス目のインデックスを求める
         /// </summary>
@@ -27,8 +27,8 @@ namespace Interface.ViewInterface.InGame
 
     public interface IGimmickEventView
     {
-        public Observable<EventContext> GimmickEventObservable { get; }
-        public void Invoke(EventContext context);
+        public Observable<IEventContext> GimmickEventObservable { get; }
+        public void Invoke(IEventContext context);
     }
 
     public interface ISpawnRubbleView
@@ -42,9 +42,10 @@ namespace Interface.ViewInterface.InGame
         public void ChangeTileState(TileStateType tileStateType);
     }
 
-    public interface IStairsEventView
+    public interface IStairEventView : IGimmickEventView
     {
-        public Observable<StairType> StairsEventObservable { get; }
-        public void Invoke(StairType type);
+        public Observable<StairType> StairsEventObservable => GimmickEventObservable
+            .Where(x => x is StairContext)
+            .Select(x => (x as StairContext)!.EventContext.StairType);
     }
 }

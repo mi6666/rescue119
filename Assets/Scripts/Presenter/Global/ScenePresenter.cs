@@ -56,7 +56,7 @@ namespace Presenter.Global
                 foreach (var scope in lifetimeScopes)
                 {
                     // primaryシーンには`LifetimeScope`が一つだけ存在すること
-                    Debug.Assert(rootScope is null);
+                    Debug.Assert(rootScope is null, "rootScope is null");
 
                     rootScope = scope;
                     Debug.Log($"scene: {primaryScene.name}, lifetime scope: {scope.name}");

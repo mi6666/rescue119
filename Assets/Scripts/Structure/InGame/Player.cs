@@ -9,7 +9,8 @@ namespace Structure.InGame
     public enum PlayerStateType
     {
         Normal,
-        Action
+        Action,
+        Holding,
     }
 
     public enum PawnType

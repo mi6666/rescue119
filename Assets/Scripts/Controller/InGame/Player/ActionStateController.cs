@@ -37,13 +37,16 @@ namespace Controller.InGame.Player
             var currentFloor = StageFloorModel.CurrentFloor;
             var detectGridPosition = StageTileMapPresenter.ToMapIndex(currentFloor, detectPosition);
             var castResult =
-                GridCastLogic.CastGrid(currentFloor, detectGridPosition, Vector2Int.one, CastTargetType.Pawn);
+                GridCastLogic.CastGridFirst(currentFloor, detectGridPosition, Vector2Int.one, CastTargetType.Pawn);
 
 
-            if (castResult.Length == 0)
+            if (!castResult.TryGetValue(out var value))
             {
                 SpawnWater().Forget();
             }
+
+            Debug.Log($"get {value.ToString()}");
+            InnerState.ChangeState(PlayerStateType.Holding);
         }
 
         public override void OnExit()

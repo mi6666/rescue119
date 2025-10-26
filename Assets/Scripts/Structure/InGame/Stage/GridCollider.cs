@@ -1,3 +1,4 @@
+using System.Text;
 using UnityEngine;
 
 namespace Structure.InGame.Stage
@@ -21,6 +22,28 @@ namespace Structure.InGame.Stage
             Floor = floor;
             Position = position;
             Size = size;
+        }
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder(nameof(GridCollider));
+            builder.Append("{");
+
+            Append(nameof(PawnId), PawnId.ToString());
+            Append(nameof(Floor), Floor.ToString());
+            Append(nameof(Position), Position.ToString());
+            Append(nameof(Size), Size.ToString());
+
+            builder.Append("}");
+
+            return builder.ToString();
+
+            void Append(string name, string value)
+            {
+                builder.Append(name);
+                builder.Append(": ");
+                builder.AppendLine(value);
+            }
         }
     }
 }

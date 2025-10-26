@@ -28,9 +28,9 @@ namespace Controller.InGame.Player
         }
     }
 
-    public class PlayerState : AbstractStateType<PlayerStateType>
+    public class PlayerStateEntity : AbstractStateType<PlayerStateType>
     {
-        public PlayerState() : base(PlayerStateType.Normal)
+        public PlayerStateEntity() : base(PlayerStateType.Normal)
         {
         }
     }

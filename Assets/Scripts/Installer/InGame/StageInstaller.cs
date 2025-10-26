@@ -15,8 +15,10 @@ namespace Installer.InGame
     public class StageInstaller : InstallerBase
     {
         [SerializeField] private SpawnRubbleView spawnRubbleView;
+        [SerializeField] private EventCompositeView eventCompositeView;
         [SerializeField] private StageTileView stageTileView;
         [SerializeField] private List<TileMapView> tileMapViews;
+        [SerializeField] private ScenePawnsView scenePawnsView;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -24,12 +26,14 @@ namespace Installer.InGame
             // View
             builder.RegisterInstance(converted).AsImplementedInterfaces();
             builder.RegisterInstance(spawnRubbleView).AsImplementedInterfaces();
+            builder.RegisterInstance(eventCompositeView).AsImplementedInterfaces();
             builder.RegisterInstance(stageTileView).AsImplementedInterfaces();
-            builder.Register<GimmickEventView>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.RegisterInstance(scenePawnsView).AsImplementedInterfaces();
             
             // Model
             builder.Register<TileMapModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<StageFloorModel>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<StagePawnModel>(Lifetime.Singleton).AsImplementedInterfaces();
 
             // Presenter
             builder.Register<StageMapPresenter>(Lifetime.Singleton).AsImplementedInterfaces();

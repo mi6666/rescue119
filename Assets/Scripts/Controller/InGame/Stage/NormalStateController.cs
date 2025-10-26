@@ -78,9 +78,12 @@ namespace Controller.InGame.Stage
             }
         }
 
-        private void SpawnRubble(EventContext context)
+        private void SpawnRubble(IEventContext context)
         {
-            SpawnRubbleView.Spawn(context.SpawnPosition);
+            if (context is SpawnRubbleContext spawnRubbleContext)
+            {
+                SpawnRubbleView.Spawn(spawnRubbleContext.EventContext.SpawnPosition);
+            }
         }
 
         private CompositeDisposable CompositeDisposable { get; }

@@ -1,36 +1,48 @@
+using System;
 using Interface.ModelInterface.InGame;
 using Module.Option.Runtime;
 using Structure.InGame.Stage;
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace Model.InGame.Stage
 {
-    /// <summary>
-    /// todo
-    /// オブジェクトプールのような出来る限りアロケーションを起こさない仕組みで
-    /// Gridの当たり判定を管理する
-    /// </summary>
     public class StagePawnModel: IStagePawnModel
     {
-        private readonly Dictionary<int, GridCollider> _pawns = new();
+        private GridCollider[] PawnArray { get; } = new GridCollider[32];
+        private int _length;
 
-        public IReadOnlyCollection<GridCollider> Pawns => _pawns.Values;
+        public ReadOnlySpan<GridCollider> Pawns => PawnArray.AsSpan(0, _length);
 
         public void StorePawn(GridCollider gridCollider)
         {
-            _pawns[gridCollider.PawnId] = gridCollider;
+            Debug.Assert(_length < PawnArray.Length, "Pawn array is full.");
+            PawnArray[_length] = gridCollider;
+            _length++;
         }
 
         public void RemovePawn(int id)
         {
-            _pawns.Remove(id);
+            int index = -1;
+            for (int i = 0; i < _length; i++)
+            {
+                if (PawnArray[i].PawnId == id)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1)
+            {
+                _length--;
+                PawnArray[index] = PawnArray[_length];
+            }
         }
 
 
         public Option<int> CastPosition(Vector2Int position)
         {
-            foreach (var pawn in _pawns.Values)
+            foreach (var pawn in Pawns)
             {
                 var pawnPosition = pawn.Position;
                 var pawnSize = pawn.Size;
