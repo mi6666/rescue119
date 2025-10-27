@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8875750615167083272}
   - component: {fileID: 3304169265103026213}
   - component: {fileID: 3085112235480188941}
+  - component: {fileID: -5259919788627310495}
   m_Layer: 0
   m_Name: WallPrefab
   m_TagString: Untagged
@@ -133,3 +134,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-5259919788627310495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628671337993480310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0fac6429c64bcfb64cca47cb70ab54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfRenderer: {fileID: 3304169265103026213}
+  tipSprite: {fileID: 11400000, guid: 5a3ae4dd093828d4994ef4e251d4046e, type: 2}
+  stateSprite: {fileID: 11400000, guid: 8677a79e7de0e2749a6049b91c3912d4, type: 2}
