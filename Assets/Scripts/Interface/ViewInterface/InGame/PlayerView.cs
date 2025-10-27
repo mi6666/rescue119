@@ -14,6 +14,11 @@ namespace Interface.ViewInterface.InGame
         public ReadOnlySpan<RaycastHit2D> RayCast(Vector2 castTo);
     }
 
+    public interface IPlayerAnimatorView
+    {
+        public void SetFloat(string key, float value);
+    }
+
     public interface IPlayerCommandEventView
     {
     }

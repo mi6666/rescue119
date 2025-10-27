@@ -40,13 +40,13 @@ namespace Controller.InGame.Player
                 GridCastLogic.CastGridFirst(currentFloor, detectGridPosition, Vector2Int.one, CastTargetType.Pawn);
 
 
-            if (!castResult.TryGetValue(out var value))
-            {
+            // if (!castResult.TryGetValue(out var value))
+            // {
                 SpawnWater().Forget();
-            }
+            // }
 
-            Debug.Log($"get {value.ToString()}");
-            InnerState.ChangeState(PlayerStateType.Holding);
+            // Debug.Log($"get {value.ToString()}");
+            // InnerState.ChangeState(PlayerStateType.Holding);
         }
 
         public override void OnExit()
