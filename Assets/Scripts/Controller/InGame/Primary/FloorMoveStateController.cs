@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using Interface.ModelInterface.InGame;
 using Interface.PresenterInterface.Global;
 using Interface.ViewInterface.InGame.UserInterface;
@@ -15,22 +16,18 @@ namespace Controller.InGame.Primary
             IFloorMoveUiView floorMoveUiView,
             IFloorMoveTextView floorMoveTextView,
             IStageFloorModel stageFloorModel,
-            IMutStateType<PrimaryStateType> innerState
-        ) : base(PrimaryStateType.FloorMove, innerState)
+            IFloorMoveTime floorMoveTime,
+            IMutStateType<PrimaryStateType> innerState, IFloorMoveTime o) : base(PrimaryStateType.FloorMove, innerState)
         {
             FloorMoveUiView = floorMoveUiView;
             FloorMoveTextView = floorMoveTextView;
             StageFloorModel = stageFloorModel;
+            FloorMoveTime = floorMoveTime;
         }
 
         public void Start()
         {
             
-        }
-        
-        public void OnFloorMove()
-        {
-            InnerState.ChangeState(PrimaryStateType.FloorMove);
         }
 
         public override void OnEnter()
@@ -39,6 +36,15 @@ namespace Controller.InGame.Primary
             
             FloorMoveTextView.SetFloorMove(currentFloor);
             FloorMoveUiView.Show().Forget();
+            
+            Wait().Forget();
+        }
+
+        private async UniTask Wait()
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(FloorMoveTime.FloorTime));
+            
+            InnerState.ChangeState(PrimaryStateType.Normal);
         }
         
         public override void OnExit()
@@ -46,13 +52,9 @@ namespace Controller.InGame.Primary
             FloorMoveUiView.Hide().Forget();
         }
 
-        public void OffFloorMove()
-        {
-            InnerState.ChangeState(PrimaryStateType.Normal);
-        }
-
         private IFloorMoveUiView FloorMoveUiView { get; }
         private IFloorMoveTextView FloorMoveTextView { get; }
         private IStageFloorModel StageFloorModel { get; }
+        private IFloorMoveTime FloorMoveTime { get; }
     }
 }

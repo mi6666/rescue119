@@ -1,25 +1,27 @@
 ﻿using Cysharp.Threading.Tasks;
 using Interface.ViewInterface.InGame.UserInterface;
+using Module.FadeContainer.Runtime;
 using UnityEngine;
 
 namespace View.InGame.UserInterface.FloorMove
 {
-    public class FloorMoveUiView : MonoBehaviour, IFloorMoveUiView
+    public class FloorMoveUiFadeView : MonoBehaviour, IFloorMoveUiFadeView
     {
+        [SerializeField] private FadeContainer fadeContainer;
         [SerializeField] private FloorMoveTextView floorMoveTextView;
-
+        
         public FloorMoveTextView FloorMoveTextView => floorMoveTextView;
 
-        public UniTask Show()
+        public async UniTask Show()
         {
             FloorMoveTextView.gameObject.SetActive((true));
-            return UniTask.CompletedTask;
+            await fadeContainer.FadeIn();
         }
-        
-        public UniTask Hide()
+
+        public async UniTask Hide()
         {
+            await fadeContainer.FadeOut();
             FloorMoveTextView.gameObject.SetActive(false);
-            return UniTask.CompletedTask;
         }
     }
 }

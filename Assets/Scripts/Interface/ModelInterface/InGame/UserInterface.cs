@@ -9,4 +9,9 @@ namespace Interface.ModelInterface.InGame
     {
         public SceneGroup StageSelect { get; }
     }
+
+    public interface IFloorMoveTime
+    {
+        public float FloorTime { get; }
+    }
 }
