@@ -9,12 +9,6 @@ namespace Interface.ViewInterface.InGame.UserInterface
         public UniTask Hide();
     }
 
-    public interface IFloorMoveUiFadeView
-    {
-        public UniTask Show();
-        public UniTask Hide();
-    }
-
     public interface IFloorMoveTextView
     {
         public void SetFloorMove(int floor);

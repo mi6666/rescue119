@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace View.InGame.UserInterface.Pause
 {
-    public class PauseUiFadeView: MonoBehaviour, IPauseUiFadeView
+    public class PauseUiFadeView: MonoBehaviour, IPauseUiView
     {
         [SerializeField] private FadeContainer fadeContainer;
         [SerializeField] private ExitPauseButtonView exitPauseButtonView;

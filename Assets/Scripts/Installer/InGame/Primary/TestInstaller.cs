@@ -4,7 +4,6 @@ using Model.InGame.Stage;
 using Model.InGame.UserInterface;
 using Structure.InGame;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 using View.InGame.UserInterface.FloorMove;
@@ -19,13 +18,13 @@ namespace Installer.InGame.Primary
     {
         [SerializeField] private ClearButtonView clearButtonView;
         [SerializeField] private GameOverButtonView gameOverButtonView;
-        [SerializeField] private StageSettingModel stageSettingModel;
+        [SerializeField] private StageMasterModel stageMasterModel;
         [SerializeField] private ExitGameSceneModel exitGameSceneModel;
         [SerializeField] private NormalUiFadeView normalUiFadeView;
         [SerializeField] private PauseUiFadeView pauseUiFadeView;
         [SerializeField] private GameOverUiFadeView gameOverUiFadeView;
         [SerializeField] private GameClearUiFadeView gameClearUiFadeView;
-        [FormerlySerializedAs("floorMoveUiView")] [SerializeField] private FloorMoveUiFadeView floorMoveUiFadeView;
+        [SerializeField] private FloorMoveUiFadeView floorMoveUiFadeView;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -45,7 +44,7 @@ namespace Installer.InGame.Primary
             builder.RegisterInstance(gameOverButtonView).AsImplementedInterfaces();
             
             // Model
-            builder.RegisterInstance(stageSettingModel).AsImplementedInterfaces();
+            builder.RegisterInstance(stageMasterModel).AsImplementedInterfaces();
             builder.RegisterInstance(exitGameSceneModel).AsImplementedInterfaces();
             builder.Register<HpModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<TimeModel>(Lifetime.Singleton).AsImplementedInterfaces();

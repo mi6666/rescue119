@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace View.InGame.UserInterface.FloorMove
 {
-    public class FloorMoveUiFadeView : MonoBehaviour, IFloorMoveUiFadeView
+    public class FloorMoveUiFadeView : MonoBehaviour, IFloorMoveUiView
     {
         [SerializeField] private FadeContainer fadeContainer;
         [SerializeField] private FloorMoveTextView floorMoveTextView;

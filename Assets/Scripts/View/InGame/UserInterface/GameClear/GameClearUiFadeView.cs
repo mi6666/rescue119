@@ -6,7 +6,7 @@ using View.InGame.UserInterface.Pause;
 
 namespace View.InGame.UserInterface.GameClear
 {
-    public class GameClearUiFadeView : MonoBehaviour, IGameClearUiFadeView
+    public class GameClearUiFadeView : MonoBehaviour, IGameClearUiView
     {
         [SerializeField] private FadeContainer fadeContainer;
         [SerializeField] private ExitStageButtonView exitStageButtonView;

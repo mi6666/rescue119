@@ -9,12 +9,6 @@ namespace Interface.ViewInterface.InGame.UserInterface
         public UniTask Hide();
     }
 
-    public interface IGameOverUiFadeView
-    {
-        public UniTask Show();
-        public UniTask Hide();
-    }
-
     public interface IGameOverEventView
     {
         public Observable<Unit> GameOverEvent { get; }

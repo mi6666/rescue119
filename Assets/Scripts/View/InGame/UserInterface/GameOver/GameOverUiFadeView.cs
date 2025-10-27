@@ -6,7 +6,7 @@ using View.InGame.UserInterface.Pause;
 
 namespace View.InGame.UserInterface.GameOver
 {
-    public class GameOverUiFadeView : MonoBehaviour, IGameOverUiFadeView
+    public class GameOverUiFadeView : MonoBehaviour, IGameOverUiView
     {
         [SerializeField] private FadeContainer fadeContainer;
         [SerializeField] private ExitStageButtonView exitStageButtonView;

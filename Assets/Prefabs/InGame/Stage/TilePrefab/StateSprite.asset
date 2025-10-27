@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: StateSprite
   m_EditorClassIdentifier: 
   stateSprites:
-    array: []
+    array:
+    - {fileID: 0}

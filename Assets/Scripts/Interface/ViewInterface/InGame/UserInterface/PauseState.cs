@@ -9,12 +9,6 @@ namespace Interface.ViewInterface.InGame.UserInterface
         public UniTask Hide();
     }
 
-    public interface IPauseUiFadeView
-    {
-        public UniTask Show();
-        public UniTask Hide();
-    }
-
     /// <summary>
     /// ポーズ状態から通常状態へ戻るイベントを提供する
     /// </summary>

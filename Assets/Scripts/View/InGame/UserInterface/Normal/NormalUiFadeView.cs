@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace View.InGame.UserInterface.Normal
 {
-    public class NormalUiFadeView : MonoBehaviour, INormalUiFadeView
+    public class NormalUiFadeView : MonoBehaviour, INormalUiView
     {
         [SerializeField] private FadeContainer fadeContainer;
         [SerializeField] private TimerView timerView;
