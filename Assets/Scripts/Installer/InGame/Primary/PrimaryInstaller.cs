@@ -17,7 +17,7 @@ namespace Installer.InGame.Primary
     {
         [SerializeField] private ClearButtonView clearButtonView;
         [SerializeField] private GameOverButtonView gameOverButtonView;
-        [SerializeField] private StageSettingModel stageSettingModel;
+        [SerializeField] private StageMasterModel stageMasterModel;
         [SerializeField] private ExitGameSceneModel exitGameSceneModel;
         [SerializeField] private NormalUiView normalUiView;
         [SerializeField] private PauseUiView pauseUiView;
@@ -42,7 +42,7 @@ namespace Installer.InGame.Primary
             builder.RegisterInstance(gameOverButtonView).AsImplementedInterfaces();
             
             // Model
-            builder.RegisterInstance(stageSettingModel).AsImplementedInterfaces();
+            builder.RegisterInstance(stageMasterModel).AsImplementedInterfaces();
             builder.RegisterInstance(exitGameSceneModel).AsImplementedInterfaces();
             builder.Register<HpModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<TimeModel>(Lifetime.Singleton).AsImplementedInterfaces();

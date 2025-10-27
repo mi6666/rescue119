@@ -12,7 +12,6 @@ namespace View.InGame.Stage
 
             foreach (var tipView in views)
             {
-                Debug.Log($"{tipView.gameObject.GetInstanceID()}", tipView);
                 TileViews.Add(tipView.gameObject.GetInstanceID(), tipView);
             }
         }

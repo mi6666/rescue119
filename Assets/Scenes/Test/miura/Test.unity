@@ -623,12 +623,13 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  stageMasterModel: {fileID: 11400000, guid: d239a37819267984a83dce7d769a0b9f, type: 2}
   spawnRubbleView: {fileID: 549706747}
   eventCompositeView: {fileID: 76085173}
   stageTileView: {fileID: 76085174}
+  scenePawnsView: {fileID: 76085172}
   tileMapViews:
   - {fileID: 544672415}
-  scenePawnsView: {fileID: 76085172}
 --- !u!4 &1548889449
 Transform:
   m_ObjectHideFlags: 0

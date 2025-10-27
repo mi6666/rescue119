@@ -24,6 +24,7 @@ namespace Controller.InGame.Stage
             IStageTileView stageTileView,
             IStageTileMapModel stageTileMapModel,
             IStageFloorModel stageFloorModel,
+            IStageMasterModel stageMasterModel,
             IBurnLogic burnLogic,
             CompositeDisposable compositeDisposable,
             IMutStateType<StageStateType> innerState
@@ -34,6 +35,7 @@ namespace Controller.InGame.Stage
             StageTileView = stageTileView;
             StageTileMapModel = stageTileMapModel;
             StageFloorModel = stageFloorModel;
+            StageMasterModel = stageMasterModel;
             BurnLogic = burnLogic;
             CompositeDisposable = compositeDisposable;
         }
@@ -43,7 +45,9 @@ namespace Controller.InGame.Stage
             GimmickEventView.GimmickEventObservable
                 .Subscribe(this, (context, controller) => controller.SpawnRubble(context))
                 .AddTo(CompositeDisposable);
-            Observable.Interval(TimeSpan.FromSeconds(1.0f))
+            Observable
+                .Interval(TimeSpan.FromSeconds(StageMasterModel.PawnTickInterval))
+                .ObserveOnMainThread() // これがないと乱数がきちんと動かない
                 .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (_, controller) => controller.UpdateLogic())
                 .AddTo(CompositeDisposable);
@@ -71,7 +75,7 @@ namespace Controller.InGame.Stage
                             var result = BurnLogic.Update(tipBurnable, arg);
                             foreach (var command in result)
                             {
-                                var tileView= StageTileView.GetTileView(command.ObjectId);
+                                var tileView = StageTileView.GetTileView(command.ObjectId);
 
                                 tileView.ChangeTileState(TileStateType.Burning);
                             }
@@ -96,6 +100,7 @@ namespace Controller.InGame.Stage
         private IStageTileView StageTileView { get; }
         private IStageTileMapModel StageTileMapModel { get; }
         private IStageFloorModel StageFloorModel { get; }
+        private IStageMasterModel StageMasterModel { get; }
         private IBurnLogic BurnLogic { get; }
     }
 }

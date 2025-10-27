@@ -3,20 +3,30 @@ using Structure.InGame.Stage;
 
 namespace Interface.ModelInterface.InGame
 {
+    // ============================================================================================
+    // 設定情報
+    // ============================================================================================
     /// <summary>
     /// ステージ設定を保持するモデル
     /// </summary>
-    public interface IStageSettingModel
+    public interface IStageMasterModel
     {
         public float TimeLength { get; }
         public int MaxFloorNum { get; }
+        public float PawnTickInterval { get; }
     }
-
+    
+    // ============================================================================================
+    // 実行時情報
+    // ============================================================================================
+    
+    //
     /// <summary>
     /// 経過時間を保持するモデル
     /// </summary>
     public interface ITimeModel
     {
+        public float TimeLength { get; }
         public float CurrentTime { get; }
         public void CountUpTime(float deltaTime);
     }

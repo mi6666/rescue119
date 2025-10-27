@@ -62,7 +62,7 @@ namespace Controller.InGame.Player
             var currentVelocity = PlayerView.CurrentVelocity;
             var frontHit = PlayerView.RayCast(moveInput);
 
-            var lookAt = Constants.Approx8Dir(moveInput);
+            var lookAt = Utility.Approx8Dir(moveInput);
             if (lookAt.TryGetValue(out var value))
             {
                 CurrentLookModel.SetLook(value);

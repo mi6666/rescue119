@@ -37,7 +37,6 @@ namespace View.InGame.Stage
                     if (go != null)
                     {
                         instanceId = go.GetInstanceID();
-                        Debug.Log($"{instanceId}", go);
                     }
 
                     stageTileTips[y, x] = tile.TileType switch

@@ -18,7 +18,6 @@ namespace Controller.InGame.Primary
             IPauseEventView pauseEventView,
             IHpModel hpModel,
             ITimeModel timeModel,
-            IStageSettingModel stageSettingModel,
             CompositeDisposable compositeDisposable,
             IMutStateType<PrimaryStateType> innerState
         ) : base(PrimaryStateType.Normal, innerState)
@@ -29,7 +28,6 @@ namespace Controller.InGame.Primary
             PauseEventView = pauseEventView;
             HpModel = hpModel;
             TimeModel = timeModel;
-            StageSettingModel = stageSettingModel;
             CompositeDisposable = compositeDisposable;
         }
 
@@ -47,7 +45,7 @@ namespace Controller.InGame.Primary
 
             var currentHp = HpModel.CurrentHp;
             var maxHp = HpModel.MaxHp;
-            var remainTime = StageSettingModel.TimeLength - TimeModel.CurrentTime;
+            var remainTime = TimeModel.TimeLength - TimeModel.CurrentTime;
 
             HpUiView.SetHp(currentHp, maxHp);
             TimerView.SetTime(remainTime);
@@ -75,6 +73,5 @@ namespace Controller.InGame.Primary
         private IPauseEventView PauseEventView { get; }
         private IHpModel HpModel { get; }
         private ITimeModel TimeModel { get; }
-        private IStageSettingModel StageSettingModel { get; }
     }
 }

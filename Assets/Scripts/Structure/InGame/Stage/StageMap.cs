@@ -69,7 +69,11 @@ namespace Structure.InGame.Stage
             {
                 for (int x = 0; x < LengthX; x++)
                 {
-                    builder.AppendLine(StageTileTips[y, x].ToString());
+                    var tip = StageTileTips[y, x];
+                    if (tip is not NoneTip)
+                    {
+                        builder.AppendLine(tip.ToString());
+                    }
                 }
             }
 
