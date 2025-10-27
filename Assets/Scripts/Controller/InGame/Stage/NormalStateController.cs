@@ -1,3 +1,4 @@
+using System;
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
 using Interface.ViewInterface.InGame;
@@ -42,9 +43,13 @@ namespace Controller.InGame.Stage
             GimmickEventView.GimmickEventObservable
                 .Subscribe(this, (context, controller) => controller.SpawnRubble(context))
                 .AddTo(CompositeDisposable);
+            Observable.Interval(TimeSpan.FromSeconds(1.0f))
+                .Where(this, (_, controller) => controller.IsInState())
+                .Subscribe(this, (_, controller) => controller.UpdateLogic())
+                .AddTo(CompositeDisposable);
         }
 
-        public override void StateUpdate(float deltaTime)
+        private void UpdateLogic()
         {
             if (StageTileMapModel.StageMaps is null) return;
 
@@ -57,8 +62,7 @@ namespace Controller.InGame.Stage
                     if (!stageMap.GetTip(x, y).TryGetValue(out var tip)) continue;
                     var arg = new UpdateArgument(
                         stageMap,
-                        new Vector2Int(x, y),
-                        deltaTime
+                        new Vector2Int(x, y)
                     );
 
                     switch (tip)
@@ -67,9 +71,9 @@ namespace Controller.InGame.Stage
                             var result = BurnLogic.Update(tipBurnable, arg);
                             foreach (var command in result)
                             {
-                                StageTileView.GetTileView(command.ObjectId);
-                                
-                                // todo: 火をつける
+                                var tileView= StageTileView.GetTileView(command.ObjectId);
+
+                                tileView.ChangeTileState(TileStateType.Burning);
                             }
 
                             break;

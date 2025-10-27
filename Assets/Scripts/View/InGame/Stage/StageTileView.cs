@@ -6,13 +6,14 @@ namespace View.InGame.Stage
 {
     public class StageTileView : MonoBehaviour, IStageTileView
     {
-        private void Awake()
+        private void Start()
         {
             var views = FindObjectsByType<TileTipView>(FindObjectsSortMode.None);
 
             foreach (var tipView in views)
             {
-                TileViews.Add(tipView.GetInstanceID(), tipView);
+                Debug.Log($"{tipView.gameObject.GetInstanceID()}", tipView);
+                TileViews.Add(tipView.gameObject.GetInstanceID(), tipView);
             }
         }
 

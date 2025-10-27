@@ -35,6 +35,11 @@ namespace Structure.InGame.Stage
         }
 
         private bool _isBurning;
+
+        public InnerBurn(bool objectBurn)
+        {
+            _isBurning = objectBurn;
+        }
     }
 
     public record InnerHealth

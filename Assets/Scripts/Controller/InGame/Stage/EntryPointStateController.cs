@@ -5,6 +5,7 @@ using Module.StateMachine;
 using Structure.InGame;
 using Structure.InGame.Stage;
 using UnityEngine;
+using UnityEngine.XR;
 using VContainer.Unity;
 
 namespace Controller.InGame.Stage
@@ -50,6 +51,8 @@ namespace Controller.InGame.Stage
             {
                 Debug.Log(stageMap);
             }
+
+            InnerState.ChangeState(StageStateType.Normal);
         }
 
         private IStageTileMapModel StageTileMapModel { get; }

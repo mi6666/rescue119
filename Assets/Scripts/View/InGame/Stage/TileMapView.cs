@@ -37,16 +37,17 @@ namespace View.InGame.Stage
                     if (go != null)
                     {
                         instanceId = go.GetInstanceID();
+                        Debug.Log($"{instanceId}", go);
                     }
 
                     stageTileTips[y, x] = tile.TileType switch
                     {
                         StageTileType.None => new NoneTip(),
-                        StageTileType.Floor => new FloorTip(new InnerBurn(), new InnerObject(instanceId),
+                        StageTileType.Floor => new FloorTip(new InnerBurn(isBurning), new InnerObject(instanceId),
                             new InnerHealth(objectHealth)),
-                        StageTileType.Wall => new WallTip(new InnerBurn(), new InnerObject(instanceId),
+                        StageTileType.Wall => new WallTip(new InnerBurn(isBurning), new InnerObject(instanceId),
                             new InnerHealth(objectHealth)),
-                        StageTileType.Rubble => new RubbleTip(new InnerBurn(), new InnerObject(instanceId),
+                        StageTileType.Rubble => new RubbleTip(new InnerBurn(isBurning), new InnerObject(instanceId),
                             new InnerHealth(objectHealth)),
                         StageTileType.Hole => new HoleTip(new InnerObject(instanceId), new InnerHealth(objectHealth)),
                         _ => throw new NotImplementedException(),
