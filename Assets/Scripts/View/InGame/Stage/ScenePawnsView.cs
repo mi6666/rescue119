@@ -20,5 +20,10 @@ namespace View.InGame.Stage
         {
             return _pawns;
         }
+
+        public IPawnView FindPawn(int id)
+        {
+            return _pawns.Find(x => x.InstanceId == id);
+        }
     }
 }

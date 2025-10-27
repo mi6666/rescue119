@@ -15,7 +15,8 @@ namespace Structure.InGame
 
     public enum PawnType
     {
-        People
+        People,
+        Fire,
     }
 
     public readonly ref struct LocomotionArgument

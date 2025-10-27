@@ -48,5 +48,6 @@ namespace Interface.ViewInterface.InGame
     public interface IScenePawnsView
     {
         public IReadOnlyList<IPawnView> GetPawns();
+        public IPawnView FindPawn(int id);
     }
 }
