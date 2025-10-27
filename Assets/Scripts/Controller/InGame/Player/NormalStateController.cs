@@ -8,6 +8,7 @@ using Module.StateMachine;
 using R3;
 using Structure.Global;
 using Structure.InGame;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace Controller.InGame.Player
@@ -20,7 +21,9 @@ namespace Controller.InGame.Player
             IDetectPositionView detectPositionView,
             IInput_MoveVectorView moveVectorView,
             IInput_ActionEventView actionEventView,
+            IPlayerAnimatorView playerAnimatorView,
             ICurrentLookModel currentLookModel,
+            ILocomotionModel locomotionModel,
             IStageTileMapPresenter stageTileMapPresenter,
             ILocomotionLogic locomotionLogic,
             CompositeDisposable compositeDisposable,
@@ -31,7 +34,9 @@ namespace Controller.InGame.Player
             DetectPositionView = detectPositionView;
             MoveVectorView = moveVectorView;
             ActionEventView = actionEventView;
+            PlayerAnimatorView = playerAnimatorView;
             CurrentLookModel = currentLookModel;
+            LocomotionModel = locomotionModel;
             StageTileMapPresenter = stageTileMapPresenter;
             LocomotionLogic = locomotionLogic;
             CompositeDisposable = compositeDisposable;
@@ -81,7 +86,12 @@ namespace Controller.InGame.Player
             DebugLogger.Log("calculated velocity", calculatedVelocity.ToString());
 
             PlayerView.ApplyVelocity(calculatedVelocity * deltaTime);
+
+            var walkValue = calculatedVelocity.magnitude / LocomotionModel.MaxSpeed;
+            PlayerAnimatorView.SetFloat("Walk", walkValue); // todo インターフェースに置き換える
         }
+        
+        
 
         private void UpdatePawnDetectorPosition()
         {
@@ -95,8 +105,10 @@ namespace Controller.InGame.Player
         private IInput_MoveVectorView MoveVectorView { get; }
         private IInput_ActionEventView ActionEventView { get; }
         private ICurrentLookModel CurrentLookModel { get; }
+        private ILocomotionModel LocomotionModel { get; }
         private IStageTileMapPresenter StageTileMapPresenter { get; }
         private ILocomotionLogic LocomotionLogic { get; }
         private CompositeDisposable CompositeDisposable { get; }
+        private IPlayerAnimatorView PlayerAnimatorView { get; }
     }
 }
