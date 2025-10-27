@@ -2,6 +2,7 @@
 using Structure.InGame;
 using Structure.InGame.Stage;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace Interface.ViewInterface.InGame
 {
@@ -47,5 +48,12 @@ namespace Interface.ViewInterface.InGame
         public Observable<StairType> StairsEventObservable => GimmickEventObservable
             .Where(x => x is StairContext)
             .Select(x => (x as StairContext)!.EventContext.StairType);
+    }
+
+    public interface IPawnPoolable<T> where T : class
+    {
+        public void SetPool(IObjectPool<T> objectPool);
+
+        public void Spawn(int floor);
     }
 }

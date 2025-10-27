@@ -4,7 +4,7 @@ using Interface.ViewInterface.InGame;
 using UnityEngine;
 using View.InGame.Player;
 
-namespace View.InGame.Stage
+namespace View.InGame.Stage.Pawn
 {
     public class ScenePawnsView : MonoBehaviour, IScenePawnsView
     {

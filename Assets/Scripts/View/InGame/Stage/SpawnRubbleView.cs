@@ -1,6 +1,7 @@
 ﻿using Interface.ViewInterface.InGame;
-﻿using UnityEngine;
-﻿using UnityEngine.Pool;
+using UnityEngine;
+using UnityEngine.Pool;
+using View.InGame.Stage.Pawn;
 
 namespace View.InGame.Stage
 {
@@ -29,17 +30,17 @@ namespace View.InGame.Stage
             return rubble;
         }
 
-        private void OnGetRubble(RubbleView rubbleView)
+        private static void OnGetRubble(RubbleView rubbleView)
         {
             rubbleView.gameObject.SetActive(true);
         }
 
-        private void OnReleaseRubble(RubbleView rubbleView)
+        private static void OnReleaseRubble(RubbleView rubbleView)
         {
             rubbleView.gameObject.SetActive(false);
         }
 
-        private void OnDestroyRubble(RubbleView rubbleView)
+        private static void OnDestroyRubble(RubbleView rubbleView)
         {
             if (rubbleView != null)
             {

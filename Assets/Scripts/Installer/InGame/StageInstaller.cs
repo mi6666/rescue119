@@ -9,6 +9,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using View.InGame.Stage;
+using View.InGame.Stage.Pawn;
 
 namespace Installer.InGame
 {

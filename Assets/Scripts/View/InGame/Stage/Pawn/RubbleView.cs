@@ -1,15 +1,23 @@
+using Interface.ViewInterface.InGame;
+using Structure.InGame;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace View.InGame.Stage
+namespace View.InGame.Stage.Pawn
 {
-    public class RubbleView : MonoBehaviour
+    public class RubbleView : BasePawnView, IPawnPoolable<RubbleView>
     {
         private IObjectPool<RubbleView> _pool;
+        private int _floor;
 
         public void SetPool(IObjectPool<RubbleView> pool)
         {
             _pool = pool;
+        }
+
+        public void Spawn(int floor)
+        {
+            _floor = floor;
         }
 
         private void Release()
@@ -24,5 +32,9 @@ namespace View.InGame.Stage
         {
             Release();
         }
+
+        public override PawnType Type => PawnType.Rubble;
+        public override Vector2Int Size => Vector2Int.one;
+        public override int Floor => _floor;
     }
 }

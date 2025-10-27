@@ -12,6 +12,7 @@ namespace Installer.InGame.Player
     public class PlayerInstaller: InstallerBase
     {
         [SerializeField] private PlayerView playerView;
+        [SerializeField] private PlayerAnimatorView playerAnimatorView;
         [SerializeField] private DetectPositionView detectPositionView;
         [SerializeField] private WaterView waterView;
         [SerializeField] private LocomotionModel locomotionModel;
@@ -19,9 +20,9 @@ namespace Installer.InGame.Player
         
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.Log("VAR");
             // View
             builder.RegisterInstance(playerView).AsImplementedInterfaces();
+            builder.RegisterInstance(playerAnimatorView).AsImplementedInterfaces();
             builder.RegisterInstance(detectPositionView).AsImplementedInterfaces();
             builder.RegisterInstance(waterView).AsImplementedInterfaces();
             

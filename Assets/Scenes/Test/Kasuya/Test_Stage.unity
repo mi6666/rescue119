@@ -806,10 +806,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 7604305329431674094, guid: ccc49c83a35a5d94eb8a6cc0cf232865, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1043,12 +1039,13 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  stageMasterModel: {fileID: 11400000, guid: d239a37819267984a83dce7d769a0b9f, type: 2}
   spawnRubbleView: {fileID: 1555827181}
   eventCompositeView: {fileID: 268862357}
   stageTileView: {fileID: 268862355}
+  scenePawnsView: {fileID: 268862356}
   tileMapViews:
   - {fileID: 1023029531}
-  scenePawnsView: {fileID: 268862356}
 --- !u!4 &2036382974
 Transform:
   m_ObjectHideFlags: 0

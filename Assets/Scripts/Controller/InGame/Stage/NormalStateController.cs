@@ -22,6 +22,7 @@ namespace Controller.InGame.Stage
             IGimmickEventView gimmickEventView,
             ISpawnRubbleView spawnRubbleView,
             IStageTileView stageTileView,
+            IStagePawnModel stagePawnModel,
             IStageTileMapModel stageTileMapModel,
             IStageFloorModel stageFloorModel,
             IStageMasterModel stageMasterModel,
@@ -33,6 +34,7 @@ namespace Controller.InGame.Stage
             GimmickEventView = gimmickEventView;
             SpawnRubbleView = spawnRubbleView;
             StageTileView = stageTileView;
+            StagePawnModel = stagePawnModel;
             StageTileMapModel = stageTileMapModel;
             StageFloorModel = stageFloorModel;
             StageMasterModel = stageMasterModel;
@@ -98,6 +100,7 @@ namespace Controller.InGame.Stage
         private IGimmickEventView GimmickEventView { get; }
         private ISpawnRubbleView SpawnRubbleView { get; }
         private IStageTileView StageTileView { get; }
+        private IStagePawnModel StagePawnModel { get; }
         private IStageTileMapModel StageTileMapModel { get; }
         private IStageFloorModel StageFloorModel { get; }
         private IStageMasterModel StageMasterModel { get; }

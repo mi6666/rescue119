@@ -206,9 +206,10 @@ GameObject:
   - component: {fileID: 8256654763027665143}
   - component: {fileID: 9196397184426248551}
   - component: {fileID: 7049297621115034803}
+  - component: {fileID: 7010527418245181741}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -403,6 +404,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   playerView: {fileID: 8256654763027665143}
+  playerAnimatorView: {fileID: 7010527418245181741}
   detectPositionView: {fileID: 2583464649292206259}
   waterView: {fileID: 5745911544867117455}
   locomotionModel:
@@ -449,3 +451,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362def3e02f148e2bb6180a637b94a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: View::View.OutGame.StageSelect.ClickStageView
+--- !u!114 &7010527418245181741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7604305329431674094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc84aedb8f254e3c8cd174c10690508b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
