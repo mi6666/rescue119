@@ -1,9 +1,10 @@
-using Controller.InGame.Primary;
+﻿using Controller.InGame.Primary;
 using Model.InGame.Player;
 using Model.InGame.Stage;
 using Model.InGame.UserInterface;
 using Structure.InGame;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 using View.InGame.UserInterface.FloorMove;
@@ -14,33 +15,33 @@ using View.InGame.UserInterface.Pause;
 
 namespace Installer.InGame.Primary
 {
-    public class PrimaryInstaller : InstallerBase
+    public class TestInstaller : LifetimeScope
     {
         [SerializeField] private ClearButtonView clearButtonView;
         [SerializeField] private GameOverButtonView gameOverButtonView;
         [SerializeField] private StageSettingModel stageSettingModel;
         [SerializeField] private ExitGameSceneModel exitGameSceneModel;
-        [SerializeField] private NormalUiView normalUiView;
-        [SerializeField] private PauseUiView pauseUiView;
-        [SerializeField] private GameOverUiView gameOverUiView;
-        [SerializeField] private GameClearUiView gameClearUiView;
-        [SerializeField] private FloorMoveUiView floorMoveUiView;
-
+        [SerializeField] private NormalUiFadeView normalUiFadeView;
+        [SerializeField] private PauseUiFadeView pauseUiFadeView;
+        [SerializeField] private GameOverUiFadeView gameOverUiFadeView;
+        [SerializeField] private GameClearUiFadeView gameClearUiFadeView;
+        [FormerlySerializedAs("floorMoveUiView")] [SerializeField] private FloorMoveUiFadeView floorMoveUiFadeView;
+        
         protected override void Configure(IContainerBuilder builder)
         {
             // View
-            builder.RegisterInstance(normalUiView).AsImplementedInterfaces();
-            builder.RegisterInstance(normalUiView.TimerView).AsImplementedInterfaces();
-            builder.RegisterInstance(normalUiView.HpUiView).AsImplementedInterfaces();
-            builder.RegisterInstance(normalUiView.PauseButtonView).AsImplementedInterfaces();
-            builder.RegisterInstance(pauseUiView).AsImplementedInterfaces();
-            builder.RegisterInstance(pauseUiView.ExitPauseButtonView).AsImplementedInterfaces();
-            builder.RegisterInstance(pauseUiView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.Pause);
-            builder.RegisterInstance(gameClearUiView).AsImplementedInterfaces();
-            builder.RegisterInstance(gameClearUiView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameClear);
+            builder.RegisterInstance(normalUiFadeView).AsImplementedInterfaces();
+            builder.RegisterInstance(normalUiFadeView.TimerView).AsImplementedInterfaces();
+            builder.RegisterInstance(normalUiFadeView.HpUiView).AsImplementedInterfaces();
+            builder.RegisterInstance(normalUiFadeView.PauseButtonView).AsImplementedInterfaces();
+            builder.RegisterInstance(pauseUiFadeView).AsImplementedInterfaces();
+            builder.RegisterInstance(pauseUiFadeView.ExitPauseButtonView).AsImplementedInterfaces();
+            builder.RegisterInstance(pauseUiFadeView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.Pause);
+            builder.RegisterInstance(gameClearUiFadeView).AsImplementedInterfaces();
+            builder.RegisterInstance(gameClearUiFadeView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameClear);
             builder.RegisterInstance(clearButtonView).AsImplementedInterfaces();
-            builder.RegisterInstance(gameOverUiView).AsImplementedInterfaces();
-            builder.RegisterInstance(gameOverUiView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameOver);
+            builder.RegisterInstance(gameOverUiFadeView).AsImplementedInterfaces();
+            builder.RegisterInstance(gameOverUiFadeView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameOver);
             builder.RegisterInstance(gameOverButtonView).AsImplementedInterfaces();
             
             // Model

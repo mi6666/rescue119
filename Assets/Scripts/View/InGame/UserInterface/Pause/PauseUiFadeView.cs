@@ -1,30 +1,31 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using Interface.ViewInterface.InGame.UserInterface;
+using Module.FadeContainer.Runtime;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace View.InGame.UserInterface.Pause
 {
-    public class PauseUiView : MonoBehaviour, IPauseUiView
+    public class PauseUiFadeView: MonoBehaviour, IPauseUiFadeView
     {
+        [SerializeField] private FadeContainer fadeContainer;
         [SerializeField] private ExitPauseButtonView exitPauseButtonView;
         [SerializeField] private ExitStageButtonView exitStageButtonView;
-
+        
         public ExitPauseButtonView ExitPauseButtonView => exitPauseButtonView;
         public ExitStageButtonView ExitStageButtonView => exitStageButtonView;
 
-        public UniTask Show()
+        public async UniTask Show()
         {
             exitPauseButtonView.gameObject.SetActive(true);
             exitStageButtonView.gameObject.SetActive(true);
-            return UniTask.CompletedTask;
+            await fadeContainer.FadeIn();
         }
 
-        public UniTask Hide()
+        public async UniTask Hide()
         {
+            await fadeContainer.FadeOut();
             exitPauseButtonView.gameObject.SetActive(false);
             exitStageButtonView.gameObject.SetActive(false);
-            return UniTask.CompletedTask;
         }
     }
 }

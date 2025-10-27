@@ -9,6 +9,12 @@ namespace Interface.ViewInterface.InGame.UserInterface
         public UniTask Hide();
     }
 
+    public interface INormalUiFadeView
+    {
+        public UniTask Show();
+        public UniTask Hide();
+    }
+
     public interface ITimerView
     {
         public void SetTime(float time);
