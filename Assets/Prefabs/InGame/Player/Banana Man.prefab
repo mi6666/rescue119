@@ -217,7 +217,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 81bb9eea30387e442899949a80011e55, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3580539408159770045}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 81bb9eea30387e442899949a80011e55, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9088237312209977723}
   m_SourcePrefab: {fileID: 100100000, guid: 81bb9eea30387e442899949a80011e55, type: 3}
+--- !u!95 &101284066252621188 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 81bb9eea30387e442899949a80011e55, type: 3}
+  m_PrefabInstance: {fileID: 5768338147425761301}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6307284160618225662 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81bb9eea30387e442899949a80011e55, type: 3}
@@ -347,6 +355,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   playerView: {fileID: 1403894452840604294}
+  playerAnimatorView: {fileID: 9088237312209977723}
   detectPositionView: {fileID: 4453525631053228345}
   waterView: {fileID: 3757490851057176275}
   locomotionModel:
@@ -393,3 +402,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362def3e02f148e2bb6180a637b94a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9088237312209977723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6686764808339490116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc84aedb8f254e3c8cd174c10690508b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 101284066252621188}
