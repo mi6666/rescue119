@@ -1,4 +1,5 @@
 using Controller.InGame.Player;
+using Interface.ModelInterface.InGame;
 using Logic.InGame.Player;
 using Logic.InGame.Stage;
 using Model.InGame.Player;
@@ -17,6 +18,7 @@ namespace Installer.InGame.Player
         [SerializeField] private WaterView waterView;
         [SerializeField] private LocomotionModel locomotionModel;
         [SerializeField] private ActionModel actionModel;
+        [SerializeField] private PlayerMasterData playerMasterData;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -25,6 +27,7 @@ namespace Installer.InGame.Player
             builder.RegisterInstance(playerAnimatorView).AsImplementedInterfaces();
             builder.RegisterInstance(detectPositionView).AsImplementedInterfaces();
             builder.RegisterInstance(waterView).AsImplementedInterfaces();
+            builder.RegisterInstance(playerMasterData).AsImplementedInterfaces();
             
             // Model
             builder.RegisterInstance(locomotionModel).AsImplementedInterfaces();
