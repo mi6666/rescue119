@@ -1,4 +1,5 @@
 ﻿using System;
+using Structure.InGame;
 using Structure.InGame.Stage;
 
 namespace Interface.ModelInterface.InGame
@@ -48,6 +49,16 @@ namespace Interface.ModelInterface.InGame
         public int CurrentFloor { get; }
 
         public void SetFloor(int floor);
+    }
+
+    /// <summary>
+    /// フロア移動時の情報を保持する
+    /// </summary>
+    public interface IFloorMoveContextModel
+    {
+        public StairType StairType { get; }
+
+        public void SetContext(StairType stairType);
     }
 
     /// <summary>

@@ -37,7 +37,7 @@ namespace Controller.InGame.Player
         {
             var detectPosition = DetectPositionView.DetectPosition;
             var currentFloor = StageFloorModel.CurrentFloor;
-            var detectGridPosition = StageTileMapPresenter.ToMapIndex(currentFloor, detectPosition);
+            var detectGridPosition = StageTileMapPresenter.PositionToMapIndex(currentFloor, detectPosition);
             var castResult =
                 GridCastLogic.CastGridFirst(currentFloor, detectGridPosition, Vector2Int.one, CastTargetType.Pawn);
 

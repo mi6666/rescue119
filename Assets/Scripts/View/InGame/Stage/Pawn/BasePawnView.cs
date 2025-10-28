@@ -10,7 +10,7 @@ namespace View.InGame.Stage.Pawn
     /// </summary>
     public abstract class BasePawnView : MonoBehaviour, IPawnView
     {
-        [SerializeField, AutoAssign] protected GameObject selfObject;
+        [SerializeField] protected GameObject selfObject;
         [SerializeField, AutoAssign] protected Transform selfTransform;
 
         public int InstanceId => selfObject.GetInstanceID();
@@ -24,10 +24,6 @@ namespace View.InGame.Stage.Pawn
         public void SetPool(IPawnPool pawnPool)
         {
             PawnPool = pawnPool;
-        }
-
-        public virtual void SetFloor(int floor)
-        {
         }
     }
 }

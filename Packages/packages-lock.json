@@ -328,6 +328,16 @@
       },
       "url": "https://package.openupm.com"
     },
+    "org.nuget.microsoft.bcl.memory": {
+      "version": "9.0.9",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.memory": "4.5.5",
+        "org.nuget.system.runtime.compilerservices.unsafe": "6.0.0"
+      },
+      "url": "https://package.openupm.com"
+    },
     "org.nuget.microsoft.bcl.timeprovider": {
       "version": "8.0.0",
       "depth": 1,
@@ -352,7 +362,7 @@
       "url": "https://package.openupm.com"
     },
     "org.nuget.system.buffers": {
-      "version": "4.5.1",
+      "version": "4.6.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
@@ -366,25 +376,25 @@
       "url": "https://package.openupm.com"
     },
     "org.nuget.system.memory": {
-      "version": "4.5.5",
+      "version": "4.6.3",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "org.nuget.system.buffers": "4.5.1",
-        "org.nuget.system.numerics.vectors": "4.4.0",
-        "org.nuget.system.runtime.compilerservices.unsafe": "4.5.3"
+        "org.nuget.system.buffers": "4.6.1",
+        "org.nuget.system.numerics.vectors": "4.6.1",
+        "org.nuget.system.runtime.compilerservices.unsafe": "6.1.2"
       },
       "url": "https://package.openupm.com"
     },
     "org.nuget.system.numerics.vectors": {
-      "version": "4.4.0",
+      "version": "4.6.1",
       "depth": 2,
       "source": "registry",
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
     "org.nuget.system.runtime.compilerservices.unsafe": {
-      "version": "6.0.0",
+      "version": "6.1.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
@@ -405,6 +415,18 @@
       "source": "registry",
       "dependencies": {
         "org.nuget.system.runtime.compilerservices.unsafe": "4.5.3"
+      },
+      "url": "https://package.openupm.com"
+    },
+    "org.nuget.zlinq": {
+      "version": "1.5.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.microsoft.bcl.memory": "9.0.9",
+        "org.nuget.system.buffers": "4.6.1",
+        "org.nuget.system.memory": "4.6.3",
+        "org.nuget.system.runtime.compilerservices.unsafe": "6.1.2"
       },
       "url": "https://package.openupm.com"
     },

@@ -16,7 +16,7 @@ namespace Installer.InGame
     public class StageInstaller : InstallerBase
     {
         [SerializeField] private StageMasterModel stageMasterModel;
-        [SerializeField] private SpawnRubbleView spawnRubbleView;
+        [SerializeField] private RubbleFactoryView rubbleFactoryView;
         [SerializeField] private EventCompositeView eventCompositeView;
         [SerializeField] private StageTileView stageTileView;
         [SerializeField] private ScenePawnsView scenePawnsView;
@@ -27,7 +27,7 @@ namespace Installer.InGame
             var converted = tileMapViews.Select(x => x as IStageTileMapView).ToList();
             // View
             builder.RegisterInstance(converted).AsImplementedInterfaces();
-            builder.RegisterInstance(spawnRubbleView).AsImplementedInterfaces();
+            builder.RegisterInstance(rubbleFactoryView).AsImplementedInterfaces();
             builder.RegisterInstance(eventCompositeView).AsImplementedInterfaces();
             builder.RegisterInstance(stageTileView).AsImplementedInterfaces();
             builder.RegisterInstance(scenePawnsView).AsImplementedInterfaces();
@@ -42,7 +42,7 @@ namespace Installer.InGame
             builder.Register<StageMapPresenter>(Lifetime.Singleton).AsImplementedInterfaces();
 
             // Logic
-            builder.Register<FloorLogic>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<BurnLogic>(Lifetime.Singleton).AsImplementedInterfaces();
 
             // Controller
             builder.Register<StageStateEntity>(Lifetime.Singleton).AsImplementedInterfaces();

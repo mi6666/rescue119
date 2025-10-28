@@ -48,11 +48,22 @@ namespace Interface.ViewInterface.InGame
     }
 
     /// <summary>
+    /// 動的に配置される`Pawn`のインターフェース
+    /// </summary>
+    public interface IFactorablePawnView
+    {
+        public void SetFloor(int newFloor);
+    }
+
+    /// <summary>
     /// シーンに存在する全てのPawnを取得するインターフェース
     /// </summary>
     public interface IScenePawnsView
     {
         public IReadOnlyList<IPawnView> GetPawns();
         public IPawnView FindPawn(int id);
+
+        public void AddPawn(IPawnView pawnView);
+        public void RemovePawn(int id);
     }
 }

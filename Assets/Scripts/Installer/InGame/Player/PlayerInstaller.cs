@@ -33,7 +33,6 @@ namespace Installer.InGame.Player
             
             // Logic
             builder.Register<LocomotionLogic>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<GridCastLogic>(Lifetime.Singleton).AsImplementedInterfaces();
             
             // Controller
             builder.Register<PlayerStateEntity>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();

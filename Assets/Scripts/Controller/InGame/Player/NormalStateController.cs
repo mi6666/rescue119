@@ -8,7 +8,6 @@ using Module.StateMachine;
 using R3;
 using Structure.Global;
 using Structure.InGame;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace Controller.InGame.Player
@@ -96,7 +95,7 @@ namespace Controller.InGame.Player
         private void UpdatePawnDetectorPosition()
         {
             var detectorPosition = PlayerView.Position + CurrentLookModel.LookTo;
-            var refinedPosition = StageTileMapPresenter.ToMapPosition(0, detectorPosition);
+            var refinedPosition = StageTileMapPresenter.AlignToMapPosition(0, detectorPosition);
             DetectPositionView.SetPosition(refinedPosition);
         }
 

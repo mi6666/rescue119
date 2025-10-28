@@ -5,7 +5,6 @@ using Module.StateMachine;
 using Structure.InGame;
 using Structure.InGame.Stage;
 using UnityEngine;
-using UnityEngine.XR;
 using VContainer.Unity;
 
 namespace Controller.InGame.Stage
@@ -36,10 +35,11 @@ namespace Controller.InGame.Stage
             for (var i = 0; i < pawns.Count; i++)
             {
                 var pawnView = pawns[i];
-                var gridPosition = StageTileMapPresenter.ToMapIndex(pawnView.Floor, pawnView.Position);
+                var gridPosition = StageTileMapPresenter.PositionToMapIndex(pawnView.Floor, pawnView.Position);
 
                 var gridCollider = new GridCollider(
                     pawnView.InstanceId,
+                    pawnView.Type,
                     pawnView.Floor,
                     gridPosition,
                     pawnView.Size

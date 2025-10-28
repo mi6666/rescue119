@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Interface.ViewInterface.InGame;
 using UnityEngine;
 
 namespace View.InGame.Stage.Pawn
@@ -41,7 +42,10 @@ namespace View.InGame.Stage.Pawn
             }
 
             pawn.gameObject.SetActive(true);
-            pawn.SetFloor(floor);
+            if (pawn is IFactorablePawnView factorable)
+            {
+                factorable.SetFloor(floor);
+            }
 
             return pawn;
         }

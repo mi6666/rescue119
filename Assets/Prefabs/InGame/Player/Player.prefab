@@ -400,7 +400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Installer.InGame.Player.PlayerInstaller
   parentReference:
-    TypeName: Installer.InGame.StageInstaller
+    TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
   playerView: {fileID: 8256654763027665143}

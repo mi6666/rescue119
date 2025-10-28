@@ -7,6 +7,6 @@
         // ===========================================================
         // `ScriptableObject`用メニュー階層
         // ===========================================================
-        public const string MasterModelDiv = "MasterModel/";
+        public const string MasterDataDiv = "MasterData/";
     }
 }

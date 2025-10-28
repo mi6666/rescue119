@@ -1,23 +1,28 @@
 ﻿using Cysharp.Threading.Tasks;
 using Interface.ModelInterface.InGame;
+using Interface.ViewInterface.InGame;
 using Interface.ViewInterface.InGame.UserInterface;
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
+using VContainer;
 using VContainer.Unity;
 
 namespace Controller.InGame.Primary
 {
     public class NormalStateController : PrimaryStateBehaviour, IStartable
     {
+        [Inject]
         public NormalStateController
         (
             INormalUiView normalUiView,
             IHpUiView hpUiView,
             ITimerView timerView,
             IPauseEventView pauseEventView,
+            IStairEventView stairEventView,
             IHpModel hpModel,
             ITimeModel timeModel,
+            IFloorMoveContextModel floorMoveContextModel,
             CompositeDisposable compositeDisposable,
             IMutStateType<PrimaryStateType> innerState
         ) : base(PrimaryStateType.Normal, innerState)
@@ -26,8 +31,10 @@ namespace Controller.InGame.Primary
             HpUiView = hpUiView;
             TimerView = timerView;
             PauseEventView = pauseEventView;
+            StairEventView = stairEventView;
             HpModel = hpModel;
             TimeModel = timeModel;
+            FloorMoveContextModel = floorMoveContextModel;
             CompositeDisposable = compositeDisposable;
         }
 
@@ -36,6 +43,14 @@ namespace Controller.InGame.Primary
             PauseEventView.PauseEventObservable
                 .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (_, controller) => controller.OnPause())
+                .AddTo(CompositeDisposable);
+            StairEventView.StairsEventObservable
+                .Where(this, (_, controller) => controller.IsInState())
+                .Subscribe(this, (type, controller) =>
+                {
+                    controller.FloorMoveContextModel.SetContext(type);
+                    controller.InnerState.ChangeState(PrimaryStateType.FloorMove);
+                })
                 .AddTo(CompositeDisposable);
         }
 
@@ -71,7 +86,9 @@ namespace Controller.InGame.Primary
         private IHpUiView HpUiView { get; }
         private ITimerView TimerView { get; }
         private IPauseEventView PauseEventView { get; }
+        private IStairEventView StairEventView { get; }
         private IHpModel HpModel { get; }
         private ITimeModel TimeModel { get; }
+        private IFloorMoveContextModel FloorMoveContextModel { get; }
     }
 }

@@ -7,7 +7,7 @@ namespace Model.InGame.Stage
     [CreateAssetMenu(fileName = nameof(StageMasterModel), menuName = MenuName)]
     public class StageMasterModel : ScriptableObject, IStageMasterModel
     {
-        private const string MenuName = Constants.MasterModelDiv + nameof(StageMasterModel);
+        private const string MenuName = Constants.MasterDataDiv + nameof(StageMasterModel);
 
         [SerializeField] private float timeLength;
         [SerializeField] private int maxFloorNum;

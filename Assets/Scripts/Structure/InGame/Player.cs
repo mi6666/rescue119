@@ -29,7 +29,7 @@ namespace Structure.InGame
         /// 瓦礫
         /// </summary>
         Rubble,
-
+        
         /// <summary>
         /// 特に動かないオブジェクト
         /// </summary>

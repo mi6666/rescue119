@@ -28,14 +28,19 @@ namespace Presenter.InGame.Stage
             return StageMaps;
         }
 
-        public Vector2 ToMapPosition(int floor, Vector2 position)
+        public Vector2 AlignToMapPosition(int floor, Vector2 position)
         {
-            return StageTileMapViews[floor].ConvertToMapPosition(position);
+            return StageTileMapViews[floor].AlignToMapPosition(position);
         }
 
-        public Vector2Int ToMapIndex(int floor, Vector2 position)
+        public Vector2 IndexToMapPosition(int floor, Vector2Int index)
         {
-            return StageTileMapViews[floor].WorldToCell(position);
+            return StageTileMapViews[floor].IndexToMapPosition(index);
+        }
+
+        public Vector2Int PositionToMapIndex(int floor, Vector2 position)
+        {
+            return StageTileMapViews[floor].PositionToMapIndex(position);
         }
 
         private StageMap[] StageMaps { get; }
