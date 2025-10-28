@@ -152,8 +152,8 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  stageMasterModel: {fileID: 0}
-  spawnRubbleView: {fileID: 1569575957}
+  stageMasterModel: {fileID: 11400000, guid: d239a37819267984a83dce7d769a0b9f, type: 2}
+  rubbleFactoryView: {fileID: 1569575957}
   eventCompositeView: {fileID: 1168571416}
   stageTileView: {fileID: 1168571417}
   scenePawnsView: {fileID: 1168571415}
@@ -175,6 +175,16 @@ Transform:
   - {fileID: 1569575958}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &483412980 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 101284066252621188, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+  m_PrefabInstance: {fileID: 95877127335579165}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &710204936 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7295621056180168528, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+  m_PrefabInstance: {fileID: 95877127335579165}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1041680098
 GameObject:
   m_ObjectHideFlags: 0
@@ -753,7 +763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 743acab5ed6e466f8e67303608b3bd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rubbleViewPrefab: {fileID: 3551095548488871197, guid: 795567d0828712042b51856e5fe9c677, type: 3}
+  pawnPrefabMasterView: {fileID: 11400000, guid: b3676f9190de2824cbabfb3adee0802e, type: 2}
 --- !u!4 &1569575958
 Transform:
   m_ObjectHideFlags: 0
@@ -777,6 +787,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 624407157938979011, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 483412980}
+    - target: {fileID: 4453525631053228345, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: selfTransform
+      value: 
+      objectReference: {fileID: 710204936}
+    - target: {fileID: 5771060554614565830, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: playerMasterData
+      value: 
+      objectReference: {fileID: 11400000, guid: f0e3005afa8e61f45b2949deae8e0059, type: 2}
     - target: {fileID: 6307284160618225662, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.333721

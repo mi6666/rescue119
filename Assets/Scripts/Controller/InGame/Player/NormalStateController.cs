@@ -23,6 +23,7 @@ namespace Controller.InGame.Player
             IPlayerAnimatorView playerAnimatorView,
             ICurrentLookModel currentLookModel,
             ILocomotionModel locomotionModel,
+            IPlayerAnimationParameterKeyModel playerAnimationParameterKeyModel,
             IStageTileMapPresenter stageTileMapPresenter,
             ILocomotionLogic locomotionLogic,
             CompositeDisposable compositeDisposable,
@@ -36,6 +37,7 @@ namespace Controller.InGame.Player
             PlayerAnimatorView = playerAnimatorView;
             CurrentLookModel = currentLookModel;
             LocomotionModel = locomotionModel;
+            PlayerAnimationParameterKeyModel = playerAnimationParameterKeyModel;
             StageTileMapPresenter = stageTileMapPresenter;
             LocomotionLogic = locomotionLogic;
             CompositeDisposable = compositeDisposable;
@@ -59,6 +61,9 @@ namespace Controller.InGame.Player
             Locomotion(deltaTime);
             UpdatePawnDetectorPosition();
         }
+        
+        
+        
 
         private void Locomotion(float deltaTime)
         {
@@ -87,7 +92,8 @@ namespace Controller.InGame.Player
             PlayerView.ApplyVelocity(calculatedVelocity * deltaTime);
 
             var walkValue = calculatedVelocity.magnitude / LocomotionModel.MaxSpeed;
-            PlayerAnimatorView.SetFloat("Walk", walkValue); // todo インターフェースに置き換える
+            
+            PlayerAnimatorView.SetFloat(PlayerAnimationParameterKeyModel.Key, walkValue); 
         }
         
         
@@ -109,5 +115,6 @@ namespace Controller.InGame.Player
         private ILocomotionLogic LocomotionLogic { get; }
         private CompositeDisposable CompositeDisposable { get; }
         private IPlayerAnimatorView PlayerAnimatorView { get; }
+        private IPlayerAnimationParameterKeyModel PlayerAnimationParameterKeyModel { get; }
     }
 }
