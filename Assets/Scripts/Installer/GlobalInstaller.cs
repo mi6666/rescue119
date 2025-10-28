@@ -1,4 +1,5 @@
 using System;
+using Interface.ModelInterface.InGame;
 using Logic.InGame.Stage;
 using Model.InGame.Stage;
 using Model.OutGame.StageSelect;
@@ -24,11 +25,13 @@ namespace Installer
             builder.Register<InputWrapper>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<SceneLoaderView>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<EmptyPawnsView>(Lifetime.Transient).AsImplementedInterfaces();
+            builder.Register<EmptyStairEventView>(Lifetime.Transient).AsImplementedInterfaces();
             
             // Model
             builder.Register<StageInfoModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<StageFloorModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<StagePawnModel>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<FloorMoveContextModel>(Lifetime.Singleton).AsImplementedInterfaces();
             
             // Presenter
             builder.Register<ScenePresenter>(Lifetime.Singleton).AsImplementedInterfaces();
