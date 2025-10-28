@@ -439,6 +439,7 @@ MonoBehaviour:
     reverseAngleThreshold: 100
   actionModel:
     actionLength: 0.25
+  playerMasterData: {fileID: 11400000, guid: f0e3005afa8e61f45b2949deae8e0059, type: 2}
 --- !u!114 &7049297621115034803
 MonoBehaviour:
   m_ObjectHideFlags: 0
