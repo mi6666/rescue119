@@ -37,7 +37,6 @@ namespace View.InGame.Stage
                     if (go != null)
                     {
                         instanceId = go.GetInstanceID();
-                        Debug.Log($"{instanceId}", go);
                     }
 
                     stageTileTips[y, x] = tile.TileType switch
@@ -58,17 +57,34 @@ namespace View.InGame.Stage
             return new StageMap(stageTileTips);
         }
 
-        public Vector2 ConvertToMapPosition(Vector2 position)
+        /// <summary>
+        /// タイルマップのセルに座標を揃える
+        /// </summary>
+        public Vector2 AlignToMapPosition(Vector2 position)
         {
-            Vector2 alignToCenter = new Vector2(0.5f, 0.5f);
+            var anchor = tilemap.tileAnchor;
             var cellPosition = tilemap.WorldToCell(position);
-            return new Vector2(cellPosition.x, cellPosition.y) + alignToCenter;
+            return new Vector2(cellPosition.x + anchor.x, cellPosition.y + anchor.y);
         }
 
-        public Vector2Int WorldToCell(Vector2 worldPosition)
+        /// <summary>
+        /// `StageMap`のインデックスから、ワールド座標を算出する
+        /// </summary>
+        public Vector2 IndexToMapPosition(Vector2Int index)
+        {
+            var bounds = tilemap.cellBounds;
+            var cellPosition = new Vector3Int(index.x + bounds.x, index.y + bounds.y, 0);
+            return tilemap.GetCellCenterWorld(cellPosition);
+        }
+
+        /// <summary>
+        /// ワールド座標から`StageMap`へのインデックスに変換する
+        /// </summary>
+        public Vector2Int PositionToMapIndex(Vector2 worldPosition)
         {
             var cellPosition = tilemap.WorldToCell(worldPosition);
-            return new Vector2Int(cellPosition.x, cellPosition.y);
+            var bounds = tilemap.cellBounds;
+            return new Vector2Int(cellPosition.x - bounds.x, cellPosition.y - bounds.y);
         }
     }
 }

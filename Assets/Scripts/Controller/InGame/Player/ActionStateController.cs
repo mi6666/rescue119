@@ -16,6 +16,7 @@ namespace Controller.InGame.Player
         (
             IWaterView waterView,
             IDetectPositionView detectPositionView,
+            IScenePawnsView scenePawnsView,
             IActionLengthModel actionLengthModel,
             IStageFloorModel stageFloorModel,
             IStageTileMapPresenter stageTileMapPresenter,
@@ -25,6 +26,7 @@ namespace Controller.InGame.Player
         {
             WaterView = waterView;
             DetectPositionView = detectPositionView;
+            ScenePawnsView = scenePawnsView;
             ActionLengthModel = actionLengthModel;
             StageFloorModel = stageFloorModel;
             StageTileMapPresenter = stageTileMapPresenter;
@@ -35,18 +37,24 @@ namespace Controller.InGame.Player
         {
             var detectPosition = DetectPositionView.DetectPosition;
             var currentFloor = StageFloorModel.CurrentFloor;
-            var detectGridPosition = StageTileMapPresenter.ToMapIndex(currentFloor, detectPosition);
+            var detectGridPosition = StageTileMapPresenter.PositionToMapIndex(currentFloor, detectPosition);
             var castResult =
                 GridCastLogic.CastGridFirst(currentFloor, detectGridPosition, Vector2Int.one, CastTargetType.Pawn);
 
-
-            if (!castResult.TryGetValue(out var value))
+            if (castResult.TryGetValue(out var value))
             {
-                SpawnWater().Forget();
+                var pawn = ScenePawnsView.FindPawn(value.PawnId);
+                if (pawn is not null)
+                {
+                    if (pawn.Type == PawnType.People)
+                    {
+                        InnerState.ChangeState(PlayerStateType.Holding);
+                        return;
+                    }
+                }
             }
 
-            Debug.Log($"get {value.ToString()}");
-            InnerState.ChangeState(PlayerStateType.Holding);
+            SpawnWater().Forget();
         }
 
         public override void OnExit()
@@ -66,6 +74,7 @@ namespace Controller.InGame.Player
 
         private IWaterView WaterView { get; }
         private IDetectPositionView DetectPositionView { get; }
+        private IScenePawnsView ScenePawnsView { get; }
         private IActionLengthModel ActionLengthModel { get; }
         private IStageFloorModel StageFloorModel { get; }
         private IStageTileMapPresenter StageTileMapPresenter { get; }

@@ -1,23 +1,41 @@
-using System;
-using System.Text;
+using Module.Option.Runtime;
+using UnityEngine;
 
 namespace Structure.Global
 {
     public static class Utility
     {
-        public static string ToString<T>(this ReadOnlySpan<T> span)
+        public static Option<Vector2> Approx8Dir(Vector2 v)
         {
-            var builder = new StringBuilder(typeof(T).Name);
+            if (Vector2.SqrMagnitude(v) <= Constants.Threshold) return Option<Vector2>.None();
 
-            builder.Append("{");
-            foreach (var value in span)
+            var bestDir = Vector2.zero;
+            var maxDot = -Mathf.Infinity;
+            var n = v.normalized;
+
+            foreach (var d in Dirs)
             {
-                builder.Append(value);
-                builder.Append(",");
+                float dot = Vector2.Dot(n, d.normalized);
+                if (dot > maxDot)
+                {
+                    maxDot = dot;
+                    bestDir = d;
+                }
             }
-            builder.Append("}");
 
-            return builder.ToString();
+            return Option<Vector2>.Some(bestDir);
         }
+
+        private static readonly Vector2[] Dirs = new Vector2[]
+        {
+            new Vector2(1, 0), // right
+            new Vector2(1, 1), // up-right
+            new Vector2(0, 1), // up
+            new Vector2(-1, 1), // up-left
+            new Vector2(-1, 0), // left
+            new Vector2(-1, -1), // down-left
+            new Vector2(0, -1), // down
+            new Vector2(1, -1), // down-right
+        };
     }
 }

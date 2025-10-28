@@ -6,6 +6,7 @@ namespace Structure.InGame.Stage
     public readonly struct GridCollider
     {
         public int PawnId { get; }
+        public PawnType PawnType { get; }
         public int Floor { get; }
         public Vector2Int Position { get; }
         public Vector2Int Size { get; }
@@ -13,12 +14,14 @@ namespace Structure.InGame.Stage
         public GridCollider
         (
             int pawnId,
+            PawnType pawnType,
             int floor,
             Vector2Int position,
             Vector2Int size
         )
         {
             PawnId = pawnId;
+            PawnType = pawnType;
             Floor = floor;
             Position = position;
             Size = size;
@@ -30,6 +33,7 @@ namespace Structure.InGame.Stage
             builder.Append("{");
 
             Append(nameof(PawnId), PawnId.ToString());
+            Append(nameof(PawnType), PawnType.ToString());
             Append(nameof(Floor), Floor.ToString());
             Append(nameof(Position), Position.ToString());
             Append(nameof(Size), Size.ToString());

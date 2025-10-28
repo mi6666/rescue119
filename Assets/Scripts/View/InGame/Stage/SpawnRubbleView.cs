@@ -1,56 +1,34 @@
-﻿using Interface.ViewInterface.InGame;
-﻿using UnityEngine;
-﻿using UnityEngine.Pool;
+﻿using System;
+using Interface.ViewInterface.InGame;
+using Structure.InGame;
+using UnityEngine;
+using View.InGame.Stage.Pawn;
 
 namespace View.InGame.Stage
 {
-    public class SpawnRubbleView : MonoBehaviour, ISpawnRubbleView
+    public class RubbleFactoryView : MonoBehaviour, IRubbleFactoryView
     {
-        [SerializeField] private RubbleView rubbleViewPrefab;
+        [SerializeField] private PawnPrefabMasterView pawnPrefabMasterView;
 
-        private IObjectPool<RubbleView> _pool;
+        private PawnPool[] _pawnPools;
 
-        private void Awake()
+        private void Start()
         {
-            _pool = new ObjectPool<RubbleView>(
-                CreateRubble,
-                OnGetRubble,
-                OnReleaseRubble,
-                OnDestroyRubble,
-                collectionCheck: true,
-                defaultCapacity: 10,
-                maxSize: 20);
-        }
-
-        private RubbleView CreateRubble()
-        {
-            var rubble = Instantiate(rubbleViewPrefab);
-            rubble.SetPool(_pool);
-            return rubble;
-        }
-
-        private void OnGetRubble(RubbleView rubbleView)
-        {
-            rubbleView.gameObject.SetActive(true);
-        }
-
-        private void OnReleaseRubble(RubbleView rubbleView)
-        {
-            rubbleView.gameObject.SetActive(false);
-        }
-
-        private void OnDestroyRubble(RubbleView rubbleView)
-        {
-            if (rubbleView != null)
+            var values = Enum.GetValues(typeof(PawnType));
+            var len = values.Length;
+            _pawnPools = new PawnPool[len];
+            for (int i = 0; i < len; i++)
             {
-                Destroy(rubbleView.gameObject);
+                var pawn = pawnPrefabMasterView.GetPawns((PawnType)i);
+                _pawnPools[i] = new PawnPool(pawn, 32);
             }
         }
 
-        public void Spawn(Vector2 position)
+        public IPawnView Spawn(int floor, Vector2 position, PawnType type)
         {
-            var rubble = _pool.Get();
+            var rubble = _pawnPools[(int)type].Spawn(floor);
             rubble.transform.position = position;
+            return rubble;
         }
     }
 }

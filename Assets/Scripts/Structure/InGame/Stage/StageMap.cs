@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using Module.Option.Runtime;
+using UnityEngine;
 
 namespace Structure.InGame.Stage
 {
@@ -12,13 +13,13 @@ namespace Structure.InGame.Stage
         )
         {
             StageTileTips = stageTileTips;
-            TempBuffer = new TipBase[4];
+            TempBuffer = new (Vector2Int, TipBase)[4];
         }
 
         public Option<TipBase> GetTip(int x, int y)
         {
-            if (x < 0 || x >= StageTileTips.GetLength(0) ||
-                y < 0 || y >= StageTileTips.GetLength(1))
+            if (x < 0 || x >= LengthX ||
+                y < 0 || y >= LengthY)
             {
                 return Option<TipBase>.None();
             }
@@ -26,10 +27,10 @@ namespace Structure.InGame.Stage
             return Option<TipBase>.Some(StageTileTips[y, x]);
         }
 
-        public ReadOnlySpan<TipBase> GetAroundTips(int x, int y)
+        public ReadOnlySpan<(Vector2Int, TipBase)> GetAround4Tips(int x, int y)
         {
             var getCount = 0;
-            foreach (var (dx, dy) in Around)
+            foreach (var (dx, dy) in Around4)
             {
                 var cursorX = x + dx;
                 var cursorY = y + dy;
@@ -40,7 +41,7 @@ namespace Structure.InGame.Stage
                     continue;
                 }
 
-                TempBuffer[getCount] = tileTip;
+                TempBuffer[getCount] = (new Vector2Int(cursorX, cursorY), tileTip);
                 getCount++;
             }
 
@@ -50,7 +51,7 @@ namespace Structure.InGame.Stage
         public int LengthX => StageTileTips.GetLength(1);
         public int LengthY => StageTileTips.GetLength(0);
 
-        private (int, int)[] Around { get; } = new[]
+        private (int, int)[] Around4 { get; } = new[]
         {
             (1, 0),
             (0, 1),
@@ -58,7 +59,7 @@ namespace Structure.InGame.Stage
             (0, -1),
         };
 
-        private TipBase[] TempBuffer { get; }
+        private (Vector2Int, TipBase)[] TempBuffer { get; }
         private TipBase[,] StageTileTips { get; }
 
         public override string ToString()
@@ -69,7 +70,11 @@ namespace Structure.InGame.Stage
             {
                 for (int x = 0; x < LengthX; x++)
                 {
-                    builder.AppendLine(StageTileTips[y, x].ToString());
+                    var tip = StageTileTips[y, x];
+                    if (tip is not NoneTip)
+                    {
+                        builder.AppendLine($"position: ({x}, {y}), {tip}");
+                    }
                 }
             }
 

@@ -6,6 +6,7 @@ using Structure.InGame;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using View.InGame.UserInterface.FloorMove;
 using View.InGame.UserInterface.GameClear;
 using View.InGame.UserInterface.GameOver;
 using View.InGame.UserInterface.Normal;
@@ -17,12 +18,13 @@ namespace Installer.InGame.Primary
     {
         [SerializeField] private ClearButtonView clearButtonView;
         [SerializeField] private GameOverButtonView gameOverButtonView;
-        [SerializeField] private StageSettingModel stageSettingModel;
+        [SerializeField] private StageMasterModel stageMasterModel;
         [SerializeField] private ExitGameSceneModel exitGameSceneModel;
         [SerializeField] private NormalUiView normalUiView;
         [SerializeField] private PauseUiView pauseUiView;
         [SerializeField] private GameOverUiView gameOverUiView;
         [SerializeField] private GameClearUiView gameClearUiView;
+        [SerializeField] private FloorMoveUiView floorMoveUiView;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -42,7 +44,7 @@ namespace Installer.InGame.Primary
             builder.RegisterInstance(gameOverButtonView).AsImplementedInterfaces();
             
             // Model
-            builder.RegisterInstance(stageSettingModel).AsImplementedInterfaces();
+            builder.RegisterInstance(stageMasterModel).AsImplementedInterfaces();
             builder.RegisterInstance(exitGameSceneModel).AsImplementedInterfaces();
             builder.Register<HpModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<TimeModel>(Lifetime.Singleton).AsImplementedInterfaces();

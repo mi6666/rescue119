@@ -1,24 +1,28 @@
 ﻿using Cysharp.Threading.Tasks;
 using Interface.ModelInterface.InGame;
+using Interface.ViewInterface.InGame;
 using Interface.ViewInterface.InGame.UserInterface;
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
+using VContainer;
 using VContainer.Unity;
 
 namespace Controller.InGame.Primary
 {
     public class NormalStateController : PrimaryStateBehaviour, IStartable
     {
+        [Inject]
         public NormalStateController
         (
             INormalUiView normalUiView,
             IHpUiView hpUiView,
             ITimerView timerView,
             IPauseEventView pauseEventView,
+            IStairEventView stairEventView,
             IHpModel hpModel,
             ITimeModel timeModel,
-            IStageSettingModel stageSettingModel,
+            IFloorMoveContextModel floorMoveContextModel,
             CompositeDisposable compositeDisposable,
             IMutStateType<PrimaryStateType> innerState
         ) : base(PrimaryStateType.Normal, innerState)
@@ -27,9 +31,10 @@ namespace Controller.InGame.Primary
             HpUiView = hpUiView;
             TimerView = timerView;
             PauseEventView = pauseEventView;
+            StairEventView = stairEventView;
             HpModel = hpModel;
             TimeModel = timeModel;
-            StageSettingModel = stageSettingModel;
+            FloorMoveContextModel = floorMoveContextModel;
             CompositeDisposable = compositeDisposable;
         }
 
@@ -39,6 +44,14 @@ namespace Controller.InGame.Primary
                 .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (_, controller) => controller.OnPause())
                 .AddTo(CompositeDisposable);
+            StairEventView.StairsEventObservable
+                .Where(this, (_, controller) => controller.IsInState())
+                .Subscribe(this, (type, controller) =>
+                {
+                    controller.FloorMoveContextModel.SetContext(type);
+                    controller.InnerState.ChangeState(PrimaryStateType.FloorMove);
+                })
+                .AddTo(CompositeDisposable);
         }
 
         public override void StateUpdate(float deltaTime)
@@ -47,7 +60,7 @@ namespace Controller.InGame.Primary
 
             var currentHp = HpModel.CurrentHp;
             var maxHp = HpModel.MaxHp;
-            var remainTime = StageSettingModel.TimeLength - TimeModel.CurrentTime;
+            var remainTime = TimeModel.TimeLength - TimeModel.CurrentTime;
 
             HpUiView.SetHp(currentHp, maxHp);
             TimerView.SetTime(remainTime);
@@ -73,8 +86,9 @@ namespace Controller.InGame.Primary
         private IHpUiView HpUiView { get; }
         private ITimerView TimerView { get; }
         private IPauseEventView PauseEventView { get; }
+        private IStairEventView StairEventView { get; }
         private IHpModel HpModel { get; }
         private ITimeModel TimeModel { get; }
-        private IStageSettingModel StageSettingModel { get; }
+        private IFloorMoveContextModel FloorMoveContextModel { get; }
     }
 }

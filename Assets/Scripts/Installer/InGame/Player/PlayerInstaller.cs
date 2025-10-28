@@ -12,6 +12,7 @@ namespace Installer.InGame.Player
     public class PlayerInstaller: InstallerBase
     {
         [SerializeField] private PlayerView playerView;
+        [SerializeField] private PlayerAnimatorView playerAnimatorView;
         [SerializeField] private DetectPositionView detectPositionView;
         [SerializeField] private WaterView waterView;
         [SerializeField] private LocomotionModel locomotionModel;
@@ -21,6 +22,7 @@ namespace Installer.InGame.Player
         {
             // View
             builder.RegisterInstance(playerView).AsImplementedInterfaces();
+            builder.RegisterInstance(playerAnimatorView).AsImplementedInterfaces();
             builder.RegisterInstance(detectPositionView).AsImplementedInterfaces();
             builder.RegisterInstance(waterView).AsImplementedInterfaces();
             
@@ -31,7 +33,6 @@ namespace Installer.InGame.Player
             
             // Logic
             builder.Register<LocomotionLogic>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<GridCastLogic>(Lifetime.Singleton).AsImplementedInterfaces();
             
             // Controller
             builder.Register<PlayerStateEntity>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
