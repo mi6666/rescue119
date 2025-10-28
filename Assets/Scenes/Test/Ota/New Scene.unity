@@ -453,12 +453,13 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  stageMasterModel: {fileID: 0}
   spawnRubbleView: {fileID: 1569575957}
   eventCompositeView: {fileID: 1168571416}
   stageTileView: {fileID: 1168571417}
+  scenePawnsView: {fileID: 1168571415}
   tileMapViews:
   - {fileID: 1041680100}
-  scenePawnsView: {fileID: 1168571415}
 --- !u!4 &471794866
 Transform:
   m_ObjectHideFlags: 0
@@ -1161,11 +1162,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 471794866}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &95877127335579165
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6307284160618225662, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.333721
+      objectReference: {fileID: 0}
+    - target: {fileID: 6307284160618225662, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.40524906
+      objectReference: {fileID: 0}
+    - target: {fileID: 6307284160618225662, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6307284160618225662, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6307284160618225662, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6307284160618225662, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6307284160618225662, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6307284160618225662, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6307284160618225662, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6307284160618225662, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6686764808339490116, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
+      propertyPath: m_Name
+      value: Banana Man
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7c0ed9725fca83f83af22923b81ef0ac, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1472377893}
-  - {fileID: 170235428}
+  - {fileID: 95877127335579165}
   - {fileID: 471794866}
   - {fileID: 1168571419}

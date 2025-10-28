@@ -17,7 +17,6 @@ namespace View.InGame.UserInterface.Pause
         {
             exitPauseButtonView.gameObject.SetActive(true);
             exitStageButtonView.gameObject.SetActive(true);
-
             return UniTask.CompletedTask;
         }
 
@@ -25,7 +24,6 @@ namespace View.InGame.UserInterface.Pause
         {
             exitPauseButtonView.gameObject.SetActive(false);
             exitStageButtonView.gameObject.SetActive(false);
-
             return UniTask.CompletedTask;
         }
     }

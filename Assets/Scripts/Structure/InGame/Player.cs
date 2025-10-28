@@ -15,7 +15,25 @@ namespace Structure.InGame
 
     public enum PawnType
     {
-        People
+        /// <summary>
+        /// 要救助者
+        /// </summary>
+        People,
+
+        /// <summary>
+        /// 炎
+        /// </summary>
+        Fire,
+        
+        /// <summary>
+        /// 瓦礫
+        /// </summary>
+        Rubble,
+        
+        /// <summary>
+        /// 特に動かないオブジェクト
+        /// </summary>
+        Static,
     }
 
     public readonly ref struct LocomotionArgument

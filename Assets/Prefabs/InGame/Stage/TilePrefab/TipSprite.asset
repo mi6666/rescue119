@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: TipSprite
   m_EditorClassIdentifier: 
   tipSprites:
-    array: []
+    array:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}

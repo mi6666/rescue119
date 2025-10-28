@@ -9,7 +9,9 @@ namespace View.InGame.Player
 
         public void SetFloat(string key, float value)
         {
-            anim.SetFloat(key, value);
+            if (anim == null) return;
+                
+            anim?.SetFloat(key, value);
         }
     }
 }

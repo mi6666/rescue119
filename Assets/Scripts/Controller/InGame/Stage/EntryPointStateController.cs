@@ -35,10 +35,11 @@ namespace Controller.InGame.Stage
             for (var i = 0; i < pawns.Count; i++)
             {
                 var pawnView = pawns[i];
-                var gridPosition = StageTileMapPresenter.ToMapIndex(pawnView.Floor, pawnView.Position);
+                var gridPosition = StageTileMapPresenter.PositionToMapIndex(pawnView.Floor, pawnView.Position);
 
                 var gridCollider = new GridCollider(
                     pawnView.InstanceId,
+                    pawnView.Type,
                     pawnView.Floor,
                     gridPosition,
                     pawnView.Size
@@ -50,6 +51,8 @@ namespace Controller.InGame.Stage
             {
                 Debug.Log(stageMap);
             }
+
+            InnerState.ChangeState(StageStateType.Normal);
         }
 
         private IStageTileMapModel StageTileMapModel { get; }

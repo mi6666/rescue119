@@ -2,6 +2,7 @@
 using Structure.InGame;
 using Structure.InGame.Stage;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace Interface.ViewInterface.InGame
 {
@@ -12,12 +13,14 @@ namespace Interface.ViewInterface.InGame
         /// <summary>
         /// マス目に座標を揃える
         /// </summary>
-        public Vector2 ConvertToMapPosition(Vector2 position);
+        public Vector2 AlignToMapPosition(Vector2 position);
+
+        public Vector2 IndexToMapPosition(Vector2Int index);
 
         /// <summary>
         /// マス目のインデックスを求める
         /// </summary>
-        public Vector2Int WorldToCell(Vector2 worldPosition);
+        public Vector2Int PositionToMapIndex(Vector2 worldPosition);
     }
 
     public interface IStageTileView
@@ -31,9 +34,9 @@ namespace Interface.ViewInterface.InGame
         public void Invoke(IEventContext context);
     }
 
-    public interface ISpawnRubbleView
+    public interface IRubbleFactoryView
     {
-        public void Spawn(Vector2 position);
+        public IPawnView Spawn(int floor, Vector2 position, PawnType type);
     }
 
     public interface ITileView
@@ -47,5 +50,12 @@ namespace Interface.ViewInterface.InGame
         public Observable<StairType> StairsEventObservable => GimmickEventObservable
             .Where(x => x is StairContext)
             .Select(x => (x as StairContext)!.EventContext.StairType);
+    }
+
+    public interface IPawnPoolable<T> where T : class
+    {
+        public void SetPool(IObjectPool<T> objectPool);
+
+        public void Spawn(int floor);
     }
 }

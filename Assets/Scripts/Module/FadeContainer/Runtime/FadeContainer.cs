@@ -13,7 +13,7 @@ namespace Module.FadeContainer.Runtime
         [SerializeField] private float fadeDuration;
         [SerializeField] private FadeEntity[] fadeTargets;
 
-        public UniTask FadeIn(CancellationToken token)
+        public UniTask FadeIn(CancellationToken token = new CancellationToken())
         {
             var task = UniTask.CompletedTask;
             for (int i = 0; i < fadeTargets.Length; i++)
@@ -28,7 +28,7 @@ namespace Module.FadeContainer.Runtime
             return task;
         }
 
-        public UniTask FadeOut(CancellationToken token)
+        public UniTask FadeOut(CancellationToken token = new CancellationToken())
         {
             var task = UniTask.CompletedTask;
             for (int i = 0; i < fadeTargets.Length; i++)

@@ -9,18 +9,16 @@ namespace View.InGame.UserInterface.FloorMove
         [SerializeField] private FloorMoveTextView floorMoveTextView;
 
         public FloorMoveTextView FloorMoveTextView => floorMoveTextView;
+
+        public UniTask Show()
+        {
+            FloorMoveTextView.gameObject.SetActive((true));
+            return UniTask.CompletedTask;
+        }
         
         public UniTask Hide()
         {
             FloorMoveTextView.gameObject.SetActive(false);
-            
-            return UniTask.CompletedTask;
-        }
-
-        UniTask IFloorMoveUiView.Show()
-        {
-            FloorMoveTextView.gameObject.SetActive((true));
-            
             return UniTask.CompletedTask;
         }
     }

@@ -9,28 +9,31 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using View.InGame.Stage;
+using View.InGame.Stage.Pawn;
 
 namespace Installer.InGame
 {
     public class StageInstaller : InstallerBase
     {
-        [SerializeField] private SpawnRubbleView spawnRubbleView;
+        [SerializeField] private StageMasterModel stageMasterModel;
+        [SerializeField] private RubbleFactoryView rubbleFactoryView;
         [SerializeField] private EventCompositeView eventCompositeView;
         [SerializeField] private StageTileView stageTileView;
-        [SerializeField] private List<TileMapView> tileMapViews;
         [SerializeField] private ScenePawnsView scenePawnsView;
+        [SerializeField] private List<TileMapView> tileMapViews;
 
         protected override void Configure(IContainerBuilder builder)
         {
             var converted = tileMapViews.Select(x => x as IStageTileMapView).ToList();
             // View
             builder.RegisterInstance(converted).AsImplementedInterfaces();
-            builder.RegisterInstance(spawnRubbleView).AsImplementedInterfaces();
+            builder.RegisterInstance(rubbleFactoryView).AsImplementedInterfaces();
             builder.RegisterInstance(eventCompositeView).AsImplementedInterfaces();
             builder.RegisterInstance(stageTileView).AsImplementedInterfaces();
             builder.RegisterInstance(scenePawnsView).AsImplementedInterfaces();
             
             // Model
+            builder.RegisterInstance(stageMasterModel).AsImplementedInterfaces();
             builder.Register<TileMapModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<StageFloorModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<StagePawnModel>(Lifetime.Singleton).AsImplementedInterfaces();
@@ -39,7 +42,7 @@ namespace Installer.InGame
             builder.Register<StageMapPresenter>(Lifetime.Singleton).AsImplementedInterfaces();
 
             // Logic
-            builder.Register<FloorLogic>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<BurnLogic>(Lifetime.Singleton).AsImplementedInterfaces();
 
             // Controller
             builder.Register<StageStateEntity>(Lifetime.Singleton).AsImplementedInterfaces();
