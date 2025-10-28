@@ -1,4 +1,3 @@
-using System;
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
 using Interface.PresenterInterface.InGame;

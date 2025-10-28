@@ -28,7 +28,15 @@ namespace View.InGame.Stage.Pawn
 
         public IPawnView FindPawn(int id)
         {
-            return _pawns.AsValueEnumerable().FirstOrDefault(x => x.InstanceId == id);
+            foreach (var pawn in _pawns.AsValueEnumerable())
+            {
+                if (pawn.InstanceId == id)
+                {
+                    return pawn;
+                }
+            }
+
+            return null;
         }
 
         public void AddPawn(IPawnView pawnView)
