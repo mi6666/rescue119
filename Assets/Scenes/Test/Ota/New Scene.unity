@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: 
+    TypeName: Installer.InGame.StageInstaller
   autoRun: 1
   autoInjectGameObjects: []
   playerView: {fileID: 170235432}
@@ -566,7 +566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468f4da8a024496fb5e1e11d15bdde55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selfTransform: {fileID: 0}
+  selfTransform: {fileID: 570797447}
 --- !u!1 &1041680098
 GameObject:
   m_ObjectHideFlags: 0
