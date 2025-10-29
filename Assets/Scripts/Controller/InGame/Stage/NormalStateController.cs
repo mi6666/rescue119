@@ -1,7 +1,6 @@
+using System;
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
-using Interface.PresenterInterface.InGame;
-using Interface.ViewInterface.InGame;
 using Interface.ViewInterface.InGame.Stage;
 using Module.StateMachine;
 using R3;
@@ -23,13 +22,13 @@ namespace Controller.InGame.Stage
         (
             IPawnEventView pawnEventView,
             IStageTileView stageTileView,
-            IScenePawnsView scenePawnsView,
+            IFloorPawnView  floorPawnView,
+            IMapCoordinateView mapCoordinateView,
             IPawnPoolView pawnPoolView,
             IStagePawnModel stagePawnModel,
             IStageTileMapModel stageTileMapModel,
             IStageFloorModel stageFloorModel,
             IStageMasterModel stageMasterModel,
-            IStageTileMapPresenter stageTileMapPresenter,
             IBurnLogic burnLogic,
             CompositeDisposable compositeDisposable,
             IMutStateType<StageStateType> innerState
@@ -37,13 +36,13 @@ namespace Controller.InGame.Stage
         {
             PawnEventView = pawnEventView;
             StageTileView = stageTileView;
-            ScenePawnsView = scenePawnsView;
+            FloorPawnView = floorPawnView;
+            MapCoordinateView = mapCoordinateView;
             PawnPoolView = pawnPoolView;
             StagePawnModel = stagePawnModel;
             StageTileMapModel = stageTileMapModel;
             StageFloorModel = stageFloorModel;
             StageMasterModel = stageMasterModel;
-            StageTileMapPresenter = stageTileMapPresenter;
             BurnLogic = burnLogic;
             CompositeDisposable = compositeDisposable;
         }
@@ -53,13 +52,8 @@ namespace Controller.InGame.Stage
             PawnEventView.GimmickEventObservable
                 .Subscribe(this, (context, controller) => controller.SpawnRubble(context))
                 .AddTo(CompositeDisposable);
-            // Observable
-            //     .Interval(TimeSpan.FromSeconds(StageMasterModel.PawnTickInterval))
-            //     .ObserveOnMainThread() // これがないと乱数がきちんと動かない
-            //     .Where(this, (_, controller) => controller.IsInState())
-            //     .Subscribe(this, (_, controller) => controller.UpdateLogic())
-            //     .AddTo(CompositeDisposable);
-            Observable.EveryUpdate(UnityFrameProvider.Update)
+            Observable
+                .Interval(TimeSpan.FromSeconds(StageMasterModel.PawnTickInterval))
                 .ObserveOnMainThread() // これがないと乱数がきちんと動かない
                 .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (_, controller) => controller.UpdatePawnLogic())
@@ -101,16 +95,16 @@ namespace Controller.InGame.Stage
 
         private void UpdatePawnLogic()
         {
-            var pawns = ScenePawnsView.GetPawns();
             var floor = StageFloorModel.CurrentFloor;
             var stageMap = StageTileMapModel.StageMaps[floor];
+            var pawns = FloorPawnView.GetFloorPawn(floor);
 
-            for (int i = 0; i < pawns.Count; i++)
+            for (int i = 0; i < pawns.Length; i++)
             {
                 var pawn = pawns[i];
                 if (pawn.Floor != floor) continue;
 
-                var position = StageTileMapPresenter.PositionToMapIndex(floor, pawn.Position);
+                var position = MapCoordinateView.PositionToMapIndex(floor, pawn.Position);
                 var arg = new UpdateArgument(stageMap, new Vector2Int(position.x, position.y));
 
                 var result = BurnLogic.Update(floor, arg);
@@ -127,7 +121,7 @@ namespace Controller.InGame.Stage
             {
                 var eventContext = spawnRubbleContext.EventContext;
                 var floor = StageFloorModel.CurrentFloor;
-                var index = StageTileMapPresenter.PositionToMapIndex(floor, eventContext.SpawnPosition);
+                var index = MapCoordinateView.PositionToMapIndex(floor, eventContext.SpawnPosition);
                 SpawnPawn(index, PawnType.Rubble);
             }
         }
@@ -135,8 +129,8 @@ namespace Controller.InGame.Stage
         private void SpawnPawn(Vector2Int mapIndex, PawnType type)
         {
             var floor = StageFloorModel.CurrentFloor;
-            var spawnPosition = StageTileMapPresenter.IndexToMapPosition(floor, mapIndex);
-            var pawnView = PawnPoolView.Spawn(floor, spawnPosition, type);
+            var spawnPosition = MapCoordinateView.IndexToMapPosition(floor, mapIndex);
+            var pawnView = PawnPoolView.Spawn(spawnPosition, type);
             var rubbleCollider = new GridCollider(
                 pawnView.InstanceId,
                 pawnView.Type,
@@ -144,19 +138,19 @@ namespace Controller.InGame.Stage
                 mapIndex,
                 pawnView.Size);
             StagePawnModel.StorePawn(rubbleCollider);
-            ScenePawnsView.AddPawn(pawnView);
+            FloorPawnView.GivePawn(pawnView, floor);
         }
 
         private CompositeDisposable CompositeDisposable { get; }
         private IPawnEventView PawnEventView { get; }
-        private IScenePawnsView ScenePawnsView { get; }
+        private IFloorPawnView FloorPawnView { get; }
         private IPawnPoolView PawnPoolView { get; }
+        private IMapCoordinateView MapCoordinateView { get; }
         private IStageTileView StageTileView { get; }
         private IStagePawnModel StagePawnModel { get; }
         private IStageTileMapModel StageTileMapModel { get; }
         private IStageFloorModel StageFloorModel { get; }
         private IStageMasterModel StageMasterModel { get; }
-        private IStageTileMapPresenter StageTileMapPresenter { get; }
         private IBurnLogic BurnLogic { get; }
     }
 }

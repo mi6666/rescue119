@@ -2,7 +2,7 @@
 using Structure.InGame;
 using UnityEngine;
 
-namespace View.InGame.Stage
+namespace View.InGame.Stage.Tile
 {
     [CreateAssetMenu(fileName = "TipSprite", menuName = "Tiles/TipSprite", order = 0)]
     public class TipSprite : ScriptableObject

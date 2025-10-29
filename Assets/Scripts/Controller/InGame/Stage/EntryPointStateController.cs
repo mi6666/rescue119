@@ -1,5 +1,4 @@
 using Interface.ModelInterface.InGame;
-using Interface.ViewInterface.InGame;
 using Interface.ViewInterface.InGame.Stage;
 using Module.StateMachine;
 using Structure.InGame;
@@ -14,14 +13,14 @@ namespace Controller.InGame.Stage
         public EntryPointStateController
         (
             IMapReaderView mapReaderView,
-            IScenePawnsView scenePawnsView,
+            IFloorPawnView floorPawnView,
             IStageTileMapModel stageTileMapModel,
             IStagePawnModel stagePawnModel,
             IMutStateType<StageStateType> innerState
         ) : base(StageStateType.EntryPoint, innerState)
         {
             MapReaderView = mapReaderView;
-            ScenePawnsView = scenePawnsView;
+            FloorPawnView = floorPawnView;
             StageTileMapModel = stageTileMapModel;
             StagePawnModel = stagePawnModel;
         }
@@ -31,10 +30,9 @@ namespace Controller.InGame.Stage
             var map = MapReaderView.GetMap();
             StageTileMapModel.InitStageMap(map);
 
-            var pawns = ScenePawnsView.GetPawns();
-            for (var i = 0; i < pawns.Count; i++)
+            var pawns = FloorPawnView.GetAllPawn();
+            foreach (var pawnView in pawns)
             {
-                var pawnView = pawns[i];
                 var gridPosition = MapReaderView.PositionToMapIndex(pawnView.Floor, pawnView.Position);
 
                 var gridCollider = new GridCollider(
@@ -56,7 +54,7 @@ namespace Controller.InGame.Stage
         }
 
         private IMapReaderView MapReaderView { get; }
-        private IScenePawnsView ScenePawnsView { get; }
+        private IFloorPawnView FloorPawnView { get; }
         private IStageTileMapModel StageTileMapModel { get; }
         private IStagePawnModel StagePawnModel { get; }
     }

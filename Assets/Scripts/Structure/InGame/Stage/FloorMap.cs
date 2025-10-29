@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Structure.InGame.Stage
 {
-    public class StageMap
+    public class FloorMap
     {
-        public StageMap
+        public FloorMap
         (
             TipBase[,] stageTileTips
         )

@@ -25,7 +25,7 @@ namespace Logic.InGame.Stage
             int count = 0;
 
             var tipPos = updateArgument.MapIndex;
-            var aroundTip = updateArgument.StageMap.GetAround4Tips(tipPos.x, tipPos.y);
+            var aroundTip = updateArgument.FloorMap.GetAround4Tips(tipPos.x, tipPos.y);
 
             foreach (var (_, tipBase) in aroundTip)
             {
@@ -50,7 +50,7 @@ namespace Logic.InGame.Stage
             int count = 0;
 
             var fireIndex = updateArgument.MapIndex;
-            var aroundTip = updateArgument.StageMap.GetAround4Tips(fireIndex.x, fireIndex.y);
+            var aroundTip = updateArgument.FloorMap.GetAround4Tips(fireIndex.x, fireIndex.y);
 
             foreach (var (position, tipBase) in aroundTip)
             {

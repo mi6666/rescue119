@@ -2,7 +2,7 @@
 using Structure.InGame;
 using UnityEngine;
 
-namespace View.InGame.Stage
+namespace View.InGame.Stage.Tile
 {
     [CreateAssetMenu(fileName = "StateSprite", menuName = "Tiles/StateSprite", order = 0)]
     public class StateSprite : ScriptableObject

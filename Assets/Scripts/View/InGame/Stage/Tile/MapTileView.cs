@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using Interface.ViewInterface.InGame.Stage;
 using UnityEngine;
 
-namespace View.InGame.Stage
+namespace View.InGame.Stage.Tile
 {
-    public class StageTileView : MonoBehaviour, IStageTileView
+    public class MapTileView : MonoBehaviour, IStageTileView
     {
         private void Start()
         {

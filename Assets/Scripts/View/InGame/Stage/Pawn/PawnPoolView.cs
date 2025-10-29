@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Interface.ViewInterface.InGame;
 using Interface.ViewInterface.InGame.Stage;
+using Module.EditorExtension.Runtime;
 using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 using ZLinq;
@@ -9,35 +11,32 @@ namespace View.InGame.Stage.Pawn
 {
     public class PawnPoolView : MonoBehaviour, IPawnPoolView
     {
-        [SerializeField] private Transform poolTransform;
+        [SerializeField, AutoAssign] private Transform poolTransform;
         [SerializeField] private PawnPrefabMasterView pawnPrefabMasterView;
-        [SerializeField] private int initialPoolSize;
+        [SerializeField] private int initialPoolSize = 32;
 
-        private PawnPool[] _pawnPools;
+        private Dictionary<PawnType, PawnPool> _pawnDictionary;
 
         private void Awake()
         {
-            _pawnPools = ((PawnType[])Enum.GetValues(typeof(PawnType)))
+            _pawnDictionary = ((PawnType[])Enum.GetValues(typeof(PawnType)))
                 .AsValueEnumerable()
                 .Select(x => pawnPrefabMasterView.GetPawns(x))
-                .Where(x => x == null)
+                .Where(x => x != null)
                 .Select(x => new PawnPool(poolTransform, x, initialPoolSize))
-                .ToArray();
+                .ToDictionary(x => x.PawnView.Type);
         }
 
-        public IPawnView Move(int id, int floorPrevious, int floorNext)
+        public IPawnView Spawn(Vector2 position, PawnType type)
         {
-            throw new NotImplementedException();
+            var view = _pawnDictionary[type].Spawn();
+            view.SetPosition(position);
+            return view;
         }
 
-        public IPawnView Spawn(int floor, Vector2 position, PawnType type)
+        public void Despawn(IPawnView pawnView)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Despawn(int id, int floorPrevious)
-        {
-            throw new NotImplementedException();
+            _pawnDictionary[pawnView.Type].ReturnToPool(pawnView as BasePawnView);
         }
     }
 }

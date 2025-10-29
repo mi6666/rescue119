@@ -1,6 +1,5 @@
 using Structure.InGame.Stage.Pawn;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace Interface.ViewInterface.InGame.Stage
 {
@@ -9,35 +8,69 @@ namespace Interface.ViewInterface.InGame.Stage
     /// </summary>
     public interface IFloorView
     {
-        public void Activate();
-        public void Deactivate();
+        /// <summary>
+        /// フロア移動として前回フロアを非表示化し、次のフロアを表示する。
+        /// </summary>
+        public void MoveFloor(int prevFloor, int nextFloor)
+        {
+            Deactivate(prevFloor);
+            Activate(nextFloor);
+        }
+
+        public void Activate(int floor);
+        public void Deactivate(int floor);
     }
 
     /// <summary>
-    /// `Pawn`についてフロアを横断した管理を行う
+    /// 全フロアの`Pawn`を管理する
     /// </summary>
-    public interface IPawnPoolView  // FIXME?
+    public interface IFloorPawnView
     {
         /// <summary>
-        /// フロアでの`Pawn`の所有権を移動させる
+        /// すべての`Pawn`を取得する。
         /// </summary>
-        public IPawnView Move(int id, int floorPrevious, int floorNext);
+        public IPawnView[] GetAllPawn();
+        
+        /// <summary>
+        /// フロア中すべての`Pawn`を取得する。
+        /// </summary>
+        public IPawnView[] GetFloorPawn(int floor);
+        
+        /// <summary>
+        /// `Pawn`を別フロアへ移動させる。
+        /// </summary>
+        public IPawnView MovePawn(int id, int floorPrevious, int floorNext);
 
+        /// <summary>
+        /// `Pawn`のViewを取得する。
+        /// </summary>
+        public IPawnView GetPawn(int id, int floor);
+
+        /// <summary>
+        /// フロアの`Pawn`を所有権ごと取得する。
+        /// (フロアに存在しているIPawnViewへの参照を断ち切り、取得する)
+        /// </summary>
+        public IPawnView TakePawn(int id, int floor);
+
+        /// <summary>
+        /// フロアに`Pawn`を与える。
+        /// </summary>
+        public void GivePawn(IPawnView pawnView, int floor);
+    }
+
+    /// <summary>
+    /// `Pawn`のプールを管理する
+    /// </summary>
+    public interface IPawnPoolView
+    {
         /// <summary>
         /// 新しい`Pawn`をプールから取得する
         /// </summary>
-        public IPawnView Spawn(int floor, Vector2 position, PawnType type);
+        public IPawnView Spawn(Vector2 position, PawnType type);
 
         /// <summary>
         /// `Pawn`をプールに返す
         /// </summary>
-        public void Despawn(int id, int floorPrevious);
-    }
-
-    public interface IPawnPoolable<T> where T : class
-    {
-        public void SetPool(IObjectPool<T> objectPool);
-
-        public void Spawn(int floor);
+        public void Despawn(IPawnView pawnView);
     }
 }

@@ -33,7 +33,7 @@ namespace Interface.ViewInterface.InGame.Stage
         /// <summary>
         /// マップ情報を読み取る
         /// </summary>
-        public StageMap[] GetMap();
+        public FloorMap[] GetMap();
     }
 
     public interface IStageTileView

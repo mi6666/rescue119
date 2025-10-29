@@ -5,25 +5,27 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using View.InGame.Stage;
+using View.InGame.Stage.Floor;
 using View.InGame.Stage.Pawn;
+using View.InGame.Stage.Tile;
 
 namespace Installer.InGame
 {
     public class StageInstaller : InstallerBase
     {
-        [SerializeField] private StageMasterModel stageMasterModel;
         [SerializeField] private EventCompositeView eventCompositeView;
-        [SerializeField] private StageTileView stageTileView;
-        [SerializeField] private ScenePawnsView scenePawnsView;
-        [SerializeField] private TileMapView tileMapView;
+        [SerializeField] private MapTileView mapTileView;
+        [SerializeField] private FloorManageView floorManageView;
+        [SerializeField] private PawnPoolView pawnPoolView;
+        [SerializeField] private StageMasterModel stageMasterModel;
 
         protected override void Configure(IContainerBuilder builder)
         {
             // View
             builder.RegisterInstance(eventCompositeView).AsImplementedInterfaces();
-            builder.RegisterInstance(stageTileView).AsImplementedInterfaces();
-            builder.RegisterInstance(scenePawnsView).AsImplementedInterfaces();
-            builder.RegisterInstance(tileMapView).AsImplementedInterfaces();
+            builder.RegisterInstance(mapTileView).AsImplementedInterfaces();
+            builder.RegisterInstance(floorManageView).AsImplementedInterfaces();
+            builder.RegisterInstance(pawnPoolView).AsImplementedInterfaces();
             
             // Model
             builder.RegisterInstance(stageMasterModel).AsImplementedInterfaces();

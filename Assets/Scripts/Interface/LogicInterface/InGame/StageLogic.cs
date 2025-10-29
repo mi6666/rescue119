@@ -62,16 +62,16 @@ namespace Interface.LogicInterface.InGame
 
     public readonly ref struct UpdateArgument
     {
-        public StageMap StageMap { get; }
+        public FloorMap FloorMap { get; }
         public Vector2Int MapIndex { get; }
 
         public UpdateArgument
         (
-            StageMap stageMap,
+            FloorMap floorMap,
             Vector2Int mapIndex
         )
         {
-            StageMap = stageMap;
+            FloorMap = floorMap;
             MapIndex = mapIndex;
         }
     }

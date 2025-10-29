@@ -3,7 +3,7 @@ using Module.EditorExtension.Runtime;
 using Structure.InGame;
 using UnityEngine;
 
-namespace View.InGame.Stage
+namespace View.InGame.Stage.Tile
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class TileTipView : MonoBehaviour, ITileView

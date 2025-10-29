@@ -1,11 +1,10 @@
 ﻿using Structure.InGame;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
-namespace View.InGame.Stage
+namespace View.InGame.Stage.Tile
 {
     [CreateAssetMenu(menuName = "Tiles/StageTile")]
-    public class StageTileTipData: Tile
+    public class StageTileTipData: UnityEngine.Tilemaps.Tile
     {
         public StageTileType TileType => stageTileType;
         public bool IsBurning => isBurning;

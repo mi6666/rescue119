@@ -37,8 +37,8 @@ namespace Interface.ModelInterface.InGame
     /// </summary>
     public interface IStageTileMapModel
     {
-        public StageMap[] StageMaps { get; }
-        public void InitStageMap(StageMap[] stageMaps);
+        public FloorMap[] StageMaps { get; }
+        public void InitStageMap(FloorMap[] stageMaps);
     }
 
     /// <summary>

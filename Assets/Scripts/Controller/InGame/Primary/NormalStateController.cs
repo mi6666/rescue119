@@ -5,6 +5,7 @@ using Interface.ViewInterface.InGame.UserInterface;
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -48,6 +49,7 @@ namespace Controller.InGame.Primary
                 .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (type, controller) =>
                 {
+                    Debug.Log("on floor move");
                     controller.FloorMoveContextModel.SetContext(type);
                     controller.InnerState.ChangeState(PrimaryStateType.FloorMove);
                 })

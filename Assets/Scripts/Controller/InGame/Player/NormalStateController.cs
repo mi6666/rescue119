@@ -1,8 +1,8 @@
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
-using Interface.PresenterInterface.InGame;
 using Interface.ViewInterface.Global;
 using Interface.ViewInterface.InGame;
+using Interface.ViewInterface.InGame.Stage;
 using Module.EditorExtension.Runtime;
 using Module.StateMachine;
 using R3;
@@ -20,11 +20,11 @@ namespace Controller.InGame.Player
             IDetectPositionView detectPositionView,
             IInput_MoveVectorView moveVectorView,
             IInput_ActionEventView actionEventView,
+            IMapCoordinateView mapCoordinateView,
             IPlayerAnimatorView playerAnimatorView,
             ICurrentLookModel currentLookModel,
             ILocomotionModel locomotionModel,
             IPlayerAnimationParameterKeyModel playerAnimationParameterKeyModel,
-            IStageTileMapPresenter stageTileMapPresenter,
             ILocomotionLogic locomotionLogic,
             CompositeDisposable compositeDisposable,
             IMutStateType<PlayerStateType> innerState
@@ -33,12 +33,12 @@ namespace Controller.InGame.Player
             PlayerView = playerView;
             DetectPositionView = detectPositionView;
             MoveVectorView = moveVectorView;
+            MapCoordinateView = mapCoordinateView;
             ActionEventView = actionEventView;
             PlayerAnimatorView = playerAnimatorView;
             CurrentLookModel = currentLookModel;
             LocomotionModel = locomotionModel;
             PlayerAnimationParameterKeyModel = playerAnimationParameterKeyModel;
-            StageTileMapPresenter = stageTileMapPresenter;
             LocomotionLogic = locomotionLogic;
             CompositeDisposable = compositeDisposable;
         }
@@ -61,9 +61,7 @@ namespace Controller.InGame.Player
             Locomotion(deltaTime);
             UpdatePawnDetectorPosition();
         }
-        
-        
-        
+
 
         private void Locomotion(float deltaTime)
         {
@@ -92,16 +90,15 @@ namespace Controller.InGame.Player
             PlayerView.ApplyVelocity(calculatedVelocity * deltaTime);
 
             var walkValue = calculatedVelocity.magnitude / LocomotionModel.MaxSpeed;
-            
-            PlayerAnimatorView.SetFloat(PlayerAnimationParameterKeyModel.Key, walkValue); 
+
+            PlayerAnimatorView.SetFloat(PlayerAnimationParameterKeyModel.Key, walkValue);
         }
-        
-        
+
 
         private void UpdatePawnDetectorPosition()
         {
             var detectorPosition = PlayerView.Position + CurrentLookModel.LookTo;
-            var refinedPosition = StageTileMapPresenter.AlignToMapPosition(0, detectorPosition);
+            var refinedPosition = MapCoordinateView.AlignToMapPosition(0, detectorPosition);
             DetectPositionView.SetPosition(refinedPosition);
         }
 
@@ -109,9 +106,9 @@ namespace Controller.InGame.Player
         private IDetectPositionView DetectPositionView { get; }
         private IInput_MoveVectorView MoveVectorView { get; }
         private IInput_ActionEventView ActionEventView { get; }
+        private IMapCoordinateView MapCoordinateView { get; }
         private ICurrentLookModel CurrentLookModel { get; }
         private ILocomotionModel LocomotionModel { get; }
-        private IStageTileMapPresenter StageTileMapPresenter { get; }
         private ILocomotionLogic LocomotionLogic { get; }
         private CompositeDisposable CompositeDisposable { get; }
         private IPlayerAnimatorView PlayerAnimatorView { get; }
