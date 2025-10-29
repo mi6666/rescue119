@@ -2,6 +2,7 @@
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
+using VContainer.Unity;
 
 namespace Controller.InGame.Primary
 {

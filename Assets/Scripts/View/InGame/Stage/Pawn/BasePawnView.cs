@@ -30,6 +30,11 @@ namespace View.InGame.Stage.Pawn
             selfTransform.position = position;
         }
 
+        public void InitFloor(int changedFloor)
+        {
+            Floor = changedFloor;
+        }
+
         public void SetFloor(Transform newParent, int changedFloor)
         {
             selfTransform.parent = newParent;

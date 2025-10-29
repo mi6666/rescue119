@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace Model.InGame.Stage
 {
-    public class StagePawnModel: IStagePawnModel
+    public class StagePawnModel : IStagePawnModel
     {
-        private GridCollider[] PawnArray { get; } = new GridCollider[32];
+        private GridCollider[] PawnArray { get; } = new GridCollider[256];
         private int _length;
 
         public ReadOnlySpan<GridCollider> Pawns => PawnArray.AsSpan(0, _length);

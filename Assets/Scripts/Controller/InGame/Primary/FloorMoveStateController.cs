@@ -18,9 +18,8 @@ namespace Controller.InGame.Primary
             IStageFloorModel stageFloorModel,
             IFloorMoveContextModel floorMoveContextModel,
             IFloorMoveTime floorMoveTime,
-            IMutStateType<PrimaryStateType> innerState,
-            IFloorMoveTime o
-        ) : base(PrimaryStateType.FloorMove, innerState)
+            IMutStateType<PrimaryStateType> innerState
+        ) : base(PrimaryStateType.FloorTransition, innerState)
         {
             FloorMoveUiView = floorMoveUiView;
             FloorMoveTextView = floorMoveTextView;
@@ -31,24 +30,32 @@ namespace Controller.InGame.Primary
 
         public override void OnEnter()
         {
-            var currentFloor = StageFloorModel.CurrentFloor;
-
-            FloorMoveTextView.SetFloorMove(currentFloor);
-            FloorMoveUiView.Show().Forget();
-
             Wait().Forget();
         }
 
         private async UniTask Wait()
         {
+            var currentFloor = StageFloorModel.CurrentFloor;
+            StageFloorModel.SetFloor(currentFloor);
+            await FloorMoveUiView.Show();
+            var context = FloorMoveContextModel.StairType;
+
+            if (context == StairType.Up)
+            {
+                currentFloor++;
+            }
+            else
+            {
+                currentFloor--;
+            }
+
+            StageFloorModel.SetFloor(currentFloor);
+            FloorMoveTextView.SetFloorMove(currentFloor);
+
             await UniTask.Delay(TimeSpan.FromSeconds(FloorMoveTime.FloorTime));
 
+            await FloorMoveUiView.Hide();
             InnerState.ChangeState(PrimaryStateType.Normal);
-        }
-
-        public override void OnExit()
-        {
-            FloorMoveUiView.Hide().Forget();
         }
 
         private IFloorMoveUiView FloorMoveUiView { get; }

@@ -47,6 +47,7 @@ namespace Interface.ViewInterface.InGame
         public int Floor { get; }
 
         public void SetPosition(Vector2 position);
+        public void InitFloor(int changedFloor);
         public void SetFloor(Transform newParent, int changedFloor);
     }
 

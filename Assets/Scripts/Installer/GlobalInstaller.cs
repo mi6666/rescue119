@@ -1,5 +1,4 @@
 using System;
-using Interface.ModelInterface.InGame;
 using Logic.InGame.Stage;
 using Model.InGame.Stage;
 using Model.OutGame.StageSelect;
@@ -9,6 +8,7 @@ using R3;
 using VContainer;
 using View.Global.Input;
 using View.Global.Scene;
+using View.InGame;
 using View.InGame.Stage.Pawn;
 
 namespace Installer
@@ -24,6 +24,7 @@ namespace Installer
             // View
             builder.Register<InputWrapper>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<SceneLoaderView>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<PrimaryStateEventView>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<EmptyPawnsView>(Lifetime.Transient).AsImplementedInterfaces();
             builder.Register<EmptyStairEventView>(Lifetime.Transient).AsImplementedInterfaces();
             

@@ -11,6 +11,7 @@ namespace Structure.InGame
         Normal,
         Action,
         Holding,
+        Stopping,
     }
 
     public readonly ref struct LocomotionArgument

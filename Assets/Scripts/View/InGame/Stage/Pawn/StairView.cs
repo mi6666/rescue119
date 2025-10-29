@@ -30,7 +30,6 @@ namespace View.InGame.Stage.Pawn
         {
             if (other.CompareTag(targetTag))
             {
-                Debug.Log("VAR");
                 StairContext.EventContext = new StairContext.Context(stairType);
                 _eventCompositeView.Invoke(StairContext);
             }

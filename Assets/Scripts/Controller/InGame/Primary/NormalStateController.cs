@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Interface.ModelInterface.InGame;
+using Interface.ViewInterface.InGame;
 using Interface.ViewInterface.InGame.Stage;
 using Interface.ViewInterface.InGame.UserInterface;
 using Module.StateMachine;
@@ -21,6 +22,7 @@ namespace Controller.InGame.Primary
             ITimerView timerView,
             IPauseEventView pauseEventView,
             IStairEventView stairEventView,
+            IPrimaryStateEventView primaryStateEventView,
             IHpModel hpModel,
             ITimeModel timeModel,
             IFloorMoveContextModel floorMoveContextModel,
@@ -33,6 +35,7 @@ namespace Controller.InGame.Primary
             TimerView = timerView;
             PauseEventView = pauseEventView;
             StairEventView = stairEventView;
+            PrimaryStateEventView = primaryStateEventView;
             HpModel = hpModel;
             TimeModel = timeModel;
             FloorMoveContextModel = floorMoveContextModel;
@@ -51,8 +54,11 @@ namespace Controller.InGame.Primary
                 {
                     Debug.Log("on floor move");
                     controller.FloorMoveContextModel.SetContext(type);
-                    controller.InnerState.ChangeState(PrimaryStateType.FloorMove);
+                    controller.InnerState.ChangeState(PrimaryStateType.FloorTransition);
                 })
+                .AddTo(CompositeDisposable);
+            InnerState.StateEnterObservable
+                .Subscribe(this, (type, controller) => controller.PrimaryStateEventView.Invoke(type))
                 .AddTo(CompositeDisposable);
         }
 
@@ -89,6 +95,7 @@ namespace Controller.InGame.Primary
         private ITimerView TimerView { get; }
         private IPauseEventView PauseEventView { get; }
         private IStairEventView StairEventView { get; }
+        private IPrimaryStateEventView PrimaryStateEventView { get; }
         private IHpModel HpModel { get; }
         private ITimeModel TimeModel { get; }
         private IFloorMoveContextModel FloorMoveContextModel { get; }

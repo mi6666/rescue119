@@ -14,6 +14,17 @@ namespace View.InGame.Stage.Floor
         [SerializeField] private FloorMapView[] floorMapViews;
         [SerializeField] private FloorPawnView[] floorPawnViews;
 
+        private void Awake()
+        {
+            foreach (var (index, floorPawnView) in floorPawnViews.AsValueEnumerable().Index())
+            {
+                foreach (var pawnView in floorPawnView.GetAll().AsValueEnumerable())
+                {
+                    pawnView.InitFloor(index);
+                }
+            }
+        }
+
         #region IFloorView
 
         public void Activate(int floor)

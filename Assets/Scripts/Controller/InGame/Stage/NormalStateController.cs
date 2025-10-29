@@ -21,7 +21,6 @@ namespace Controller.InGame.Stage
         public NormalStateController
         (
             IPawnEventView pawnEventView,
-            IStageTileView stageTileView,
             IFloorPawnView  floorPawnView,
             IMapCoordinateView mapCoordinateView,
             IPawnPoolView pawnPoolView,
@@ -35,7 +34,6 @@ namespace Controller.InGame.Stage
         ) : base(StageStateType.Normal, innerState)
         {
             PawnEventView = pawnEventView;
-            StageTileView = stageTileView;
             FloorPawnView = floorPawnView;
             MapCoordinateView = mapCoordinateView;
             PawnPoolView = pawnPoolView;
@@ -58,39 +56,6 @@ namespace Controller.InGame.Stage
                 .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (_, controller) => controller.UpdatePawnLogic())
                 .AddTo(CompositeDisposable);
-        }
-
-        private void UpdateLogic()
-        {
-            if (StageTileMapModel.StageMaps is null) return;
-
-            var stageMap = StageTileMapModel.StageMaps[StageFloorModel.CurrentFloor];
-
-            for (var y = 0; y < stageMap.LengthY; y++)
-            {
-                for (var x = 0; x < stageMap.LengthX; x++)
-                {
-                    if (!stageMap.GetTip(x, y).TryGetValue(out var tip)) continue;
-                    var arg = new UpdateArgument(
-                        stageMap,
-                        new Vector2Int(x, y)
-                    );
-
-                    switch (tip)
-                    {
-                        case ITipBurnable tipBurnable:
-                            var result = BurnLogic.Update(tipBurnable, arg);
-                            foreach (var command in result)
-                            {
-                                var tileView = StageTileView.GetTileView(command.ObjectId);
-
-                                tileView.ChangeTileState(TileStateType.Burning);
-                            }
-
-                            break;
-                    }
-                }
-            }
         }
 
         private void UpdatePawnLogic()
@@ -146,7 +111,6 @@ namespace Controller.InGame.Stage
         private IFloorPawnView FloorPawnView { get; }
         private IPawnPoolView PawnPoolView { get; }
         private IMapCoordinateView MapCoordinateView { get; }
-        private IStageTileView StageTileView { get; }
         private IStagePawnModel StagePawnModel { get; }
         private IStageTileMapModel StageTileMapModel { get; }
         private IStageFloorModel StageFloorModel { get; }

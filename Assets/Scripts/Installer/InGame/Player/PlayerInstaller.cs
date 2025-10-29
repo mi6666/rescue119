@@ -1,7 +1,5 @@
 using Controller.InGame.Player;
-using Interface.ModelInterface.InGame;
 using Logic.InGame.Player;
-using Logic.InGame.Stage;
 using Model.InGame.Player;
 using UnityEngine;
 using VContainer;
@@ -42,6 +40,7 @@ namespace Installer.InGame.Player
             builder.RegisterEntryPoint<PlayerStateMachine>();
             builder.Register<NormalStateController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<ActionStateController>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<StopStateController>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

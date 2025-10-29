@@ -1,4 +1,5 @@
 ﻿using System;
+using R3;
 using Structure.InGame;
 using Structure.InGame.Stage;
 
@@ -47,6 +48,7 @@ namespace Interface.ModelInterface.InGame
     public interface IStageFloorModel
     {
         public int CurrentFloor { get; }
+        public ReadOnlyReactiveProperty<int> FloorObservable { get; }
 
         public void SetFloor(int floor);
     }
