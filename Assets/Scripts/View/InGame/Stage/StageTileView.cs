@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Interface.ViewInterface.InGame;
+using Interface.ViewInterface.InGame.Stage;
 using UnityEngine;
 
 namespace View.InGame.Stage

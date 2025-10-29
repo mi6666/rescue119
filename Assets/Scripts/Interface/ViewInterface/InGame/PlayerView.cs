@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Structure.InGame;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
 namespace Interface.ViewInterface.InGame

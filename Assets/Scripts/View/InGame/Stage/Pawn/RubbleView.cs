@@ -1,5 +1,5 @@
-using Interface.ViewInterface.InGame;
-using Structure.InGame;
+using Interface.ViewInterface.InGame.Stage;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 using UnityEngine.Pool;
 

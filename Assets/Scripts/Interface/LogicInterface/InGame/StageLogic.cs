@@ -2,6 +2,7 @@ using System;
 using Module.Option.Runtime;
 using Structure.InGame;
 using Structure.InGame.Stage;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
 namespace Interface.LogicInterface.InGame

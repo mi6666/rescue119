@@ -1,6 +1,6 @@
 using Interface.ModelInterface.InGame;
-using Interface.PresenterInterface.InGame;
 using Interface.ViewInterface.InGame;
+using Interface.ViewInterface.InGame.Stage;
 using Module.StateMachine;
 using Structure.InGame;
 using Structure.InGame.Stage;
@@ -13,29 +13,29 @@ namespace Controller.InGame.Stage
     {
         public EntryPointStateController
         (
+            IMapReaderView mapReaderView,
+            IScenePawnsView scenePawnsView,
             IStageTileMapModel stageTileMapModel,
             IStagePawnModel stagePawnModel,
-            IStageTileMapPresenter stageTileMapPresenter,
-            IScenePawnsView scenePawnsView,
             IMutStateType<StageStateType> innerState
         ) : base(StageStateType.EntryPoint, innerState)
         {
-            StageTileMapPresenter = stageTileMapPresenter;
+            MapReaderView = mapReaderView;
+            ScenePawnsView = scenePawnsView;
             StageTileMapModel = stageTileMapModel;
             StagePawnModel = stagePawnModel;
-            ScenePawnsView = scenePawnsView;
         }
 
         public void Start()
         {
-            var map = StageTileMapPresenter.GetMap();
+            var map = MapReaderView.GetMap();
             StageTileMapModel.InitStageMap(map);
 
             var pawns = ScenePawnsView.GetPawns();
             for (var i = 0; i < pawns.Count; i++)
             {
                 var pawnView = pawns[i];
-                var gridPosition = StageTileMapPresenter.PositionToMapIndex(pawnView.Floor, pawnView.Position);
+                var gridPosition = MapReaderView.PositionToMapIndex(pawnView.Floor, pawnView.Position);
 
                 var gridCollider = new GridCollider(
                     pawnView.InstanceId,
@@ -55,9 +55,9 @@ namespace Controller.InGame.Stage
             InnerState.ChangeState(StageStateType.Normal);
         }
 
+        private IMapReaderView MapReaderView { get; }
+        private IScenePawnsView ScenePawnsView { get; }
         private IStageTileMapModel StageTileMapModel { get; }
         private IStagePawnModel StagePawnModel { get; }
-        private IStageTileMapPresenter StageTileMapPresenter { get; }
-        private IScenePawnsView ScenePawnsView { get; }
     }
 }

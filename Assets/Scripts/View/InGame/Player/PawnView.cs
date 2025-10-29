@@ -1,6 +1,7 @@
 using Interface.ViewInterface.InGame;
 using Module.EditorExtension.Runtime;
 using Structure.InGame;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 using View.InGame.Stage.Pawn;
 

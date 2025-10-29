@@ -1,4 +1,4 @@
-using Interface.ViewInterface.InGame;
+using Interface.ViewInterface.InGame.Stage;
 using R3;
 using Structure.InGame.Stage;
 using UnityEngine;

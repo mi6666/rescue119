@@ -7,8 +7,9 @@ namespace View.InGame.Stage.Pawn
 {
     public class PawnPool : IPawnPool
     {
-        public PawnPool(BasePawnView pawnView, int initialPool)
+        public PawnPool(Transform poolParent, BasePawnView pawnView, int initialPool)
         {
+            PoolParent = poolParent;
             PawnView = pawnView;
             Pool = new List<BasePawnView>(initialPool);
             InitializePawn();
@@ -21,7 +22,7 @@ namespace View.InGame.Stage.Pawn
         {
             for (var i = 0; i < Pool.Capacity; i++)
             {
-                var pawn = Object.Instantiate(PawnView);
+                var pawn = Object.Instantiate(PawnView, parent: PoolParent.transform);
                 pawn.SetPool(this);
                 pawn.gameObject.SetActive(false);
                 Pool.Add(pawn);
@@ -55,6 +56,7 @@ namespace View.InGame.Stage.Pawn
             self.gameObject.SetActive(false);
         }
 
+        private Transform PoolParent { get; }
         private BasePawnView PawnView { get; }
         private List<BasePawnView> Pool { get; }
     }

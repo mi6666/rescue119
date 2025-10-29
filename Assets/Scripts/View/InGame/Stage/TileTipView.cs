@@ -1,4 +1,4 @@
-﻿using Interface.ViewInterface.InGame;
+﻿using Interface.ViewInterface.InGame.Stage;
 using Module.EditorExtension.Runtime;
 using Structure.InGame;
 using UnityEngine;

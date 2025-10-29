@@ -2,10 +2,12 @@ using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
 using Interface.PresenterInterface.InGame;
 using Interface.ViewInterface.InGame;
+using Interface.ViewInterface.InGame.Stage;
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
 using Structure.InGame.Stage;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -19,10 +21,10 @@ namespace Controller.InGame.Stage
     {
         public NormalStateController
         (
-            IGimmickEventView gimmickEventView,
+            IPawnEventView pawnEventView,
             IStageTileView stageTileView,
             IScenePawnsView scenePawnsView,
-            IRubbleFactoryView rubbleFactoryView,
+            IPawnPoolView pawnPoolView,
             IStagePawnModel stagePawnModel,
             IStageTileMapModel stageTileMapModel,
             IStageFloorModel stageFloorModel,
@@ -33,10 +35,10 @@ namespace Controller.InGame.Stage
             IMutStateType<StageStateType> innerState
         ) : base(StageStateType.Normal, innerState)
         {
-            GimmickEventView = gimmickEventView;
+            PawnEventView = pawnEventView;
             StageTileView = stageTileView;
             ScenePawnsView = scenePawnsView;
-            RubbleFactoryView = rubbleFactoryView;
+            PawnPoolView = pawnPoolView;
             StagePawnModel = stagePawnModel;
             StageTileMapModel = stageTileMapModel;
             StageFloorModel = stageFloorModel;
@@ -48,7 +50,7 @@ namespace Controller.InGame.Stage
 
         public void Start()
         {
-            GimmickEventView.GimmickEventObservable
+            PawnEventView.GimmickEventObservable
                 .Subscribe(this, (context, controller) => controller.SpawnRubble(context))
                 .AddTo(CompositeDisposable);
             // Observable
@@ -134,7 +136,7 @@ namespace Controller.InGame.Stage
         {
             var floor = StageFloorModel.CurrentFloor;
             var spawnPosition = StageTileMapPresenter.IndexToMapPosition(floor, mapIndex);
-            var pawnView = RubbleFactoryView.Spawn(floor, spawnPosition, type);
+            var pawnView = PawnPoolView.Spawn(floor, spawnPosition, type);
             var rubbleCollider = new GridCollider(
                 pawnView.InstanceId,
                 pawnView.Type,
@@ -146,9 +148,9 @@ namespace Controller.InGame.Stage
         }
 
         private CompositeDisposable CompositeDisposable { get; }
-        private IGimmickEventView GimmickEventView { get; }
+        private IPawnEventView PawnEventView { get; }
         private IScenePawnsView ScenePawnsView { get; }
-        private IRubbleFactoryView RubbleFactoryView { get; }
+        private IPawnPoolView PawnPoolView { get; }
         private IStageTileView StageTileView { get; }
         private IStagePawnModel StagePawnModel { get; }
         private IStageTileMapModel StageTileMapModel { get; }

@@ -1,4 +1,5 @@
 using System.Text;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
 namespace Structure.InGame.Stage

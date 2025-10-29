@@ -6,6 +6,7 @@ using Interface.PresenterInterface.InGame;
 using Interface.ViewInterface.InGame;
 using Module.StateMachine;
 using Structure.InGame;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
 namespace Controller.InGame.Player
@@ -46,7 +47,7 @@ namespace Controller.InGame.Player
                 var pawn = ScenePawnsView.FindPawn(value.PawnId);
                 if (pawn is not null)
                 {
-                    if (pawn.Type == PawnType.People)
+                    if (pawn.Type == PawnType.Casualty)
                     {
                         InnerState.ChangeState(PlayerStateType.Holding);
                         return;

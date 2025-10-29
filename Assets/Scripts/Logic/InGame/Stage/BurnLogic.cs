@@ -2,6 +2,7 @@ using System;
 using Interface.LogicInterface.InGame;
 using Structure.InGame;
 using Structure.InGame.Stage;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

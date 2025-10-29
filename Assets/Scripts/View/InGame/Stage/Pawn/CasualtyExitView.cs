@@ -1,6 +1,6 @@
 ﻿using Interface.ViewInterface.InGame.UserInterface;
 using R3;
-using Structure.InGame;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
 namespace View.InGame.Stage.Pawn

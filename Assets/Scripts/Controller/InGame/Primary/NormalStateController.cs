@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Interface.ModelInterface.InGame;
-using Interface.ViewInterface.InGame;
+using Interface.ViewInterface.InGame.Stage;
 using Interface.ViewInterface.InGame.UserInterface;
 using Module.StateMachine;
 using R3;
