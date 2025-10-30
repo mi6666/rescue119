@@ -8,6 +8,8 @@ using Module.StateMachine;
 using R3;
 using Structure.Global;
 using Structure.InGame;
+using Structure.InGame.Stage.Pawn;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace Controller.InGame.Player
@@ -26,7 +28,10 @@ namespace Controller.InGame.Player
             ILocomotionModel locomotionModel,
             IPlayerAnimationParameterKeyModel playerAnimationParameterKeyModel,
             ILocomotionLogic locomotionLogic,
+            IStageFloorModel stageFloorModel,
+            IGridCastLogic gridCastLogic,
             CompositeDisposable compositeDisposable,
+            IHpModel hpModel,
             IMutStateType<PlayerStateType> innerState
         ) : base(PlayerStateType.Normal, innerState)
         {
@@ -39,7 +44,10 @@ namespace Controller.InGame.Player
             CurrentLookModel = currentLookModel;
             LocomotionModel = locomotionModel;
             PlayerAnimationParameterKeyModel = playerAnimationParameterKeyModel;
+            StageFloorModel = stageFloorModel;
+            GridCastLogic = gridCastLogic;
             LocomotionLogic = locomotionLogic;
+            HpModel = hpModel;
             CompositeDisposable = compositeDisposable;
         }
 
@@ -60,6 +68,29 @@ namespace Controller.InGame.Player
         {
             Locomotion(deltaTime);
             UpdatePawnDetectorPosition();
+        }
+
+        private void HpDecrease()
+        {
+            
+        }
+
+        private void FireDamage()
+        {
+            var currentFloor = StageFloorModel.CurrentFloor;
+            var currentPosition = PlayerView.Position;
+            var mapIndex =
+                MapCoordinateView.PositionToMapIndex(currentFloor, currentPosition);
+            var castResult =
+                GridCastLogic.CastGrid(currentFloor, mapIndex, Vector2Int.one, CastTargetType.Pawn);
+            foreach (var variable in castResult)
+            {
+                if (variable.PawnType == PawnType.Fire)
+                {
+                    //todo 
+                    //Hpが減るメソッドでHpを減らす
+                }
+            }
         }
 
         private void Locomotion(float deltaTime)
@@ -112,5 +143,8 @@ namespace Controller.InGame.Player
         private CompositeDisposable CompositeDisposable { get; }
         private IPlayerAnimatorView PlayerAnimatorView { get; }
         private IPlayerAnimationParameterKeyModel PlayerAnimationParameterKeyModel { get; }
+        private IStageFloorModel StageFloorModel { get; }
+        private IGridCastLogic GridCastLogic { get; }
+        private IHpModel HpModel { get; }
     }
 }
