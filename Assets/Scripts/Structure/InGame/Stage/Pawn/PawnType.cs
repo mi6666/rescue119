@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Structure.InGame.Stage.Pawn
@@ -43,5 +44,23 @@ namespace Structure.InGame.Stage.Pawn
         public GridCollider Collider => new GridCollider(
             Id, Type, Floor, Position, Size
         );
+    }
+
+    public static class Extension
+    {
+        /// <summary>
+        /// このPawnが壁のように移動の妨げとなるかを記述する
+        /// </summary>
+        public static bool IsBlock(this PawnType type)
+        {
+            return type switch
+            {
+                PawnType.Casualty => false,
+                PawnType.Fire => false,
+                PawnType.Rubble => true,
+                PawnType.Static => true,
+                _ => throw new NotImplementedException("you don't have to arrive here.")
+            };
+        }
     }
 }

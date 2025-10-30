@@ -27,6 +27,9 @@ namespace Controller.InGame.Stage
 
         public void Start()
         {
+            PrimaryStateEventView.StateObservable
+                .Subscribe(this, (type, controller) => controller.StateControl(type))
+                .AddTo(CompositeDisposable);
             StageFloorModel.FloorObservable
                 .Pairwise()
                 .Subscribe(this, (i, controller) => controller.FloorControl(i.Previous, i.Current))
@@ -36,6 +39,18 @@ namespace Controller.InGame.Stage
         private void FloorControl(int prev, int current)
         {
             FloorView.MoveFloor(prev, current);
+        }
+
+        private void StateControl(PrimaryStateType nextState)
+        {
+            if (nextState == PrimaryStateType.FloorTransition)
+            {
+                InnerState.ChangeState(StageStateType.FloorTransition);
+            }
+            else if (IsInState())
+            {
+                InnerState.ChangeState(StageStateType.Normal);
+            }
         }
 
         private CompositeDisposable CompositeDisposable { get; }

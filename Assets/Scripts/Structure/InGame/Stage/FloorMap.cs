@@ -27,6 +27,11 @@ namespace Structure.InGame.Stage
             return Option<TipBase>.Some(StageTileTips[y, x]);
         }
 
+        public Option<TipBase> GetTip(Vector2Int position)
+        {
+            return GetTip(position.x, position.y);
+        }
+
         public ReadOnlySpan<(Vector2Int, TipBase)> GetAround4Tips(int x, int y)
         {
             var getCount = 0;

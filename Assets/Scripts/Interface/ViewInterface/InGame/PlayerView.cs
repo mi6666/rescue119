@@ -25,9 +25,10 @@ namespace Interface.ViewInterface.InGame
 
     public interface IWaterView
     {
-        public void SpawnWater();
+        public void SpawnWater(Vector2 position, Vector2 lookAt, int length);
         public void DespawnWater();
     }
+
 
     public interface IDetectPositionView
     {

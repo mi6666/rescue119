@@ -62,6 +62,7 @@ namespace Interface.ModelInterface.InGame
     public interface IActionLengthModel
     {
         public float SplashWater { get; }
+        public int WaterLength { get; }
     }
 
     /// <summary>

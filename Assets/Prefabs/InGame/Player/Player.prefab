@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca39840f3dfe434683e2cae5e0f02706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterPrefab: {fileID: 5218977490013182683, guid: 9234e6061d2b4d7be8addedc716767b6, type: 3}
+  initialPoolSize: 8
 --- !u!1 &2110082829031006526
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,6 +441,7 @@ MonoBehaviour:
     reverseAngleThreshold: 100
   actionModel:
     actionLength: 0.25
+    waterLength: 3
   playerMasterData: {fileID: 11400000, guid: f0e3005afa8e61f45b2949deae8e0059, type: 2}
 --- !u!114 &7049297621115034803
 MonoBehaviour:

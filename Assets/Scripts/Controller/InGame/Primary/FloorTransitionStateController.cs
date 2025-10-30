@@ -8,10 +8,10 @@ using VContainer;
 
 namespace Controller.InGame.Primary
 {
-    public class FloorMoveStateController : PrimaryStateBehaviour
+    public class FloorTransitionStateController : PrimaryStateBehaviour
     {
         [Inject]
-        public FloorMoveStateController
+        public FloorTransitionStateController
         (
             IFloorMoveUiView floorMoveUiView,
             IFloorMoveTextView floorMoveTextView,

@@ -96,13 +96,13 @@ namespace Controller.InGame.Stage
             var floor = StageFloorModel.CurrentFloor;
             var spawnPosition = MapCoordinateView.IndexToMapPosition(floor, mapIndex);
             var pawnView = PawnPoolView.Spawn(spawnPosition, type);
-            var rubbleCollider = new GridCollider(
+            var pawnCollider = new GridCollider(
                 pawnView.InstanceId,
                 pawnView.Type,
-                pawnView.Floor,
+                floor,
                 mapIndex,
                 pawnView.Size);
-            StagePawnModel.StorePawn(rubbleCollider);
+            StagePawnModel.StorePawn(pawnCollider);
             FloorPawnView.GivePawn(pawnView, floor);
         }
 

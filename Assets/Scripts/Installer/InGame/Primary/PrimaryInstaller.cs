@@ -61,7 +61,7 @@ namespace Installer.InGame.Primary
             builder.Register<PauseStateController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<GameClearStateController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<GameOverStateController>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<FloorMoveStateController>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<FloorTransitionStateController>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

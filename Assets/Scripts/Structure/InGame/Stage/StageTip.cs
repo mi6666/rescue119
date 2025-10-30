@@ -8,7 +8,7 @@
         : TipBase, ITipGameObject, ITipBurnable, ITipHealth;
 
     public record WallTip(InnerBurn InnerBurn, InnerObject InnerObject, InnerHealth InnerHealth)
-        : TipBase, ITipGameObject, ITipHealth;
+        : TipBase, ITipGameObject, ITipBlocking, ITipHealth;
 
     public record RubbleTip(InnerBurn InnerBurn, InnerObject InnerObject, InnerHealth InnerHealth)
         : TipBase, ITipGameObject, ITipBurnable, ITipHealth;
