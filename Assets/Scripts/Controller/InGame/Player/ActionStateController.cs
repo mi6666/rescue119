@@ -27,6 +27,9 @@ namespace Controller.InGame.Player
             ICurrentLookModel currentLookModel,
             IStageTileMapModel stageTileMapModel,
             IGridCastLogic gridCastLogic,
+            IFloorPawnView floorPawnView,
+            IPawnPoolView pawnPoolView,
+            IStagePawnModel stagePawnModel,
             IMutStateType<PlayerStateType> innerState
         ) : base(PlayerStateType.Action, innerState)
         {
@@ -39,6 +42,9 @@ namespace Controller.InGame.Player
             CurrentLookModel = currentLookModel;
             StageTileMapModel = stageTileMapModel;
             GridCastLogic = gridCastLogic;
+            FloorPawnView = floorPawnView;
+            PawnPoolView = pawnPoolView;
+            StagePawnModel = stagePawnModel;
         }
 
         public override void OnEnter()
@@ -115,12 +121,18 @@ namespace Controller.InGame.Player
                     {
                         return frontCount;
                     }
+
+                    if (collider.PawnType == PawnType.Fire)
+                    {
+                        var floorPawnView = FloorPawnView.TakePawn(collider.PawnId, collider.Floor);
+                        PawnPoolView.Despawn(floorPawnView);
+                        StagePawnModel.RemovePawn(collider.PawnId);
+                    }
                 }
             }
 
             return frontCount;
         }
-
         private Vector2Int FrontMapPosition()
         {
             var detectPosition = DetectPositionView.DetectPosition;
@@ -137,5 +149,8 @@ namespace Controller.InGame.Player
         private IStageTileMapModel StageTileMapModel { get; }
         private ICurrentLookModel CurrentLookModel { get; }
         private IGridCastLogic GridCastLogic { get; }
+        private IFloorPawnView FloorPawnView { get; }
+        private IPawnPoolView PawnPoolView { get; }
+        private IStagePawnModel StagePawnModel { get; }
     }
 }
