@@ -10,9 +10,7 @@
       * UiVeiw,EventVeiw
       * State Normal->FloorMove->Nomal
   * ステージギミック
-    * ステージタイル実装
     * ギミック系実装
-    * 火をPawnで管理する
   * プレイヤー動作
     * 水を出す
     * 水が壁に遮られる

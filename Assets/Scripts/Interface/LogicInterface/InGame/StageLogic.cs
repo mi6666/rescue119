@@ -2,6 +2,7 @@ using System;
 using Module.Option.Runtime;
 using Structure.InGame;
 using Structure.InGame.Stage;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
 namespace Interface.LogicInterface.InGame
@@ -61,16 +62,16 @@ namespace Interface.LogicInterface.InGame
 
     public readonly ref struct UpdateArgument
     {
-        public StageMap StageMap { get; }
+        public FloorMap FloorMap { get; }
         public Vector2Int MapIndex { get; }
 
         public UpdateArgument
         (
-            StageMap stageMap,
+            FloorMap floorMap,
             Vector2Int mapIndex
         )
         {
-            StageMap = stageMap;
+            FloorMap = floorMap;
             MapIndex = mapIndex;
         }
     }

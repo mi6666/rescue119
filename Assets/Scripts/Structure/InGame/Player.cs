@@ -11,29 +11,7 @@ namespace Structure.InGame
         Normal,
         Action,
         Holding,
-    }
-
-    public enum PawnType
-    {
-        /// <summary>
-        /// 要救助者
-        /// </summary>
-        People,
-
-        /// <summary>
-        /// 炎
-        /// </summary>
-        Fire,
-        
-        /// <summary>
-        /// 瓦礫
-        /// </summary>
-        Rubble,
-        
-        /// <summary>
-        /// 特に動かないオブジェクト
-        /// </summary>
-        Static,
+        Stopping,
     }
 
     public readonly ref struct LocomotionArgument

@@ -62,6 +62,7 @@ namespace Interface.ModelInterface.InGame
     public interface IActionLengthModel
     {
         public float SplashWater { get; }
+        public int WaterLength { get; }
     }
 
     /// <summary>
@@ -71,5 +72,11 @@ namespace Interface.ModelInterface.InGame
     {
         public Vector2 LookTo { get; }
         public void SetLook(Vector2 lookTo);
+    }
+
+    public interface IPlayerAnimationParameterKeyModel
+    {
+        public string Key { get; }
+        
     }
 }

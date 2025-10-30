@@ -4,7 +4,7 @@ namespace Structure.InGame
     {
         Normal,
         Pause,
-        FloorMove,
+        FloorTransition,
         GameOver,
         GameClear,
     }

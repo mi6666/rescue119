@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using Interface.ViewInterface.InGame;
+using Interface.ViewInterface.InGame.Stage;
+using R3;
+using Structure.InGame.Stage;
 
 namespace View.InGame.Stage.Pawn
 {
@@ -21,6 +24,16 @@ namespace View.InGame.Stage.Pawn
 
         public void RemovePawn(int id)
         {
+        }
+    }
+
+    public class EmptyStairEventView: IStairEventView
+    {
+        private Subject<IEventContext> InnerSubject { get; } = new ();
+        public Observable<IEventContext> GimmickEventObservable => InnerSubject;
+        public void Invoke(IEventContext context)
+        {
+            
         }
     }
 }

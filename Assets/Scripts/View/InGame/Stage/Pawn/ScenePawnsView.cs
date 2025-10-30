@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Interface.ViewInterface.InGame;
 using UnityEngine;
 using ZLinq;
@@ -29,10 +28,15 @@ namespace View.InGame.Stage.Pawn
 
         public IPawnView FindPawn(int id)
         {
-            // FIXME
-            return _pawns
-                .AsValueEnumerable()
-                .FirstOrDefault(x => x.InstanceId == id);
+            foreach (var pawn in _pawns.AsValueEnumerable())
+            {
+                if (pawn.InstanceId == id)
+                {
+                    return pawn;
+                }
+            }
+
+            return null;
         }
 
         public void AddPawn(IPawnView pawnView)

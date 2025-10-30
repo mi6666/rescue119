@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Structure.InGame;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
 namespace Interface.ViewInterface.InGame
@@ -25,9 +25,10 @@ namespace Interface.ViewInterface.InGame
 
     public interface IWaterView
     {
-        public void SpawnWater();
+        public void SpawnWater(Vector2 position, Vector2 lookAt, int length);
         public void DespawnWater();
     }
+
 
     public interface IDetectPositionView
     {
@@ -45,6 +46,10 @@ namespace Interface.ViewInterface.InGame
         public Vector2 Position { get; }
         public Vector2Int Size { get; }
         public int Floor { get; }
+
+        public void SetPosition(Vector2 position);
+        public void InitFloor(int changedFloor);
+        public void SetFloor(Transform newParent, int changedFloor);
     }
 
     /// <summary>

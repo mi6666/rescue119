@@ -1,62 +1,65 @@
 using System.Collections.Generic;
-using System.Linq;
-using Interface.ViewInterface.InGame;
 using UnityEngine;
 
 namespace View.InGame.Stage.Pawn
 {
     public class PawnPool : IPawnPool
     {
-        public PawnPool(BasePawnView pawnView, int initialPool)
+        private readonly List<BasePawnView> _available = new(); // 使用可能なPawn
+
+        public PawnPool(Transform poolParent, BasePawnView pawnView, int initialPool)
         {
+            PoolParent = poolParent;
             PawnView = pawnView;
-            Pool = new List<BasePawnView>(initialPool);
-            InitializePawn();
+            InitializePawn(initialPool);
         }
 
         /// <summary>
         /// プールの初期化
         /// </summary>
-        private void InitializePawn()
+        private void InitializePawn(int count)
         {
-            for (var i = 0; i < Pool.Capacity; i++)
+            for (var i = 0; i < count; i++)
             {
-                var pawn = Object.Instantiate(PawnView);
-                pawn.SetPool(this);
+                var pawn = Object.Instantiate(PawnView, parent: PoolParent);
                 pawn.gameObject.SetActive(false);
-                Pool.Add(pawn);
+                _available.Add(pawn);
             }
         }
 
         /// <summary>
         /// プールに存在する`Pawn`を取り出す
         /// </summary>
-        public BasePawnView Spawn(int floor)
+        public BasePawnView Spawn()
         {
-            var pawn = Pool.FirstOrDefault(p => !p.gameObject.activeSelf);
+            BasePawnView pawn;
 
-            if (pawn == null)
+            if (_available.Count > 0)
             {
-                pawn = Object.Instantiate(PawnView);
-                Pool.Add(pawn);
+                pawn = _available[^1];
+                _available.RemoveAt(_available.Count - 1);
+            }
+            else
+            {
+                pawn = Object.Instantiate(PawnView, parent: PoolParent);
             }
 
             pawn.gameObject.SetActive(true);
-            if (pawn is IFactorablePawnView factorable)
-            {
-                factorable.SetFloor(floor);
-            }
-
             return pawn;
         }
 
+        /// <summary>
+        /// `Pawn`をプールに戻す
+        /// </summary>
         public void ReturnToPool(BasePawnView self)
         {
-            self.gameObject.SetActive(false);
+                _available.Add(self);
+                self.gameObject.SetActive(false);
+                self.transform.SetParent(PoolParent);
         }
 
-        private BasePawnView PawnView { get; }
-        private List<BasePawnView> Pool { get; }
+        private Transform PoolParent { get; }
+        public BasePawnView PawnView { get; }
     }
 
     public interface IPawnPool

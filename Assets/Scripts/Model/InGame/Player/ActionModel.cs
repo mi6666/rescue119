@@ -8,7 +8,9 @@ namespace Model.InGame.Player
     public class ActionModel : IActionLengthModel
     {
         [SerializeField] private float actionLength;
+        [SerializeField] private int waterLength;
         
         public float SplashWater => actionLength;
+        public int WaterLength => waterLength;
     }
 }

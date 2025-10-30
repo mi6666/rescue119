@@ -1,6 +1,6 @@
 ﻿using Module.EnumArray.Runtime;
 using Structure.Global;
-using Structure.InGame;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
 namespace View.InGame.Stage.Pawn

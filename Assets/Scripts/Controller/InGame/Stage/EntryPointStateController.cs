@@ -1,6 +1,5 @@
 using Interface.ModelInterface.InGame;
-using Interface.PresenterInterface.InGame;
-using Interface.ViewInterface.InGame;
+using Interface.ViewInterface.InGame.Stage;
 using Module.StateMachine;
 using Structure.InGame;
 using Structure.InGame.Stage;
@@ -13,29 +12,36 @@ namespace Controller.InGame.Stage
     {
         public EntryPointStateController
         (
+            IMapReaderView mapReaderView,
+            IFloorPawnView floorPawnView,
+            IFloorView floorView,
             IStageTileMapModel stageTileMapModel,
             IStagePawnModel stagePawnModel,
-            IStageTileMapPresenter stageTileMapPresenter,
-            IScenePawnsView scenePawnsView,
+            IStageFloorModel stageFloorModel,
+            IStageMasterModel stageMasterModel,
             IMutStateType<StageStateType> innerState
         ) : base(StageStateType.EntryPoint, innerState)
         {
-            StageTileMapPresenter = stageTileMapPresenter;
+            MapReaderView = mapReaderView;
+            FloorPawnView = floorPawnView;
+            FloorView = floorView;
             StageTileMapModel = stageTileMapModel;
             StagePawnModel = stagePawnModel;
-            ScenePawnsView = scenePawnsView;
+            StageFloorModel = stageFloorModel;
+            StageMasterModel = stageMasterModel;
         }
 
         public void Start()
         {
-            var map = StageTileMapPresenter.GetMap();
+            // マップ情報の初期化
+            var map = MapReaderView.GetMap();
             StageTileMapModel.InitStageMap(map);
 
-            var pawns = ScenePawnsView.GetPawns();
-            for (var i = 0; i < pawns.Count; i++)
+            // ポーン情報の初期化
+            var pawns = FloorPawnView.GetAllPawn();
+            foreach (var pawnView in pawns)
             {
-                var pawnView = pawns[i];
-                var gridPosition = StageTileMapPresenter.PositionToMapIndex(pawnView.Floor, pawnView.Position);
+                var gridPosition = MapReaderView.PositionToMapIndex(pawnView.Floor, pawnView.Position);
 
                 var gridCollider = new GridCollider(
                     pawnView.InstanceId,
@@ -52,12 +58,29 @@ namespace Controller.InGame.Stage
                 Debug.Log(stageMap);
             }
 
+            // フロアの表示を初期化
+            for (int i = 0; i < StageMasterModel.MaxFloorNum; i++)
+            {
+                Debug.Log($"{i}: {StageFloorModel.CurrentFloor.ToString()}");
+                if (i == StageFloorModel.CurrentFloor)
+                {
+                    FloorView.Activate(i);
+                }
+                else
+                {
+                    FloorView.Deactivate(i);
+                }
+            }
+
             InnerState.ChangeState(StageStateType.Normal);
         }
 
+        private IMapReaderView MapReaderView { get; }
+        private IFloorPawnView FloorPawnView { get; }
+        private IFloorView FloorView { get; }
         private IStageTileMapModel StageTileMapModel { get; }
         private IStagePawnModel StagePawnModel { get; }
-        private IStageTileMapPresenter StageTileMapPresenter { get; }
-        private IScenePawnsView ScenePawnsView { get; }
+        private IStageFloorModel StageFloorModel { get; }
+        private IStageMasterModel StageMasterModel { get; }
     }
 }

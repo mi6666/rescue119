@@ -1,12 +1,12 @@
-﻿using Interface.PresenterInterface.InGame;
+﻿using Interface.ViewInterface.InGame.Stage;
 using Structure.InGame.Stage;
 using UnityEngine;
 
 namespace Presenter.InGame.Stage
 {
-    public class EmptyMapPresenter: IStageTileMapPresenter
+    public class EmptyMapPresenter: IMapCoordinateView
     {
-        public StageMap[] GetMap()
+        public FloorMap[] GetMap()
         {
             return null;
         }

@@ -23,6 +23,10 @@ namespace Structure.InGame.Stage
         public InnerHealth InnerHealth { get; }
     }
 
+    public interface ITipBlocking
+    {
+    }
+
     public record InnerObject(int InstanceId);
 
     public record InnerBurn

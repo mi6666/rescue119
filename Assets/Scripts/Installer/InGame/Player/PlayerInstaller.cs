@@ -1,6 +1,5 @@
 using Controller.InGame.Player;
 using Logic.InGame.Player;
-using Logic.InGame.Stage;
 using Model.InGame.Player;
 using UnityEngine;
 using VContainer;
@@ -17,6 +16,7 @@ namespace Installer.InGame.Player
         [SerializeField] private WaterView waterView;
         [SerializeField] private LocomotionModel locomotionModel;
         [SerializeField] private ActionModel actionModel;
+        [SerializeField] private PlayerMasterData playerMasterData;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -25,6 +25,7 @@ namespace Installer.InGame.Player
             builder.RegisterInstance(playerAnimatorView).AsImplementedInterfaces();
             builder.RegisterInstance(detectPositionView).AsImplementedInterfaces();
             builder.RegisterInstance(waterView).AsImplementedInterfaces();
+            builder.RegisterInstance(playerMasterData).AsImplementedInterfaces();
             
             // Model
             builder.RegisterInstance(locomotionModel).AsImplementedInterfaces();
@@ -39,6 +40,7 @@ namespace Installer.InGame.Player
             builder.RegisterEntryPoint<PlayerStateMachine>();
             builder.Register<NormalStateController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<ActionStateController>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<StopStateController>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

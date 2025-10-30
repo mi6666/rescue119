@@ -1,6 +1,6 @@
 using Interface.ViewInterface.InGame;
 using Module.EditorExtension.Runtime;
-using Structure.InGame;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
 namespace View.InGame.Stage.Pawn
@@ -12,18 +12,33 @@ namespace View.InGame.Stage.Pawn
     {
         [SerializeField] protected GameObject selfObject;
         [SerializeField, AutoAssign] protected Transform selfTransform;
+        [SerializeField] private int floor;
 
         public int InstanceId => selfObject.GetInstanceID();
         public abstract PawnType Type { get; }
         public Vector2 Position => selfTransform.position;
         public abstract Vector2Int Size { get; }
-        public abstract int Floor { get; }
 
-        protected IPawnPool PawnPool { get; private set; }
-
-        public void SetPool(IPawnPool pawnPool)
+        public int Floor
         {
-            PawnPool = pawnPool;
+            get { return floor; }
+            protected set { floor = value; }
+        }
+
+        public void SetPosition(Vector2 position)
+        {
+            selfTransform.position = position;
+        }
+
+        public void InitFloor(int changedFloor)
+        {
+            Floor = changedFloor;
+        }
+
+        public void SetFloor(Transform newParent, int changedFloor)
+        {
+            selfTransform.parent = newParent;
+            Floor = changedFloor;
         }
     }
 }

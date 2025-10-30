@@ -1,6 +1,7 @@
 ﻿using Module.EditorExtension.Runtime;
 using Structure.InGame;
 using Structure.InGame.Stage;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
 namespace View.InGame.Stage.Pawn
@@ -11,7 +12,6 @@ namespace View.InGame.Stage.Pawn
     [RequireComponent(typeof(BoxCollider2D))]
     public class StairView : BasePawnView
     {
-        [SerializeField] private int floor;
         [SerializeField] private Vector2Int gridColliderSize;
         [SerializeField] private TagSelector targetTag;
         [SerializeField] private StairType stairType;
@@ -37,6 +37,5 @@ namespace View.InGame.Stage.Pawn
 
         public override PawnType Type => PawnType.Static;
         public override Vector2Int Size => gridColliderSize;
-        public override int Floor => floor;
     }
 }

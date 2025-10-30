@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: StageMasterModel
   m_EditorClassIdentifier: 
   timeLength: 100
-  maxFloorNum: 1
+  maxFloorNum: 2
   pawnTickInterval: 0.125

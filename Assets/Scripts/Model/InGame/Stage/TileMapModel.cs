@@ -5,8 +5,8 @@ namespace Model.InGame.Stage
 {
     public class TileMapModel: IStageTileMapModel
     {
-        public StageMap[] StageMaps { get; private set; }
-        public void InitStageMap(StageMap[] stageMaps)
+        public FloorMap[] StageMaps { get; private set; }
+        public void InitStageMap(FloorMap[] stageMaps)
         {
             StageMaps = stageMaps;
         }

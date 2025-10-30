@@ -1,13 +1,12 @@
 ﻿using Interface.ViewInterface.InGame.UserInterface;
 using R3;
-using Structure.InGame;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
 namespace View.InGame.Stage.Pawn
 {
     public class CasualtyExitView : BasePawnView, IGameClearEventView
     {
-        [SerializeField] private int floor;
         [SerializeField] private Vector2Int gridColliderSize;
 
         private readonly Subject<Unit> _clearSubject = new();
@@ -23,6 +22,5 @@ namespace View.InGame.Stage.Pawn
 
         public override PawnType Type => PawnType.Static;
         public override Vector2Int Size => gridColliderSize;
-        public override int Floor => floor;
     }
 }
