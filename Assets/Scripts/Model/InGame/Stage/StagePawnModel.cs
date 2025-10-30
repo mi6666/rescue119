@@ -3,7 +3,6 @@ using Interface.ModelInterface.InGame;
 using Module.Option.Runtime;
 using Structure.InGame.Stage;
 using UnityEngine;
-using ZLinq;
 
 namespace Model.InGame.Stage
 {
@@ -16,14 +15,6 @@ namespace Model.InGame.Stage
 
         public void StorePawn(GridCollider gridCollider)
         {
-            // if (PawnArray.AsValueEnumerable().Any(x => x.Position == gridCollider.Position))
-            // {
-            //     Debug.Log($"length: {_length.ToString()}, inserted: {gridCollider.ToString()}");
-            //     for (int i = 0; i < _length; i++)
-            //     {
-            //         Debug.Log(PawnArray[i]);
-            //     }
-            // }
             Debug.Assert(_length < PawnArray.Length, "Pawn array is full.");
             PawnArray[_length] = gridCollider;
             _length++;

@@ -1,3 +1,4 @@
+using Module.Option.Runtime;
 using UnityEngine;
 
 namespace Interface.ModelInterface.InGame
@@ -63,6 +64,7 @@ namespace Interface.ModelInterface.InGame
     {
         public float SplashWater { get; }
         public int WaterLength { get; }
+        public float HoldMotionLength { get; }
     }
 
     /// <summary>
@@ -77,6 +79,14 @@ namespace Interface.ModelInterface.InGame
     public interface IPlayerAnimationParameterKeyModel
     {
         public string Key { get; }
-        
+    }
+
+    /// <summary>
+    /// プレイやの動作を停止する
+    /// </summary>
+    public interface IPlayerLockModel
+    {
+        public OperationHandle GetOperation();
+        public bool IsLocked();
     }
 }
