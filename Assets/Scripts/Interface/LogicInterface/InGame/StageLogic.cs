@@ -9,7 +9,6 @@ namespace Interface.LogicInterface.InGame
 {
     public interface IBurnLogic
     {
-        public ReadOnlySpan<FeedBackCommand> Update(ITipBurnable tipBurnable, UpdateArgument updateArgument);
         public ReadOnlySpan<SpawnCommand> Update(int floor, UpdateArgument updateArgument);
     }
 
@@ -62,16 +61,13 @@ namespace Interface.LogicInterface.InGame
 
     public readonly ref struct UpdateArgument
     {
-        public FloorMap FloorMap { get; }
         public Vector2Int MapIndex { get; }
 
         public UpdateArgument
         (
-            FloorMap floorMap,
             Vector2Int mapIndex
         )
         {
-            FloorMap = floorMap;
             MapIndex = mapIndex;
         }
     }

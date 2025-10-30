@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
@@ -7,7 +8,8 @@ namespace Interface.ViewInterface.InGame
 {
     public interface IPlayerView
     {
-        public Vector2 Position { get; }
+        public Transform PlayerTransform { get; }
+        public Vector2 Position => PlayerTransform.position;
         public void ApplyVelocity(Vector2 moveTo);
 
         public Vector2 CurrentVelocity { get; }
@@ -19,16 +21,11 @@ namespace Interface.ViewInterface.InGame
         public void SetFloat(string key, float value);
     }
 
-    public interface IPlayerCommandEventView
-    {
-    }
-
     public interface IWaterView
     {
         public void SpawnWater(Vector2 position, Vector2 lookAt, int length);
         public void DespawnWater();
     }
-
 
     public interface IDetectPositionView
     {
@@ -47,17 +44,10 @@ namespace Interface.ViewInterface.InGame
         public Vector2Int Size { get; }
         public int Floor { get; }
 
-        public void SetPosition(Vector2 position);
+        public UniTask SetOwner(Transform owner, float duration);
+        public void Put(Vector2 position);
         public void InitFloor(int changedFloor);
         public void SetFloor(Transform newParent, int changedFloor);
-    }
-
-    /// <summary>
-    /// 動的に配置される`Pawn`のインターフェース
-    /// </summary>
-    public interface IFactorablePawnView
-    {
-        public void SetFloor(int newFloor);
     }
 
     /// <summary>

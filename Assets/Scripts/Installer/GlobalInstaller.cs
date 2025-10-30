@@ -33,6 +33,7 @@ namespace Installer
             builder.Register<StageFloorModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<StagePawnModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<FloorMoveContextModel>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<EmptyTileMapModel>(Lifetime.Singleton).AsImplementedInterfaces();
             
             // Presenter
             builder.Register<ScenePresenter>(Lifetime.Singleton).AsImplementedInterfaces();

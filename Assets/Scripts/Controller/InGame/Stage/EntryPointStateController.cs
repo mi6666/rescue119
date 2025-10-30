@@ -53,11 +53,6 @@ namespace Controller.InGame.Stage
                 StagePawnModel.StorePawn(gridCollider);
             }
 
-            foreach (var stageMap in StageTileMapModel.StageMaps)
-            {
-                Debug.Log(stageMap);
-            }
-
             // フロアの表示を初期化
             for (int i = 0; i < StageMasterModel.MaxFloorNum; i++)
             {

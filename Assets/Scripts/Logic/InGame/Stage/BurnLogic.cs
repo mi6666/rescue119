@@ -1,6 +1,6 @@
 using System;
 using Interface.LogicInterface.InGame;
-using Structure.InGame;
+using Interface.ModelInterface.InGame;
 using Structure.InGame.Stage;
 using Structure.InGame.Stage.Pawn;
 using UnityEngine;
@@ -10,39 +10,14 @@ namespace Logic.InGame.Stage
 {
     public class BurnLogic : IBurnLogic
     {
-        public BurnLogic(IGridCastLogic gridCastLogic)
+        public BurnLogic
+            (
+                IStageTileMapModel stageTileMapModel,
+                IGridCastLogic gridCastLogic
+                )
         {
+            StageTileMapModel = stageTileMapModel;
             GridCastLogic = gridCastLogic;
-        }
-
-        public ReadOnlySpan<FeedBackCommand> Update(ITipBurnable tipBurnable, UpdateArgument updateArgument)
-        {
-            if (!tipBurnable.IsBurn)
-            {
-                return CommandBuffer.AsSpan(0, 0);
-            }
-
-            int count = 0;
-
-            var tipPos = updateArgument.MapIndex;
-            var aroundTip = updateArgument.FloorMap.GetAround4Tips(tipPos.x, tipPos.y);
-
-            foreach (var (_, tipBase) in aroundTip)
-            {
-                if (tipBase is not ITipBurnable burnable) continue;
-                if (burnable.IsBurn) continue;
-
-                var toBurnAround = Random.Range(0, 100) >= 80;
-                if (toBurnAround)
-                {
-                    burnable.SetBurn();
-                    CommandBuffer[count] = new FeedBackCommand(burnable.InstanceId, TileStateType.Burning);
-                    count++;
-                }
-            }
-
-
-            return CommandBuffer.AsSpan(0, count);
         }
 
         public ReadOnlySpan<SpawnCommand> Update(int floor, UpdateArgument updateArgument)
@@ -50,7 +25,7 @@ namespace Logic.InGame.Stage
             int count = 0;
 
             var fireIndex = updateArgument.MapIndex;
-            var aroundTip = updateArgument.FloorMap.GetAround4Tips(fireIndex.x, fireIndex.y);
+            var aroundTip = StageTileMapModel.GetAround4Tips(floor, fireIndex.x, fireIndex.y);
 
             foreach (var (position, tipBase) in aroundTip)
             {
@@ -83,6 +58,7 @@ namespace Logic.InGame.Stage
 
         private FeedBackCommand[] CommandBuffer { get; } = new FeedBackCommand[8];
         private SpawnCommand[] SpawnCommands { get; } = new SpawnCommand[8];
+        private IStageTileMapModel StageTileMapModel { get; }
         private IGridCastLogic GridCastLogic { get; }
     }
 }

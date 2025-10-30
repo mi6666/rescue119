@@ -4,14 +4,9 @@ using UnityEngine;
 
 namespace View.InGame.Stage.Pawn
 {
-    public class FirePawnView : BasePawnView, IPawnView, IFactorablePawnView
+    public class FirePawnView : BasePawnView, IPawnView
     {
         public override PawnType Type => PawnType.Fire;
         public override Vector2Int Size => Vector2Int.one;
-        
-        public void SetFloor(int newFloor)
-        {
-            Floor = newFloor;
-        }
     }
 }

@@ -62,7 +62,6 @@ namespace Controller.InGame.Player
             UpdatePawnDetectorPosition();
         }
 
-
         private void Locomotion(float deltaTime)
         {
             var moveInput = MoveVectorView.Pool();

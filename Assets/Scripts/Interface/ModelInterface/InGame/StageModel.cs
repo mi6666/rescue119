@@ -1,7 +1,9 @@
 ﻿using System;
+using Module.Option.Runtime;
 using R3;
 using Structure.InGame;
 using Structure.InGame.Stage;
+using UnityEngine;
 
 namespace Interface.ModelInterface.InGame
 {
@@ -38,8 +40,9 @@ namespace Interface.ModelInterface.InGame
     /// </summary>
     public interface IStageTileMapModel
     {
-        public FloorMap[] StageMaps { get; }
         public void InitStageMap(FloorMap[] stageMaps);
+        public ReadOnlySpan<(Vector2Int, TipBase)> GetAround4Tips(int floor, int x, int y);
+        public Option<TipBase> GetTip(int floor, Vector2Int position);
     }
 
     /// <summary>

@@ -76,8 +76,6 @@ namespace Controller.InGame.Player
             WaterView.SpawnWater(frontPosition, lookAt, waterLength);
             var duration = ActionLengthModel.SplashWater;
 
-            Debug.Log($"splash water: length {waterLength}");
-
             await UniTask.Delay(TimeSpan.FromSeconds(duration));
 
             WaterView.DespawnWater();
@@ -96,7 +94,7 @@ namespace Controller.InGame.Player
                 var castPosition = frontPosition + lookAt * frontCount;
                 
                 // マップ上の壁をチェックする
-                var mapCastResult = StageTileMapModel.StageMaps[currentFloor].GetTip(castPosition);
+                var mapCastResult = StageTileMapModel.GetTip(currentFloor, castPosition);
                 if (mapCastResult.TryGetValue(out var tipBase))
                 {
                     if (tipBase is ITipBlocking)

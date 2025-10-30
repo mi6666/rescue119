@@ -45,6 +45,9 @@ TagManager:
   - name: Environment
     uniqueID: 1867876801
     locked: 0
+  - name: Pawn
+    uniqueID: 3515702331
+    locked: 0
   - name: Player
     uniqueID: 3128520519
     locked: 0

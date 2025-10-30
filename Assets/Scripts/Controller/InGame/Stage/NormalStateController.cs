@@ -21,11 +21,10 @@ namespace Controller.InGame.Stage
         public NormalStateController
         (
             IPawnEventView pawnEventView,
-            IFloorPawnView  floorPawnView,
+            IFloorPawnView floorPawnView,
             IMapCoordinateView mapCoordinateView,
             IPawnPoolView pawnPoolView,
             IStagePawnModel stagePawnModel,
-            IStageTileMapModel stageTileMapModel,
             IStageFloorModel stageFloorModel,
             IStageMasterModel stageMasterModel,
             IBurnLogic burnLogic,
@@ -38,7 +37,6 @@ namespace Controller.InGame.Stage
             MapCoordinateView = mapCoordinateView;
             PawnPoolView = pawnPoolView;
             StagePawnModel = stagePawnModel;
-            StageTileMapModel = stageTileMapModel;
             StageFloorModel = stageFloorModel;
             StageMasterModel = stageMasterModel;
             BurnLogic = burnLogic;
@@ -61,7 +59,6 @@ namespace Controller.InGame.Stage
         private void UpdatePawnLogic()
         {
             var floor = StageFloorModel.CurrentFloor;
-            var stageMap = StageTileMapModel.StageMaps[floor];
             var pawns = FloorPawnView.GetFloorPawn(floor);
 
             for (int i = 0; i < pawns.Length; i++)
@@ -70,7 +67,7 @@ namespace Controller.InGame.Stage
                 if (pawn.Floor != floor) continue;
 
                 var position = MapCoordinateView.PositionToMapIndex(floor, pawn.Position);
-                var arg = new UpdateArgument(stageMap, new Vector2Int(position.x, position.y));
+                var arg = new UpdateArgument(new Vector2Int(position.x, position.y));
 
                 var result = BurnLogic.Update(floor, arg);
                 foreach (var command in result)
@@ -112,7 +109,6 @@ namespace Controller.InGame.Stage
         private IPawnPoolView PawnPoolView { get; }
         private IMapCoordinateView MapCoordinateView { get; }
         private IStagePawnModel StagePawnModel { get; }
-        private IStageTileMapModel StageTileMapModel { get; }
         private IStageFloorModel StageFloorModel { get; }
         private IStageMasterModel StageMasterModel { get; }
         private IBurnLogic BurnLogic { get; }

@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca39840f3dfe434683e2cae5e0f02706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterPrefab: {fileID: 5218977490013182683, guid: 9234e6061d2b4d7be8addedc716767b6, type: 3}
+  initialPoolSize: 50
 --- !u!1 &8009998105121675455
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468f4da8a024496fb5e1e11d15bdde55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selfTransform: {fileID: 0}
+  selfTransform: {fileID: 7295621056180168528}
 --- !u!1001 &5768338147425761301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -221,11 +223,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 624407157938979011}
   m_SourcePrefab: {fileID: 100100000, guid: 81bb9eea30387e442899949a80011e55, type: 3}
---- !u!95 &101284066252621188 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 81bb9eea30387e442899949a80011e55, type: 3}
-  m_PrefabInstance: {fileID: 5768338147425761301}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6307284160618225662 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81bb9eea30387e442899949a80011e55, type: 3}
@@ -321,6 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72ff32cb0454b0b9bf2988edb74a2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selfTransform: {fileID: 6307284160618225662}
   lookAtObject: {fileID: 6307284160618225662}
   raycastSize: 0.5
   rayCastDistance: 0.0625
@@ -390,6 +388,8 @@ MonoBehaviour:
     reverseAngleThreshold: 100
   actionModel:
     actionLength: 0.25
+    waterLength: 0
+  playerMasterData: {fileID: 11400000, guid: f0e3005afa8e61f45b2949deae8e0059, type: 2}
 --- !u!114 &3580539408159770045
 MonoBehaviour:
   m_ObjectHideFlags: 0
