@@ -34,13 +34,16 @@ namespace Controller.InGame.Primary
             var currentFloor = StageFloorModel.CurrentFloor;
 
             FloorMoveTextView.SetFloorMove(currentFloor);
-            FloorMoveUiView.Show().Forget();
 
             Wait().Forget();
         }
 
         private async UniTask Wait()
         {
+            await FloorMoveUiView.Show();
+            
+            // todo なんか
+
             await UniTask.Delay(TimeSpan.FromSeconds(FloorMoveTime.FloorTime));
 
             InnerState.ChangeState(PrimaryStateType.Normal);
