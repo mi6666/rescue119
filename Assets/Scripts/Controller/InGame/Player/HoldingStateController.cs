@@ -8,6 +8,7 @@ using Module.StateMachine;
 using R3;
 using Structure.InGame;
 using Structure.InGame.Stage;
+using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -63,17 +64,22 @@ namespace Controller.InGame.Player
             // 他の動作を受け付けない
             using var operation = PlayerLockModel.GetOperation(HoldingAnimationLock);
 
-            // 前方にある`Pawn`があればキャンセルする
+            var holdingPawn = HoldingPawnView.HoldingPawn;
+            // 前方にある`Pawn`を取得
             var floor = StageFloorModel.CurrentFloor;
             var detectPosition = PlayerView.Position + CurrentLookModel.LookTo;
             var detectIndex = MapCoordinateView.PositionToMapIndex(StageFloorModel.CurrentFloor, detectPosition);
             var frontPawn = GridCastLogic
                 .CastGridFirst(floor, detectIndex, Vector2Int.one, CastTargetType.Pawn);
 
+            // 岩は火を消す
+            if (holdingPawn.Type == PawnType.Rubble)
+            {
+                
+            }
             if (frontPawn.IsSome) return;
 
             // 保持している`Pawn`を置く
-            var holdingPawn = HoldingPawnView.HoldingPawn;
             var putPosition = MapCoordinateView.AlignToMapPosition(floor, detectPosition);
             StagePawnModel.StorePawn(new GridCollider(holdingPawn.InstanceId, holdingPawn.Type, floor, detectIndex,
                 holdingPawn.Size));
