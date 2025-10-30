@@ -19,7 +19,7 @@ namespace View.InGame.Player
 
         public void ApplyVelocity(Vector2 moveTo)
         {
-            moveTo = _prevMove;
+            _prevMove = moveTo;
             selfTransform.Translate(moveTo);
         }
 
