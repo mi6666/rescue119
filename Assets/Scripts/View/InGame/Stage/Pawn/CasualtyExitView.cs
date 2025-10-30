@@ -1,26 +1,33 @@
-﻿using Interface.ViewInterface.InGame.UserInterface;
-using R3;
+﻿using Module.EditorExtension.Runtime;
 using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
 namespace View.InGame.Stage.Pawn
 {
-    public class CasualtyExitView : BasePawnView, IGameClearEventView
+    [RequireComponent(typeof(BoxCollider2D))]
+    public class CasualtyExitView : BasePawnView
     {
         [SerializeField] private Vector2Int gridColliderSize;
+        [SerializeField] private TagSelector casualty;
 
-        private readonly Subject<Unit> _clearSubject = new();
-        public Observable<Unit> GameClearObservable => _clearSubject;
+        private EventCompositeView _eventCompositeView;
+        private void Awake()
+        {
+            _eventCompositeView = FindAnyObjectByType<EventCompositeView>();
+
+            Debug.Assert(_eventCompositeView is not null);
+        }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Casualty"))
+            if (other.CompareTag(casualty))
             {
-                _clearSubject.OnNext(Unit.Default);
+                Debug.Log("clear");
+                _eventCompositeView.InvokeClear();
             }
         }
 
-        public override PawnType Type => PawnType.Static;
+        public override PawnType Type => PawnType.Exit;
         public override Vector2Int Size => gridColliderSize;
     }
 }

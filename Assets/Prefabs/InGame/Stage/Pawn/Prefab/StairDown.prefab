@@ -77,8 +77,8 @@ SpriteRenderer:
   m_SortingLayerID: -779264965
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.9245283, g: 0.87856406, b: 0.21804899, a: 1}
+  m_Sprite: {fileID: 21300000, guid: ae90950179911755d9fa2a19ebecee63, type: 3}
+  m_Color: {r: 0, g: 0.23067236, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -152,4 +152,4 @@ MonoBehaviour:
   gridColliderSize: {x: 1, y: 1}
   targetTag:
     tag: Player
-  stairType: 0
+  stairType: 1

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f71aced77d34472c914c16aa2b971d3b, type: 3}
-  m_Name: StairUp
+  m_Name: StairDown
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 0d7802ee2268043309f1c17b33ca7c7f, type: 3}
-  m_Color: {r: 0.8886285, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: ae90950179911755d9fa2a19ebecee63, type: 3}
+  m_Color: {r: 0, g: 0.26607513, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0
@@ -31,7 +31,7 @@ MonoBehaviour:
     e31: 0
     e32: 0
     e33: 1
-  m_InstancedGameObject: {fileID: 3140393092037593840, guid: 7f77d4cda12813d49929cef6185f1245, type: 3}
+  m_InstancedGameObject: {fileID: 3140393092037593840, guid: 6ef6e604dd55ea36b81b53567ddda95d, type: 3}
   m_Flags: 1
   m_ColliderType: 1
   stageTileType: 0

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Structure.InGame.Stage;
 using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
@@ -27,6 +28,13 @@ namespace Interface.ViewInterface.InGame
         public void DespawnWater();
     }
 
+    public interface IHoldingPawnView
+    {
+        public UniTask HoldPawn(IPawnView pawnView);
+        public UniTask PutPawn(Vector2 position);
+        public IPawnView HoldingPawn { get; }
+    }
+
     public interface IDetectPositionView
     {
         public void SetPosition(Vector2 detectionPoint);
@@ -43,9 +51,9 @@ namespace Interface.ViewInterface.InGame
         public Vector2 Position { get; }
         public Vector2Int Size { get; }
         public int Floor { get; }
+        
+        public Transform PawnTransform { get; }
 
-        public UniTask SetOwner(Transform owner, float duration);
-        public void Put(Vector2 position);
         public void InitFloor(int changedFloor);
         public void SetFloor(Transform newParent, int changedFloor);
     }

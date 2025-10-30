@@ -23,6 +23,11 @@ namespace Structure.InGame.Stage.Pawn
         /// 瓦礫
         /// </summary>
         Rubble,
+        
+        /// <summary>
+        /// 出口
+        /// </summary>
+        Exit,
 
         /// <summary>
         /// 特に動かないオブジェクト
@@ -59,6 +64,21 @@ namespace Structure.InGame.Stage.Pawn
                 PawnType.Fire => false,
                 PawnType.Rubble => true,
                 PawnType.Static => true,
+                _ => throw new NotImplementedException("you don't have to arrive here.")
+            };
+        }
+
+        /// <summary>
+        /// このPawnが壁のように移動の妨げとなるかを記述する
+        /// </summary>
+        public static bool IsHoldable(this PawnType type)
+        {
+            return type switch
+            {
+                PawnType.Casualty => true,
+                PawnType.Fire => false,
+                PawnType.Rubble => true,
+                PawnType.Static => false,
                 _ => throw new NotImplementedException("you don't have to arrive here.")
             };
         }

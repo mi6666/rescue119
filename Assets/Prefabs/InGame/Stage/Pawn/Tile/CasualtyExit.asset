@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f71aced77d34472c914c16aa2b971d3b, type: 3}
-  m_Name: StairUp
+  m_Name: CasualtyExit
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 0d7802ee2268043309f1c17b33ca7c7f, type: 3}
-  m_Color: {r: 0.8886285, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: db9daa0ec12b3d2d6b2dc88741323b75, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0
@@ -31,7 +31,7 @@ MonoBehaviour:
     e31: 0
     e32: 0
     e33: 1
-  m_InstancedGameObject: {fileID: 3140393092037593840, guid: 7f77d4cda12813d49929cef6185f1245, type: 3}
+  m_InstancedGameObject: {fileID: 5507524394916328761, guid: f93e0caee17812c47a3d33abbefd963a, type: 3}
   m_Flags: 1
   m_ColliderType: 1
   stageTileType: 0

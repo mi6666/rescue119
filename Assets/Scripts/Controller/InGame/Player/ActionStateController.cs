@@ -18,9 +18,10 @@ namespace Controller.InGame.Player
         [Inject]
         public ActionStateController
         (
+            IPlayerView playerView,
             IWaterView waterView,
+            IHoldingPawnView holdingPawnView,
             IDetectPositionView detectPositionView,
-            IScenePawnsView scenePawnsView,
             IMapCoordinateView mapCoordinateView,
             IActionLengthModel actionLengthModel,
             IStageFloorModel stageFloorModel,
@@ -30,12 +31,14 @@ namespace Controller.InGame.Player
             IFloorPawnView floorPawnView,
             IPawnPoolView pawnPoolView,
             IStagePawnModel stagePawnModel,
+            IPlayerLockModel playerLockModel,
             IMutStateType<PlayerStateType> innerState
         ) : base(PlayerStateType.Action, innerState)
         {
+            PlayerView = playerView;
             WaterView = waterView;
+            HoldingPawnView = holdingPawnView;
             DetectPositionView = detectPositionView;
-            ScenePawnsView = scenePawnsView;
             MapCoordinateView = mapCoordinateView;
             ActionLengthModel = actionLengthModel;
             StageFloorModel = stageFloorModel;
@@ -45,6 +48,7 @@ namespace Controller.InGame.Player
             FloorPawnView = floorPawnView;
             PawnPoolView = pawnPoolView;
             StagePawnModel = stagePawnModel;
+            PlayerLockModel = playerLockModel;
         }
 
         public override void OnEnter()
@@ -54,24 +58,17 @@ namespace Controller.InGame.Player
             var castResult =
                 GridCastLogic.CastGridFirst(currentFloor, detectGridPosition, Vector2Int.one, CastTargetType.Pawn);
 
+            Debug.Log(castResult);
             if (castResult.TryGetValue(out var value))
             {
-                var pawn = ScenePawnsView.FindPawn(value.PawnId);
-                if (pawn is not null)
+                if (value.PawnType.IsHoldable())
                 {
-                    if (pawn.Type == PawnType.Casualty)
-                    {
-                        InnerState.ChangeState(PlayerStateType.Holding);
-                        return;
-                    }
+                    Hold().Forget();
+                    return;
                 }
             }
 
             SpawnWater().Forget();
-        }
-
-        public override void OnExit()
-        {
         }
 
         private async UniTask SpawnWater()
@@ -88,6 +85,27 @@ namespace Controller.InGame.Player
             InnerState.ChangeState(PlayerStateType.Normal);
         }
 
+        private const string HoldingAnimationLock = "Holding Animation Lock";
+        private async UniTask Hold()
+        {
+            // 他の動作を受け付けない
+            using var operation = PlayerLockModel.GetOperation(HoldingAnimationLock);
+
+            // 前方にある`Pawn`を取得する
+            var floor = StageFloorModel.CurrentFloor;
+            var detectPosition = PlayerView.Position + CurrentLookModel.LookTo;
+            var detectIndex = MapCoordinateView.PositionToMapIndex(StageFloorModel.CurrentFloor, detectPosition);
+            var holdPawn = GridCastLogic
+                .CastGridFirst(floor, detectIndex, Vector2Int.one, CastTargetType.Pawn)
+                .Unwrap();
+            var holdPawnView = FloorPawnView.GetPawn(holdPawn.PawnId, floor);
+            StagePawnModel.RemovePawn(holdPawnView.InstanceId);
+
+            // `Pawn`を保持する
+            await HoldingPawnView.HoldPawn(holdPawnView);
+            InnerState.ChangeState(PlayerStateType.Holding);
+        }
+
         private int CheckWall()
         {
             int frontCount;
@@ -95,10 +113,10 @@ namespace Controller.InGame.Player
             var lookAt = Vector2Int.FloorToInt(CurrentLookModel.LookTo);
             var currentFloor = StageFloorModel.CurrentFloor;
 
-            for (frontCount = 0; frontCount < ActionLengthModel.WaterLength;  frontCount++)
+            for (frontCount = 0; frontCount < ActionLengthModel.WaterLength; frontCount++)
             {
                 var castPosition = frontPosition + lookAt * frontCount;
-                
+
                 // マップ上の壁をチェックする
                 var mapCastResult = StageTileMapModel.GetTip(currentFloor, castPosition);
                 if (mapCastResult.TryGetValue(out var tipBase))
@@ -108,7 +126,7 @@ namespace Controller.InGame.Player
                         return frontCount;
                     }
                 }
-                
+
                 // 道を阻む`Pawn`がないかチェックする
                 var castResult =
                     GridCastLogic.CastGrid(
@@ -133,6 +151,7 @@ namespace Controller.InGame.Player
 
             return frontCount;
         }
+
         private Vector2Int FrontMapPosition()
         {
             var detectPosition = DetectPositionView.DetectPosition;
@@ -140,9 +159,10 @@ namespace Controller.InGame.Player
             return MapCoordinateView.PositionToMapIndex(currentFloor, detectPosition);
         }
 
+        private IPlayerView PlayerView { get; }
         private IWaterView WaterView { get; }
+        private IHoldingPawnView HoldingPawnView { get; }
         private IDetectPositionView DetectPositionView { get; }
-        private IScenePawnsView ScenePawnsView { get; }
         private IMapCoordinateView MapCoordinateView { get; }
         private IActionLengthModel ActionLengthModel { get; }
         private IStageFloorModel StageFloorModel { get; }
@@ -152,5 +172,6 @@ namespace Controller.InGame.Player
         private IFloorPawnView FloorPawnView { get; }
         private IPawnPoolView PawnPoolView { get; }
         private IStagePawnModel StagePawnModel { get; }
+        private IPlayerLockModel PlayerLockModel { get; }
     }
 }

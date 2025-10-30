@@ -86,7 +86,7 @@ namespace Interface.ModelInterface.InGame
     /// </summary>
     public interface IPlayerLockModel
     {
-        public OperationHandle GetOperation();
+        public OperationHandle GetOperation(string operationMessage);
         public bool IsLocked();
     }
 }

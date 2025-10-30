@@ -18,7 +18,6 @@ namespace Installer.InGame.Primary
     public class PrimaryInstaller : InstallerBase
     {
         [SerializeField] private EventCompositeView eventCompositeView;
-        [SerializeField] private ClearButtonView clearButtonView;
         [SerializeField] private GameOverButtonView gameOverButtonView;
         [SerializeField] private StageMasterModel stageMasterModel;
         [SerializeField] private PrimaryMasterData primaryMasterData;
@@ -41,7 +40,6 @@ namespace Installer.InGame.Primary
             builder.RegisterInstance(pauseUiView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.Pause);
             builder.RegisterInstance(gameClearUiView).AsImplementedInterfaces();
             builder.RegisterInstance(gameClearUiView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameClear);
-            builder.RegisterInstance(clearButtonView).AsImplementedInterfaces();
             builder.RegisterInstance(gameOverUiView).AsImplementedInterfaces();
             builder.RegisterInstance(gameOverUiView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameOver);
             builder.RegisterInstance(gameOverButtonView).AsImplementedInterfaces();

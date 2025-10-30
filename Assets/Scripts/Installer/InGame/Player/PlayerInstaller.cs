@@ -11,6 +11,7 @@ namespace Installer.InGame.Player
     public class PlayerInstaller: InstallerBase
     {
         [SerializeField] private PlayerView playerView;
+        [SerializeField] private HoldingPawnView holdingPawnView;
         [SerializeField] private PlayerAnimatorView playerAnimatorView;
         [SerializeField] private DetectPositionView detectPositionView;
         [SerializeField] private WaterView waterView;
@@ -22,6 +23,7 @@ namespace Installer.InGame.Player
         {
             // View
             builder.RegisterInstance(playerView).AsImplementedInterfaces();
+            builder.RegisterInstance(holdingPawnView).AsImplementedInterfaces();
             builder.RegisterInstance(playerAnimatorView).AsImplementedInterfaces();
             builder.RegisterInstance(detectPositionView).AsImplementedInterfaces();
             builder.RegisterInstance(waterView).AsImplementedInterfaces();
@@ -31,9 +33,13 @@ namespace Installer.InGame.Player
             builder.RegisterInstance(locomotionModel).AsImplementedInterfaces();
             builder.RegisterInstance(actionModel).AsImplementedInterfaces();
             builder.Register<CurrentLookModel>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<PlayerLockModel>(Lifetime.Singleton).AsImplementedInterfaces();
             
             // Logic
             builder.Register<LocomotionLogic>(Lifetime.Singleton).AsImplementedInterfaces();
+            
+            // Connection
+            builder.Register<LocomotionConnection>(Lifetime.Singleton);
             
             // Controller
             builder.Register<PlayerStateEntity>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
@@ -41,6 +47,7 @@ namespace Installer.InGame.Player
             builder.Register<NormalStateController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<ActionStateController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<StopStateController>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<HoldingStateController>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }
