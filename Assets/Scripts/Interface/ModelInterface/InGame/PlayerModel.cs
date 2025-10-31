@@ -98,7 +98,7 @@ namespace Interface.ModelInterface.InGame
         public void SetLook(Vector2 lookTo);
     }
 
-    public interface IPlayerAnimationKeyModel
+    public interface IAnimationKeyModel
     {
         public string Key { get; }
     }

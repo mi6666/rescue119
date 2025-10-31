@@ -378,41 +378,7 @@ MonoBehaviour:
   holdingPawnView: {fileID: 6359994066902468029}
   playerAnimatorView: {fileID: 7010527418245181741}
   detectPositionView: {fileID: 2583464649292206259}
-  waterView: {fileID: 5745911544867117455}
-  locomotionModel:
-    maxSpeed: 5
-    accelerationDuration: 0.125
-    directionChangeSpeed: 25
-    speedCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    wallFriction: 0.8
-    reverseAngleThreshold: 100
-  actionModel:
-    actionLength: 0.25
-    waterLength: 3
-    holdMotionLength: 0
+  waterTileView: {fileID: 5745911544867117455}
   playerMasterData: {fileID: 11400000, guid: f0e3005afa8e61f45b2949deae8e0059, type: 2}
 --- !u!114 &7049297621115034803
 MonoBehaviour:

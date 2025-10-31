@@ -6,6 +6,7 @@ using Interface.ViewInterface.InGame.Stage;
 using Module.EditorExtension.Runtime;
 using Structure.Global;
 using Structure.InGame;
+using UnityEngine;
 
 namespace Controller.InGame.Common
 {
@@ -23,7 +24,7 @@ namespace Controller.InGame.Common
             IPlayerAnimatorView playerAnimatorView,
             ICurrentLookModel currentLookModel,
             ILocomotionSetting locomotionSetting,
-            IPlayerAnimationKeyModel playerAnimationKeyModel,
+            IAnimationKeyModel animationKeyModel,
             ILocomotionLogic locomotionLogic
         )
         {
@@ -34,7 +35,7 @@ namespace Controller.InGame.Common
             PlayerAnimatorView = playerAnimatorView;
             CurrentLookModel = currentLookModel;
             LocomotionSetting = locomotionSetting;
-            PlayerAnimationKeyModel = playerAnimationKeyModel;
+            AnimationKeyModel = animationKeyModel;
             LocomotionLogic = locomotionLogic;
         }
 
@@ -54,7 +55,6 @@ namespace Controller.InGame.Common
             if (lookAt.TryGetValue(out var value))
             {
                 CurrentLookModel.SetLook(value);
-                DebugLogger.Log("look at", value.ToString());
             }
 
             var calcArg = new LocomotionArgument(
@@ -72,7 +72,7 @@ namespace Controller.InGame.Common
 
             var walkValue = calculatedVelocity.magnitude / LocomotionSetting.MaxSpeed;
 
-            PlayerAnimatorView.SetFloat(PlayerAnimationKeyModel.Key, walkValue);
+            PlayerAnimatorView.SetFloat(AnimationKeyModel.Key, walkValue);
         }
 
         private void UpdatePawnDetectorPosition()
@@ -89,7 +89,7 @@ namespace Controller.InGame.Common
         private IPlayerAnimatorView PlayerAnimatorView { get; }
         private ICurrentLookModel CurrentLookModel { get; }
         private ILocomotionSetting LocomotionSetting { get; }
-        private IPlayerAnimationKeyModel PlayerAnimationKeyModel { get; }
+        private IAnimationKeyModel AnimationKeyModel { get; }
         private ILocomotionLogic LocomotionLogic { get; }
     }
 }

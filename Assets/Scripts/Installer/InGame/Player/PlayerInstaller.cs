@@ -14,7 +14,8 @@ namespace Installer.InGame.Player
         [SerializeField] private HoldingPawnView holdingPawnView;
         [SerializeField] private PlayerAnimatorView playerAnimatorView;
         [SerializeField] private DetectPositionView detectPositionView;
-        [SerializeField] private WaterView waterView;
+        [SerializeField] private WaterTileView waterTileView;
+        [SerializeField] private PlayerMasterData playerMasterData;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -23,9 +24,10 @@ namespace Installer.InGame.Player
             builder.RegisterInstance(holdingPawnView).AsImplementedInterfaces();
             builder.RegisterInstance(playerAnimatorView).AsImplementedInterfaces();
             builder.RegisterInstance(detectPositionView).AsImplementedInterfaces();
-            builder.RegisterInstance(waterView).AsImplementedInterfaces();
+            builder.RegisterInstance(waterTileView).AsImplementedInterfaces();
             
             // Model
+            builder.RegisterInstance(playerMasterData).AsImplementedInterfaces();
             builder.Register<CurrentLookModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<PlayerLockModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<LocomotionModel>(Lifetime.Singleton).AsImplementedInterfaces();

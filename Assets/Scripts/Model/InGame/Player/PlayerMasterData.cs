@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Model.InGame.Player
 {   
     [CreateAssetMenu(fileName = "PlayerMasterData", menuName = MenuName, order = 0)]
-    public class PlayerMasterData : ScriptableObject, IPlayerAnimationKeyModel, ILocomotionSetting, IActionSetting, IHpSetting
+    public class PlayerMasterData : ScriptableObject, IAnimationKeyModel, ILocomotionSetting, IActionSetting, IHpSetting
     {
         private const string MenuName = Constants.MasterDataDiv + nameof(PlayerMasterData);
 

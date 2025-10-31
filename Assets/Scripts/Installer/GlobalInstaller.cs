@@ -1,5 +1,6 @@
 using System;
 using Controller.InGame.Common;
+using Installer.Empty;
 using Logic.InGame.Stage;
 using Model.InGame.Stage;
 using Model.OutGame.StageSelect;
@@ -10,7 +11,6 @@ using VContainer;
 using View.Global.Input;
 using View.Global.Scene;
 using View.InGame;
-using View.InGame.Stage.Pawn;
 
 namespace Installer
 {
@@ -26,15 +26,14 @@ namespace Installer
             builder.Register<InputWrapper>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<SceneLoaderView>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<PrimaryStateEventView>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<EmptyPawnsView>(Lifetime.Transient).AsImplementedInterfaces();
-            builder.Register<EmptyStairEventView>(Lifetime.Transient).AsImplementedInterfaces();
+            EmptyImplementation.RegisterEmptyView(builder);
             
             // Model
             builder.Register<StageInfoModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<StageFloorModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<StagePawnModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<FloorMoveContextModel>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<EmptyTileMapModel>(Lifetime.Singleton).AsImplementedInterfaces();
+            EmptyImplementation.RegisterEmptyModel(builder);
             
             // Presenter
             builder.Register<ScenePresenter>(Lifetime.Singleton).AsImplementedInterfaces();
