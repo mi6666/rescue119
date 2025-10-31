@@ -51,11 +51,21 @@ namespace Interface.ViewInterface.InGame
         public Vector2 Position { get; }
         public Vector2Int Size { get; }
         public int Floor { get; }
-        
+
         public Transform PawnTransform { get; }
 
         public void InitFloor(int changedFloor);
         public void SetFloor(Transform newParent, int changedFloor);
+
+        /// <summary>
+        /// `Pawn`が置かれた際に発動する
+        /// </summary>
+        public void OnPut();
+
+        /// <summary>
+        /// `Pawn`が取り除かれた際に発動する
+        /// </summary>
+        public void OnTake();
     }
 
     /// <summary>

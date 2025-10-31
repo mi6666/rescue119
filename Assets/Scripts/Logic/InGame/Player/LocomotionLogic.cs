@@ -13,17 +13,19 @@ namespace Logic.InGame.Player
     {
         public LocomotionLogic
         (
-            ILocomotionModel locomotionModel
+            ILocomotionModel locomotionModel,
+            ILocomotionSetting locomotionSetting
         )
         {
             LocomotionModel = locomotionModel;
+            LocomotionSetting = locomotionSetting;
         }
 
         public Vector2 CalcVelocity(LocomotionArgument argument)
         {
             var moveTo = math.normalizesafe(argument.CurrentVelocity);
             var acceleration = DoAccel(argument);
-            var directionChangeSpeed = LocomotionModel.DirectionChangeSpeed;
+            var directionChangeSpeed = LocomotionSetting.DirectionChangeSpeed;
 
             if (acceleration)
             {
@@ -35,7 +37,7 @@ namespace Logic.InGame.Player
             var speed = CalcSpeed(acceleration, argument);
 
             var midSpeed = moveTo * speed;
-            var result = PostProcess(midSpeed, LocomotionModel.WallFriction, argument);
+            var result = PostProcess(midSpeed, LocomotionSetting.WallFriction, argument);
 
             DebugLogger.Log("move to", moveTo.ToString());
             DebugLogger.Log("speed", speed.ToString("F1"));
@@ -50,13 +52,10 @@ namespace Logic.InGame.Player
             var moveInput = argument.MoveInput;
             var currentVelocity = argument.CurrentVelocity;
             var angle = GetAngle(moveInput, currentVelocity);
-            DebugLogger.Log("angle", angle.ToString("F1"));
 
             var hasInput = math.lengthsq(moveInput) > Constants.Threshold; // 入力はあるか
-            var isMoving = math.lengthsq(currentVelocity) > Constants.Threshold; // 移動中か
-            var inputIsReverse = angle > LocomotionModel.ReverseAngleThreshold; // 入力は反転か
-            var isReverse = isMoving & inputIsReverse;
-            var acceleration = !(!hasInput | isReverse);
+            var inputIsReverse = angle > LocomotionSetting.ReverseAngleThreshold; // 入力は反転か
+            var acceleration = !(!hasInput | inputIsReverse);
 
             return acceleration;
         }
@@ -103,11 +102,10 @@ namespace Logic.InGame.Player
         private float GetSpeed()
         {
             var accelTime = LocomotionModel.AccelerationTime;
-            var duration = LocomotionModel.AccelerationDuration;
-            var maxSpeed = LocomotionModel.MaxSpeed;
+            var duration = LocomotionSetting.AccelerationDuration;
+            var maxSpeed = LocomotionSetting.MaxSpeed;
 
-            var currentSpeed = LocomotionModel.GetSpeedCurve(accelTime / duration);
-            DebugLogger.Log("curve result", currentSpeed.ToString("F1"));
+            var currentSpeed = LocomotionSetting.GetSpeedCurve(accelTime / duration);
             DebugLogger.Log("accel time", accelTime.ToString("F1"));
 
             return maxSpeed * currentSpeed;
@@ -120,5 +118,6 @@ namespace Logic.InGame.Player
         }
 
         private ILocomotionModel LocomotionModel { get; }
+        private ILocomotionSetting LocomotionSetting { get; }
     }
 }

@@ -74,6 +74,7 @@ namespace View.InGame.Stage.Floor
             var view = targetFloor.TakePawn(id);
 
             view.SetFloor(null, floor);
+            view.OnTake();
 
             return view;
         }
@@ -84,6 +85,7 @@ namespace View.InGame.Stage.Floor
             targetFloor.GivePawn(pawnView);
 
             pawnView.SetFloor(targetFloor.SelfTransform, floor);
+            pawnView.OnPut();
         }
 
         #endregion

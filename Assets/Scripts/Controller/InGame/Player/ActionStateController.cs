@@ -22,7 +22,7 @@ namespace Controller.InGame.Player
             IHoldingPawnView holdingPawnView,
             IDetectPositionView detectPositionView,
             IMapCoordinateView mapCoordinateView,
-            IActionLengthModel actionLengthModel,
+            IActionSetting actionSetting,
             IStageFloorModel stageFloorModel,
             ICurrentLookModel currentLookModel,
             IStageTileMapModel stageTileMapModel,
@@ -37,7 +37,7 @@ namespace Controller.InGame.Player
             HoldingPawnView = holdingPawnView;
             DetectPositionView = detectPositionView;
             MapCoordinateView = mapCoordinateView;
-            ActionLengthModel = actionLengthModel;
+            ActionSetting = actionSetting;
             StageFloorModel = stageFloorModel;
             CurrentLookModel = currentLookModel;
             StageTileMapModel = stageTileMapModel;
@@ -71,7 +71,7 @@ namespace Controller.InGame.Player
             var frontPosition = DetectPositionView.DetectPosition;
             var lookAt = Vector2Int.FloorToInt(CurrentLookModel.LookTo);
             WaterView.SpawnWater(frontPosition, lookAt, waterLength);
-            var duration = ActionLengthModel.SplashWater;
+            var duration = ActionSetting.SplashWater;
 
             await UniTask.Delay(TimeSpan.FromSeconds(duration));
 
@@ -108,7 +108,7 @@ namespace Controller.InGame.Player
             var lookAt = Vector2Int.FloorToInt(CurrentLookModel.LookTo);
             var currentFloor = StageFloorModel.CurrentFloor;
 
-            for (frontCount = 0; frontCount < ActionLengthModel.WaterLength; frontCount++)
+            for (frontCount = 0; frontCount < ActionSetting.WaterLengthMax; frontCount++)
             {
                 var castPosition = frontPosition + lookAt * frontCount;
 
@@ -157,7 +157,7 @@ namespace Controller.InGame.Player
         private IHoldingPawnView HoldingPawnView { get; }
         private IDetectPositionView DetectPositionView { get; }
         private IMapCoordinateView MapCoordinateView { get; }
-        private IActionLengthModel ActionLengthModel { get; }
+        private IActionSetting ActionSetting { get; }
         private IStageFloorModel StageFloorModel { get; }
         private IStageTileMapModel StageTileMapModel { get; }
         private ICurrentLookModel CurrentLookModel { get; }

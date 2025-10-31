@@ -22,8 +22,8 @@ namespace Controller.InGame.Common
             IMapCoordinateView mapCoordinateView,
             IPlayerAnimatorView playerAnimatorView,
             ICurrentLookModel currentLookModel,
-            ILocomotionModel locomotionModel,
-            IPlayerAnimationParameterKeyModel playerAnimationParameterKeyModel,
+            ILocomotionSetting locomotionSetting,
+            IPlayerAnimationKeyModel playerAnimationKeyModel,
             ILocomotionLogic locomotionLogic
         )
         {
@@ -33,8 +33,8 @@ namespace Controller.InGame.Common
             MapCoordinateView = mapCoordinateView;
             PlayerAnimatorView = playerAnimatorView;
             CurrentLookModel = currentLookModel;
-            LocomotionModel = locomotionModel;
-            PlayerAnimationParameterKeyModel = playerAnimationParameterKeyModel;
+            LocomotionSetting = locomotionSetting;
+            PlayerAnimationKeyModel = playerAnimationKeyModel;
             LocomotionLogic = locomotionLogic;
         }
 
@@ -70,9 +70,9 @@ namespace Controller.InGame.Common
 
             PlayerView.ApplyVelocity(calculatedVelocity * deltaTime);
 
-            var walkValue = calculatedVelocity.magnitude / LocomotionModel.MaxSpeed;
+            var walkValue = calculatedVelocity.magnitude / LocomotionSetting.MaxSpeed;
 
-            PlayerAnimatorView.SetFloat(PlayerAnimationParameterKeyModel.Key, walkValue);
+            PlayerAnimatorView.SetFloat(PlayerAnimationKeyModel.Key, walkValue);
         }
 
         private void UpdatePawnDetectorPosition()
@@ -86,10 +86,10 @@ namespace Controller.InGame.Common
         private IDetectPositionView DetectPositionView { get; }
         private IInput_MoveVectorView MoveVectorView { get; }
         private IMapCoordinateView MapCoordinateView { get; }
-        private ICurrentLookModel CurrentLookModel { get; }
-        private ILocomotionModel LocomotionModel { get; }
-        private ILocomotionLogic LocomotionLogic { get; }
         private IPlayerAnimatorView PlayerAnimatorView { get; }
-        private IPlayerAnimationParameterKeyModel PlayerAnimationParameterKeyModel { get; }
+        private ICurrentLookModel CurrentLookModel { get; }
+        private ILocomotionSetting LocomotionSetting { get; }
+        private IPlayerAnimationKeyModel PlayerAnimationKeyModel { get; }
+        private ILocomotionLogic LocomotionLogic { get; }
     }
 }

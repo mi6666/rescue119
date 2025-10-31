@@ -1,7 +1,4 @@
-using Cysharp.Threading.Tasks;
 using Interface.ViewInterface.InGame;
-using LitMotion;
-using LitMotion.Extensions;
 using Module.EditorExtension.Runtime;
 using Structure.InGame.Stage.Pawn;
 using UnityEngine;
@@ -29,14 +26,6 @@ namespace View.InGame.Stage.Pawn
             protected set { floor = value; }
         }
 
-        public async UniTask SetOwner(Transform owner, float duration)
-        {
-            await LMotion.Create(selfTransform.position, owner.position, duration)
-                .BindToPosition(selfTransform)
-                .ToUniTask();
-            selfTransform.parent = owner;
-        }
-
         public void SetPosition(Vector2 position)
         {
             selfTransform.position = position;
@@ -51,7 +40,15 @@ namespace View.InGame.Stage.Pawn
         {
             selfTransform.parent = newParent;
             Floor = changedFloor;
-            selfTransform.localScale=Vector3.one;
+            selfTransform.localScale = Vector3.one;
+        }
+
+        public virtual void OnPut()
+        {
+        }
+
+        public virtual void OnTake()
+        {
         }
     }
 }

@@ -1,4 +1,3 @@
-using Controller.InGame.Common;
 using Controller.InGame.Player;
 using Logic.InGame.Player;
 using Model.InGame.Player;
@@ -16,9 +15,6 @@ namespace Installer.InGame.Player
         [SerializeField] private PlayerAnimatorView playerAnimatorView;
         [SerializeField] private DetectPositionView detectPositionView;
         [SerializeField] private WaterView waterView;
-        [SerializeField] private LocomotionModel locomotionModel;
-        [SerializeField] private ActionModel actionModel;
-        [SerializeField] private PlayerMasterData playerMasterData;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -28,13 +24,11 @@ namespace Installer.InGame.Player
             builder.RegisterInstance(playerAnimatorView).AsImplementedInterfaces();
             builder.RegisterInstance(detectPositionView).AsImplementedInterfaces();
             builder.RegisterInstance(waterView).AsImplementedInterfaces();
-            builder.RegisterInstance(playerMasterData).AsImplementedInterfaces();
             
             // Model
-            builder.RegisterInstance(locomotionModel).AsImplementedInterfaces();
-            builder.RegisterInstance(actionModel).AsImplementedInterfaces();
             builder.Register<CurrentLookModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<PlayerLockModel>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<LocomotionModel>(Lifetime.Singleton).AsImplementedInterfaces();
             
             // Logic
             builder.Register<LocomotionLogic>(Lifetime.Singleton).AsImplementedInterfaces();

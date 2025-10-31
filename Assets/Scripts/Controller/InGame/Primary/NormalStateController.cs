@@ -24,6 +24,7 @@ namespace Controller.InGame.Primary
             IStairEventView stairEventView,
             IPrimaryStateEventView primaryStateEventView,
             IHpModel hpModel,
+            IHpSetting hpSetting,
             ITimeModel timeModel,
             IFloorMoveContextModel floorMoveContextModel,
             CompositeDisposable compositeDisposable,
@@ -37,6 +38,7 @@ namespace Controller.InGame.Primary
             StairEventView = stairEventView;
             PrimaryStateEventView = primaryStateEventView;
             HpModel = hpModel;
+            HpSetting = hpSetting;
             TimeModel = timeModel;
             FloorMoveContextModel = floorMoveContextModel;
             CompositeDisposable = compositeDisposable;
@@ -67,7 +69,7 @@ namespace Controller.InGame.Primary
             TimeModel.CountUpTime(deltaTime);
 
             var currentHp = HpModel.CurrentHp;
-            var maxHp = HpModel.MaxHp;
+            var maxHp = HpSetting.MaxHp;
             var remainTime = TimeModel.TimeLength - TimeModel.CurrentTime;
 
             HpUiView.SetHp(currentHp, maxHp);
@@ -97,6 +99,7 @@ namespace Controller.InGame.Primary
         private IStairEventView StairEventView { get; }
         private IPrimaryStateEventView PrimaryStateEventView { get; }
         private IHpModel HpModel { get; }
+        private IHpSetting HpSetting { get; }
         private ITimeModel TimeModel { get; }
         private IFloorMoveContextModel FloorMoveContextModel { get; }
     }
