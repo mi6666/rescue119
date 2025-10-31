@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Structure.InGame.Stage;
 using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
@@ -32,6 +31,7 @@ namespace Interface.ViewInterface.InGame
     {
         public UniTask HoldPawn(IPawnView pawnView);
         public UniTask PutPawn(Vector2 position);
+        public UniTask PutAndFall(Vector2 position);
         public IPawnView HoldingPawn { get; }
     }
 

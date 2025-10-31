@@ -39,7 +39,6 @@ namespace Model.InGame.Stage
             }
         }
 
-
         public Option<int> CastPosition(Vector2Int position)
         {
             foreach (var pawn in Pawns)

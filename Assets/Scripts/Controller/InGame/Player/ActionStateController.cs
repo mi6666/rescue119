@@ -1,4 +1,5 @@
 using System;
+using Controller.InGame.Common;
 using Cysharp.Threading.Tasks;
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
@@ -9,13 +10,11 @@ using Structure.InGame;
 using Structure.InGame.Stage;
 using Structure.InGame.Stage.Pawn;
 using UnityEngine;
-using VContainer;
 
 namespace Controller.InGame.Player
 {
     public class ActionStateController : PlayerStateBehaviourBase
     {
-        [Inject]
         public ActionStateController
         (
             IPlayerView playerView,
@@ -28,10 +27,8 @@ namespace Controller.InGame.Player
             ICurrentLookModel currentLookModel,
             IStageTileMapModel stageTileMapModel,
             IGridCastLogic gridCastLogic,
-            IFloorPawnView floorPawnView,
-            IPawnPoolView pawnPoolView,
-            IStagePawnModel stagePawnModel,
             IPlayerLockModel playerLockModel,
+            PawnConnection pawnConnection,
             IMutStateType<PlayerStateType> innerState
         ) : base(PlayerStateType.Action, innerState)
         {
@@ -45,10 +42,8 @@ namespace Controller.InGame.Player
             CurrentLookModel = currentLookModel;
             StageTileMapModel = stageTileMapModel;
             GridCastLogic = gridCastLogic;
-            FloorPawnView = floorPawnView;
-            PawnPoolView = pawnPoolView;
-            StagePawnModel = stagePawnModel;
             PlayerLockModel = playerLockModel;
+            PawnConnection = pawnConnection;
         }
 
         public override void OnEnter()
@@ -58,7 +53,6 @@ namespace Controller.InGame.Player
             var castResult =
                 GridCastLogic.CastGridFirst(currentFloor, detectGridPosition, Vector2Int.one, CastTargetType.Pawn);
 
-            Debug.Log(castResult);
             if (castResult.TryGetValue(out var value))
             {
                 if (value.PawnType.IsHoldable())
@@ -86,6 +80,7 @@ namespace Controller.InGame.Player
         }
 
         private const string HoldingAnimationLock = "Holding Animation Lock";
+
         private async UniTask Hold()
         {
             // 他の動作を受け付けない
@@ -98,8 +93,8 @@ namespace Controller.InGame.Player
             var holdPawn = GridCastLogic
                 .CastGridFirst(floor, detectIndex, Vector2Int.one, CastTargetType.Pawn)
                 .Unwrap();
-            var holdPawnView = FloorPawnView.GetPawn(holdPawn.PawnId, floor);
-            StagePawnModel.RemovePawn(holdPawnView.InstanceId);
+            
+            var holdPawnView = PawnConnection.TakePawn(holdPawn);
 
             // `Pawn`を保持する
             await HoldingPawnView.HoldPawn(holdPawnView);
@@ -142,9 +137,7 @@ namespace Controller.InGame.Player
 
                     if (collider.PawnType == PawnType.Fire)
                     {
-                        var floorPawnView = FloorPawnView.TakePawn(collider.PawnId, collider.Floor);
-                        PawnPoolView.Despawn(floorPawnView);
-                        StagePawnModel.RemovePawn(collider.PawnId);
+                        PawnConnection.SendPawnPool(collider);
                     }
                 }
             }
@@ -169,9 +162,7 @@ namespace Controller.InGame.Player
         private IStageTileMapModel StageTileMapModel { get; }
         private ICurrentLookModel CurrentLookModel { get; }
         private IGridCastLogic GridCastLogic { get; }
-        private IFloorPawnView FloorPawnView { get; }
-        private IPawnPoolView PawnPoolView { get; }
-        private IStagePawnModel StagePawnModel { get; }
         private IPlayerLockModel PlayerLockModel { get; }
+        private PawnConnection PawnConnection { get; }
     }
 }

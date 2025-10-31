@@ -7,7 +7,7 @@ using Module.EditorExtension.Runtime;
 using Structure.Global;
 using Structure.InGame;
 
-namespace Controller.InGame.Player
+namespace Controller.InGame.Common
 {
     /// <summary>
     /// 移動処理のまとまり

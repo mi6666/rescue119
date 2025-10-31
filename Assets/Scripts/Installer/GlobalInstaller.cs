@@ -1,4 +1,5 @@
 using System;
+using Controller.InGame.Common;
 using Logic.InGame.Stage;
 using Model.InGame.Stage;
 using Model.OutGame.StageSelect;
@@ -41,6 +42,10 @@ namespace Installer
             
             // Logic
             builder.Register<GridCastLogic>(Lifetime.Transient).AsImplementedInterfaces();
+            
+            // Connection
+            builder.Register<PawnConnection>(Lifetime.Transient);
+            builder.Register<LocomotionConnection>(Lifetime.Transient);
         }
     }
 }

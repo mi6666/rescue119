@@ -1,3 +1,4 @@
+using Controller.InGame.Common;
 using Controller.InGame.Player;
 using Logic.InGame.Player;
 using Model.InGame.Player;
@@ -37,9 +38,6 @@ namespace Installer.InGame.Player
             
             // Logic
             builder.Register<LocomotionLogic>(Lifetime.Singleton).AsImplementedInterfaces();
-            
-            // Connection
-            builder.Register<LocomotionConnection>(Lifetime.Singleton);
             
             // Controller
             builder.Register<PlayerStateEntity>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();

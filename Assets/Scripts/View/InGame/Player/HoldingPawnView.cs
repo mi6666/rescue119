@@ -4,6 +4,7 @@ using LitMotion;
 using LitMotion.Extensions;
 using Module.EditorExtension.Runtime;
 using UnityEngine;
+using View.InGame.Stage.Pawn;
 
 namespace View.InGame.Player
 {
@@ -29,6 +30,18 @@ namespace View.InGame.Player
                 .ToUniTask();
             HoldingPawn = null;
             return task;
+        }
+
+        public async UniTask PutAndFall(Vector2 position)
+        {
+            await LMotion.Create(HoldingPawn.Position, position, holdLength)
+                .BindToPositionXY(HoldingPawn.PawnTransform)
+                .ToUniTask();
+            await LMotion.Create(Vector2.one, Vector2.zero, holdLength)
+                .BindToLocalScaleXY(HoldingPawn.PawnTransform)
+                .ToUniTask();
+            Debug.Log("fall", HoldingPawn as BasePawnView);
+            HoldingPawn = null;
         }
 
         public IPawnView HoldingPawn { get; private set; }

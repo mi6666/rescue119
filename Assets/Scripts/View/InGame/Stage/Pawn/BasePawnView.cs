@@ -37,11 +37,6 @@ namespace View.InGame.Stage.Pawn
             selfTransform.parent = owner;
         }
 
-        public void Put(Vector2 position)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void SetPosition(Vector2 position)
         {
             selfTransform.position = position;
@@ -56,6 +51,7 @@ namespace View.InGame.Stage.Pawn
         {
             selfTransform.parent = newParent;
             Floor = changedFloor;
+            selfTransform.localScale=Vector3.one;
         }
     }
 }
