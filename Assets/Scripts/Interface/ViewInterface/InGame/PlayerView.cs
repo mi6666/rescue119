@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Structure.Global;
 using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Interface.ViewInterface.InGame
         public void ApplyVelocity(Vector2 moveTo);
 
         public Vector2 CurrentVelocity { get; }
-        public ReadOnlySpan<RaycastHit2D> RayCast(Vector2 castTo);
+        public ReadOnlySpan<CastHit> RayCast(Vector2 castTo);
     }
 
     public interface IPlayerAnimatorView

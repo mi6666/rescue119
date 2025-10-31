@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Seagull.Interior_I1.Inspector;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;

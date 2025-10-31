@@ -85,7 +85,7 @@ namespace Logic.InGame.Player
             }
 
             var frontObject = argument.FrontObjects[0];
-            float2 normal = frontObject.normal;
+            float2 normal = frontObject.Normal;
 
             // 壁に向かっている場合のみ、壁に沿って滑らせる
             var dotProduct = math.dot(moveTo, normal);

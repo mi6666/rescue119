@@ -2,6 +2,7 @@
 
 using System;
 using System.Reflection;
+using Seagull.Interior_I1.Inspector;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;

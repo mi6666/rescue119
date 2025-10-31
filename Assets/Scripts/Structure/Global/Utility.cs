@@ -3,6 +3,16 @@ using UnityEngine;
 
 namespace Structure.Global
 {
+    public readonly struct CastHit
+    {
+        public Vector2 Normal { get; }
+
+        public CastHit(Vector2 normal)
+        {
+            Normal = normal;
+        }
+    }
+
     public static class Utility
     {
         public static Option<Vector2> Approx8Dir(Vector2 v)
