@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: FireSpeed
   m_EditorClassIdentifier: 
   timeLength: 0
-  maxFloorNum: 0
+  maxFloorNum: 2
   pawnTickInterval: 3

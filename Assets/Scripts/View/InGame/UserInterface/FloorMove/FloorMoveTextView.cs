@@ -1,19 +1,31 @@
 ﻿using Interface.ViewInterface.InGame.UserInterface;
-using Module.EditorExtension.Runtime;
-using R3;
+using Structure.InGame;
 using TMPro;
 using UnityEngine;
 
 namespace View.InGame.UserInterface.FloorMove
 {
-    [RequireComponent(typeof(TextMeshProUGUI))]
     public class FloorMoveTextView : MonoBehaviour, IFloorMoveTextView
     {
-        [SerializeField, AutoAssign] private TextMeshProUGUI floorText;
+        [SerializeField] private TextMeshProUGUI upperText;
+        [SerializeField] private TextMeshProUGUI lowerText;
 
-        public void SetFloorMove(int floor)
+        [SerializeField] private TextMeshProUGUI context;
+
+        public void SetFloorMove(int floor, StairType stairType)
         {
-            floorText.SetText(floor.ToString());
+            if (stairType == StairType.Down)
+            {
+                upperText.SetText(floor.ToString());
+                lowerText.SetText((floor - 1).ToString());
+                context.SetText("Down to");
+            }
+            else
+            {
+                upperText.SetText((floor + 1).ToString());
+                lowerText.SetText(floor.ToString());
+                context.SetText("Up to");
+            }
         }
     }
 }

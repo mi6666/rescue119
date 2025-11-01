@@ -1,5 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using R3;
+using Structure.InGame;
 
 namespace Interface.ViewInterface.InGame.UserInterface
 {
@@ -11,6 +11,6 @@ namespace Interface.ViewInterface.InGame.UserInterface
 
     public interface IFloorMoveTextView
     {
-        public void SetFloorMove(int floor);
+        public void SetFloorMove(int floor, StairType stairType);
     }
 }

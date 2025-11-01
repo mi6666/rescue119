@@ -3,6 +3,7 @@ using Interface.ViewInterface.InGame.Stage;
 using Module.StateMachine;
 using Structure.InGame;
 using Structure.InGame.Stage;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace Controller.InGame.Stage
@@ -52,6 +53,7 @@ namespace Controller.InGame.Stage
                 StagePawnModel.StorePawn(gridCollider);
             }
 
+            Debug.Log(StageFloorModel.CurrentFloor);
             // フロアの表示を初期化
             for (int i = 0; i < StageMasterModel.MaxFloorNum; i++)
             {
@@ -61,6 +63,7 @@ namespace Controller.InGame.Stage
                 }
                 else
                 {
+                    Debug.Log("VAR");
                     FloorView.Deactivate(i);
                 }
             }

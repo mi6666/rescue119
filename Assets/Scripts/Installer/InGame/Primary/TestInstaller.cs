@@ -6,6 +6,7 @@ using Structure.InGame;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using View.InGame.Stage;
 using View.InGame.UserInterface.FloorMove;
 using View.InGame.UserInterface.GameClear;
 using View.InGame.UserInterface.GameOver;
@@ -16,8 +17,7 @@ namespace Installer.InGame.Primary
 {
     public class TestInstaller : LifetimeScope
     {
-        [SerializeField] private ClearButtonView clearButtonView;
-        [SerializeField] private GameOverButtonView gameOverButtonView;
+        [SerializeField] private EventCompositeView eventCompositeView;
         [SerializeField] private StageMasterModel stageMasterModel;
         [SerializeField] private ExitGameSceneModel exitGameSceneModel;
         [SerializeField] private NormalUiFadeView normalUiFadeView;
@@ -30,6 +30,7 @@ namespace Installer.InGame.Primary
         protected override void Configure(IContainerBuilder builder)
         {
             // View
+            builder.RegisterInstance(eventCompositeView).AsImplementedInterfaces();
             builder.RegisterInstance(normalUiFadeView).AsImplementedInterfaces();
             builder.RegisterInstance(normalUiFadeView.TimerView).AsImplementedInterfaces();
             builder.RegisterInstance(normalUiFadeView.HpUiView).AsImplementedInterfaces();
@@ -39,10 +40,8 @@ namespace Installer.InGame.Primary
             builder.RegisterInstance(pauseUiFadeView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.Pause);
             builder.RegisterInstance(gameClearUiFadeView).AsImplementedInterfaces();
             builder.RegisterInstance(gameClearUiFadeView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameClear);
-            builder.RegisterInstance(clearButtonView).AsImplementedInterfaces();
             builder.RegisterInstance(gameOverUiFadeView).AsImplementedInterfaces();
             builder.RegisterInstance(gameOverUiFadeView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameOver);
-            builder.RegisterInstance(gameOverButtonView).AsImplementedInterfaces();
             
             // Model
             builder.RegisterInstance(stageMasterModel).AsImplementedInterfaces();
