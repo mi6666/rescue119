@@ -20,6 +20,10 @@ namespace View.InGame.Stage.Floor
 
         public IPawnView[] GetAll()
         {
+            if (!didAwake)
+            {
+                _pawnViews = GetComponentsInChildren<IPawnView>().AsValueEnumerable().ToList();
+            }
             return _pawnViews.AsValueEnumerable().ToArray();
         }
 

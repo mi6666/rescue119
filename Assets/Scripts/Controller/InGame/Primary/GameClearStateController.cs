@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -41,6 +42,7 @@ namespace Controller.InGame.Primary
         public void Start()
         {
             GameClearEventView.GameClearObservable
+                .ObserveOnMainThread()
                 .Subscribe(this, (_, controller) => controller.GameClear())
                 .AddTo(CompositeDisposable);
             ExitStageEventView.ExitStageObservable
@@ -50,6 +52,7 @@ namespace Controller.InGame.Primary
 
         private void GameClear()
         {
+            Debug.Log("a");
             InnerState.ChangeState(PrimaryStateType.GameClear);
         }
 
