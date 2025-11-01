@@ -39,6 +39,7 @@ namespace Controller.InGame.Primary
             StageFloorModel.SetFloor(currentFloor);
             await FloorMoveUiView.Show();
             var context = FloorMoveContextModel.StairType;
+            FloorMoveTextView.SetFloorMove(currentFloor, context);
 
             if (context == StairType.Up)
             {
@@ -50,7 +51,6 @@ namespace Controller.InGame.Primary
             }
 
             StageFloorModel.SetFloor(currentFloor);
-            FloorMoveTextView.SetFloorMove(currentFloor);
 
             await UniTask.Delay(TimeSpan.FromSeconds(FloorMoveTime.FloorTime));
 
