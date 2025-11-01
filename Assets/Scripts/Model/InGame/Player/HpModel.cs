@@ -12,6 +12,12 @@ namespace Model.InGame.Player
         }
 
         public int CurrentHp => Hp.CurrentValue;
+        public void DecHp(int value)
+        {
+            Hp.Value--;
+        }
+
+        public Observable<bool> IsDeadObservable => Hp.Select(x => x <= 0).AsObservable();
 
         private ReactiveProperty<int> Hp { get; } = new ();
         private IHpSetting HpSetting { get; }

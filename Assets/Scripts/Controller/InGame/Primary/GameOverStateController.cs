@@ -19,6 +19,7 @@ namespace Controller.InGame.Primary
             IGameOverEventView gameOverEventView,
             IGameOverUiView gameOverUiView,
             [Key(PrimaryStateType.GameOver)] IExitStageEventView exitStageEventView,
+            IHpModel hpModel,
             IExitGameSceneModel exitGameSceneModel,
             IScenePresenter scenePresenter,
             CompositeDisposable compositeDisposable,
@@ -27,14 +28,19 @@ namespace Controller.InGame.Primary
         {
             GameOverEventView = gameOverEventView;
             GameOverUiView = gameOverUiView;
+            ExitStageEventView = exitStageEventView;
+            HpModel = hpModel;
             ScenePresenter = scenePresenter;
             ExitGameSceneModel = exitGameSceneModel;
-            ExitStageEventView = exitStageEventView;
             CompositeDisposable = compositeDisposable;
         }
 
         public void Start()
         {
+            HpModel.IsDeadObservable
+                .Where(x => x)
+                .Subscribe(this, (_, controller) => controller.GameOver())
+                .AddTo(CompositeDisposable);
             GameOverEventView.GameOverEvent
                 .Subscribe(this, (_, controller) => controller.GameOver())
                 .AddTo(CompositeDisposable);
@@ -66,8 +72,9 @@ namespace Controller.InGame.Primary
         private CompositeDisposable CompositeDisposable { get; }
         private IGameOverEventView GameOverEventView { get; }
         private IGameOverUiView GameOverUiView { get; }
-        private IScenePresenter ScenePresenter { get; }
+        private IHpModel HpModel { get; }
         private IExitGameSceneModel ExitGameSceneModel { get; }
         private IExitStageEventView ExitStageEventView { get; }
+        private IScenePresenter ScenePresenter { get; }
     }
 }

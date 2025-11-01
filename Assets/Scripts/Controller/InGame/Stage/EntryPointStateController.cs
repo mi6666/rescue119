@@ -3,7 +3,6 @@ using Interface.ViewInterface.InGame.Stage;
 using Module.StateMachine;
 using Structure.InGame;
 using Structure.InGame.Stage;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace Controller.InGame.Stage
@@ -56,7 +55,6 @@ namespace Controller.InGame.Stage
             // フロアの表示を初期化
             for (int i = 0; i < StageMasterModel.MaxFloorNum; i++)
             {
-                Debug.Log($"{i}: {StageFloorModel.CurrentFloor.ToString()}");
                 if (i == StageFloorModel.CurrentFloor)
                 {
                     FloorView.Activate(i);

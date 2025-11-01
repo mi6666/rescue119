@@ -25,6 +25,7 @@ namespace Installer.InGame.Primary
         [SerializeField] private GameOverUiFadeView gameOverUiFadeView;
         [SerializeField] private GameClearUiFadeView gameClearUiFadeView;
         [SerializeField] private FloorMoveUiFadeView floorMoveUiFadeView;
+        [SerializeField] private PlayerMasterData playerMasterData;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -46,6 +47,7 @@ namespace Installer.InGame.Primary
             // Model
             builder.RegisterInstance(stageMasterModel).AsImplementedInterfaces();
             builder.RegisterInstance(exitGameSceneModel).AsImplementedInterfaces();
+            builder.RegisterInstance(playerMasterData).AsImplementedInterfaces();
             builder.Register<HpModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<TimeModel>(Lifetime.Singleton).AsImplementedInterfaces();
             
