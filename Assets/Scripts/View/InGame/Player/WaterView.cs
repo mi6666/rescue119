@@ -1,47 +1,33 @@
-using System.Collections.Generic;
 using Interface.ViewInterface.InGame;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace View.InGame.Player
 {
-    public class WaterView :  MonoBehaviour, IWaterView
+    public class WaterView : MonoBehaviour, IWaterView
     {
-        [SerializeField] private GameObject waterPrefab;
-        [SerializeField] private int initialPoolSize = 50;
+        [SerializeField] private ParticleSystem waterParticle;
 
-        private ObjectPool<GameObject> _pool;
-        private readonly List<GameObject> _activeWaters = new();
+        private Transform _waterTransform;
 
         private void Awake()
         {
-            _pool = new ObjectPool<GameObject>(
-                createFunc: () => Instantiate(waterPrefab),
-                actionOnGet: obj => obj.SetActive(true),
-                actionOnRelease: obj => obj.SetActive(false),
-                actionOnDestroy: Destroy,
-                collectionCheck: false,
-                defaultCapacity: initialPoolSize
-            );
+            _waterTransform = waterParticle.transform;
         }
 
         public void SpawnWater(Vector2 position, Vector2 lookAt, int length)
         {
-            for (int i = 0; i < length; i++)
-            {
-                var waterObj = _pool.Get();
-                waterObj.transform.position = position + lookAt * i;
-                _activeWaters.Add(waterObj);
-            }
+            var size = _waterTransform.localScale;
+
+            _waterTransform.position = position;
+            _waterTransform.rotation = Quaternion.LookRotation(lookAt);
+            _waterTransform.transform.localScale = new Vector3(size.x, size.y, length);
+
+            waterParticle.Play();
         }
 
         public void DespawnWater()
         {
-            foreach (var obj in _activeWaters)
-            {
-                _pool.Release(obj);
-            }
-            _activeWaters.Clear();
+            waterParticle.Stop();
         }
     }
 }

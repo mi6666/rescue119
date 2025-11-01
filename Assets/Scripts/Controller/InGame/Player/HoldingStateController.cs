@@ -1,3 +1,4 @@
+using Controller.InGame.Common;
 using Cysharp.Threading.Tasks;
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
@@ -22,13 +23,13 @@ namespace Controller.InGame.Player
             IHoldingPawnView holdingPawnView,
             IInput_ActionEventView actionEventView,
             IMapCoordinateView mapCoordinateView,
-            IFloorPawnView floorPawnView,
             IStageFloorModel stageFloorModel,
             ICurrentLookModel currentLookModel,
-            IStagePawnModel stagePawnModel,
             IPlayerLockModel playerLockModel,
+            IStageTileMapModel stageTileMapModel,
             IGridCastLogic gridCastLogic,
             LocomotionConnection locomotionConnection,
+            PawnConnection pawnConnection,
             CompositeDisposable compositeDisposable,
             IMutStateType<PlayerStateType> innerState
         ) : base(PlayerStateType.Holding, innerState)
@@ -37,16 +38,15 @@ namespace Controller.InGame.Player
             HoldingPawnView = holdingPawnView;
             ActionEventView = actionEventView;
             MapCoordinateView = mapCoordinateView;
-            FloorPawnView = floorPawnView;
             StageFloorModel = stageFloorModel;
             CurrentLookModel = currentLookModel;
-            StagePawnModel = stagePawnModel;
             PlayerLockModel = playerLockModel;
+            StageTileMapModel = stageTileMapModel;
             GridCastLogic = gridCastLogic;
             LocomotionConnection = locomotionConnection;
+            PawnConnection = pawnConnection;
             CompositeDisposable = compositeDisposable;
         }
-
 
         public void Start()
         {
@@ -65,27 +65,50 @@ namespace Controller.InGame.Player
             using var operation = PlayerLockModel.GetOperation(HoldingAnimationLock);
 
             var holdingPawn = HoldingPawnView.HoldingPawn;
-            // 前方にある`Pawn`を取得
             var floor = StageFloorModel.CurrentFloor;
-            var detectPosition = PlayerView.Position + CurrentLookModel.LookTo;
+            var detectPosition =
+                MapCoordinateView.AlignToMapPosition(floor, PlayerView.Position + CurrentLookModel.LookTo);
             var detectIndex = MapCoordinateView.PositionToMapIndex(StageFloorModel.CurrentFloor, detectPosition);
-            var frontPawn = GridCastLogic
-                .CastGridFirst(floor, detectIndex, Vector2Int.one, CastTargetType.Pawn);
 
-            // 岩は火を消す
-            if (holdingPawn.Type == PawnType.Rubble)
+            // マップの前方を確認
+            int putToFloor;
+            for (putToFloor = floor; putToFloor >= 0; putToFloor--)
             {
-                
+                var frontTile = StageTileMapModel.GetTip(putToFloor, detectIndex);
+                if (!frontTile.TryGetValue(out var tipBase)) break;
+                if (tipBase is not HoleTip) break;
             }
-            if (frontPawn.IsSome) return;
+
+            // 前方にある`Pawn`を取得
+            var frontPawn = GridCastLogic.CastGridFirst(
+                putToFloor, detectIndex, Vector2Int.one, CastTargetType.Pawn
+            );
+
+            if (frontPawn.TryGetValue(out var frontCollider))
+            {
+                // 岩は火を消す
+                if (holdingPawn.Type == PawnType.Rubble & frontCollider.PawnType == PawnType.Fire)
+                {
+                    PawnConnection.SendPawnPool(frontCollider);
+                }
+                // それ以外は置けない
+                else
+                {
+                    return;
+                }
+            }
 
             // 保持している`Pawn`を置く
-            var putPosition = MapCoordinateView.AlignToMapPosition(floor, detectPosition);
-            StagePawnModel.StorePawn(new GridCollider(holdingPawn.InstanceId, holdingPawn.Type, floor, detectIndex,
-                holdingPawn.Size));
-            FloorPawnView.GivePawn(holdingPawn, floor);
-            await HoldingPawnView.PutPawn(putPosition);
+            if (putToFloor == floor)
+            {
+                await HoldingPawnView.PutPawn(detectPosition);
+            }
+            else
+            {
+                await HoldingPawnView.PutAndFall(detectPosition);
+            }
 
+            PawnConnection.PutPawn(holdingPawn, detectPosition, putToFloor);
             InnerState.ChangeState(PlayerStateType.Normal);
         }
 
@@ -101,12 +124,12 @@ namespace Controller.InGame.Player
         private IHoldingPawnView HoldingPawnView { get; }
         private IInput_ActionEventView ActionEventView { get; }
         private IMapCoordinateView MapCoordinateView { get; }
-        private IFloorPawnView FloorPawnView { get; }
         private IStageFloorModel StageFloorModel { get; }
         private ICurrentLookModel CurrentLookModel { get; }
-        private IStagePawnModel StagePawnModel { get; }
         private IPlayerLockModel PlayerLockModel { get; }
+        private IStageTileMapModel StageTileMapModel { get; }
         private IGridCastLogic GridCastLogic { get; }
         private LocomotionConnection LocomotionConnection { get; }
+        private PawnConnection PawnConnection { get; }
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace View.InGame.Player
 {
-    [RequireComponent(typeof(BoxCollider2D))]
     public class DetectPositionView : MonoBehaviour, IDetectPositionView
     {
         [SerializeField, AutoAssign] private Transform selfTransform;

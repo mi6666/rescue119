@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Structure.InGame.Stage;
+using Structure.Global;
 using Structure.InGame.Stage.Pawn;
 using UnityEngine;
 
@@ -14,7 +14,7 @@ namespace Interface.ViewInterface.InGame
         public void ApplyVelocity(Vector2 moveTo);
 
         public Vector2 CurrentVelocity { get; }
-        public ReadOnlySpan<RaycastHit2D> RayCast(Vector2 castTo);
+        public ReadOnlySpan<CastHit> RayCast(Vector2 castTo);
     }
 
     public interface IPlayerAnimatorView
@@ -32,6 +32,7 @@ namespace Interface.ViewInterface.InGame
     {
         public UniTask HoldPawn(IPawnView pawnView);
         public UniTask PutPawn(Vector2 position);
+        public UniTask PutAndFall(Vector2 position);
         public IPawnView HoldingPawn { get; }
     }
 
@@ -51,11 +52,21 @@ namespace Interface.ViewInterface.InGame
         public Vector2 Position { get; }
         public Vector2Int Size { get; }
         public int Floor { get; }
-        
+
         public Transform PawnTransform { get; }
 
         public void InitFloor(int changedFloor);
         public void SetFloor(Transform newParent, int changedFloor);
+
+        /// <summary>
+        /// `Pawn`が置かれた際に発動する
+        /// </summary>
+        public void OnPut();
+
+        /// <summary>
+        /// `Pawn`が取り除かれた際に発動する
+        /// </summary>
+        public void OnTake();
     }
 
     /// <summary>

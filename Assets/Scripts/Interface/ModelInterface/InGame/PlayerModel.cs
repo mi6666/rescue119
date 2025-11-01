@@ -3,10 +3,14 @@ using UnityEngine;
 
 namespace Interface.ModelInterface.InGame
 {
+    // ============================================================================================
+    // 設定情報
+    // ============================================================================================
+
     /// <summary>
-    /// 移動処理における一時的な値を持つ
+    /// 移動処理の設定情報
     /// </summary>
-    public interface ILocomotionModel
+    public interface ILocomotionSetting
     {
         /// <summary>
         /// 最大速度
@@ -38,7 +42,35 @@ namespace Interface.ModelInterface.InGame
         /// 入力が反転しているとみなす角度の閾値
         /// </summary>
         public float ReverseAngleThreshold { get; }
+    }
 
+    /// <summary>
+    /// 体力の情報を持つ
+    /// </summary>
+    public interface IHpSetting
+    {
+        public int MaxHp { get; }
+    }
+    
+    /// <summary>
+    /// プレイヤーの挙動の長さを持つ
+    /// </summary>
+    public interface IActionSetting
+    {
+        public float SplashWater { get; }
+        public int WaterLengthMax { get; }
+        public float HoldMotionLength { get; }
+    }
+    
+    // ============================================================================================
+    // 実行時情報
+    // ============================================================================================
+    
+    /// <summary>
+    /// 移動処理における一時的な値を持つ
+    /// </summary>
+    public interface ILocomotionModel
+    {
         /// <summary>
         /// 加速・減速中にカウントアップ・カウントダウンされる時間量
         /// </summary>
@@ -48,23 +80,13 @@ namespace Interface.ModelInterface.InGame
         public void IncreaseTime(float deltaTime);
     }
 
+
     /// <summary>
     /// 体力のモデル
     /// </summary>
     public interface IHpModel
     {
         public int CurrentHp { get; }
-        public int MaxHp { get; }
-    }
-
-    /// <summary>
-    /// プレイヤーの挙動の長さを持つ
-    /// </summary>
-    public interface IActionLengthModel
-    {
-        public float SplashWater { get; }
-        public int WaterLength { get; }
-        public float HoldMotionLength { get; }
     }
 
     /// <summary>
@@ -76,7 +98,7 @@ namespace Interface.ModelInterface.InGame
         public void SetLook(Vector2 lookTo);
     }
 
-    public interface IPlayerAnimationParameterKeyModel
+    public interface IAnimationKeyModel
     {
         public string Key { get; }
     }

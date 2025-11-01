@@ -1,4 +1,5 @@
 using System;
+using Structure.Global;
 using UnityEngine;
 
 namespace Structure.InGame
@@ -18,14 +19,14 @@ namespace Structure.InGame
     {
         public Vector2 MoveInput { get; }
         public Vector2 CurrentVelocity { get; }
-        public ReadOnlySpan<RaycastHit2D> FrontObjects { get; }
+        public ReadOnlySpan<CastHit> FrontObjects { get; }
         public float DeltaTime { get; }
 
         public LocomotionArgument
         (
             Vector2 moveInput,
             Vector2 currentVelocity,
-            ReadOnlySpan<RaycastHit2D> frontObjects,
+            ReadOnlySpan<CastHit> frontObjects,
             float deltaTime
         )
         {

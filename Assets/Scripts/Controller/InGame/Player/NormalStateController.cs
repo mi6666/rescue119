@@ -1,12 +1,11 @@
+using Controller.InGame.Common;
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
 using Interface.ViewInterface.Global;
 using Interface.ViewInterface.InGame;
 using Interface.ViewInterface.InGame.Stage;
-using Module.EditorExtension.Runtime;
 using Module.StateMachine;
 using R3;
-using Structure.Global;
 using Structure.InGame;
 using Structure.InGame.Stage.Pawn;
 using UnityEngine;
@@ -19,35 +18,25 @@ namespace Controller.InGame.Player
         public NormalStateController
         (
             IPlayerView playerView,
-            IDetectPositionView detectPositionView,
-            IInput_MoveVectorView moveVectorView,
             IInput_ActionEventView actionEventView,
             IMapCoordinateView mapCoordinateView,
-            IPlayerAnimatorView playerAnimatorView,
-            ICurrentLookModel currentLookModel,
-            ILocomotionModel locomotionModel,
-            IPlayerAnimationParameterKeyModel playerAnimationParameterKeyModel,
-            ILocomotionLogic locomotionLogic,
-            IStageFloorModel stageFloorModel,
-            IGridCastLogic gridCastLogic,
-            CompositeDisposable compositeDisposable,
             IHpModel hpModel,
+            IStageFloorModel stageFloorModel,
+            IPlayerLockModel playerLockModel,
+            IGridCastLogic gridCastLogic,
+            LocomotionConnection locomotionConnection,
+            CompositeDisposable compositeDisposable,
             IMutStateType<PlayerStateType> innerState
         ) : base(PlayerStateType.Normal, innerState)
         {
             PlayerView = playerView;
-            DetectPositionView = detectPositionView;
-            MoveVectorView = moveVectorView;
             MapCoordinateView = mapCoordinateView;
             ActionEventView = actionEventView;
-            PlayerAnimatorView = playerAnimatorView;
-            CurrentLookModel = currentLookModel;
-            LocomotionModel = locomotionModel;
-            PlayerAnimationParameterKeyModel = playerAnimationParameterKeyModel;
-            StageFloorModel = stageFloorModel;
-            GridCastLogic = gridCastLogic;
-            LocomotionLogic = locomotionLogic;
             HpModel = hpModel;
+            StageFloorModel = stageFloorModel;
+            PlayerLockModel = playerLockModel;
+            GridCastLogic = gridCastLogic;
+            LocomotionConnection = locomotionConnection;
             CompositeDisposable = compositeDisposable;
         }
 
@@ -66,13 +55,13 @@ namespace Controller.InGame.Player
 
         public override void StateUpdate(float deltaTime)
         {
-            Locomotion(deltaTime);
-            UpdatePawnDetectorPosition();
+            if (PlayerLockModel.IsLocked()) return;
+            
+            LocomotionConnection.Update(deltaTime);
         }
 
         private void HpDecrease()
         {
-            
         }
 
         private void FireDamage()
@@ -87,64 +76,20 @@ namespace Controller.InGame.Player
             {
                 if (variable.PawnType == PawnType.Fire)
                 {
-                    //todo 
-                    //Hpが減るメソッドでHpを減らす
+                    // todo 
+                    // Hpが減るメソッドでHpを減らす
                 }
             }
         }
 
-        private void Locomotion(float deltaTime)
-        {
-            var moveInput = MoveVectorView.Pool();
-            var currentVelocity = PlayerView.CurrentVelocity;
-            var frontHit = PlayerView.RayCast(moveInput);
-
-            var lookAt = Utility.Approx8Dir(moveInput);
-            if (lookAt.TryGetValue(out var value))
-            {
-                CurrentLookModel.SetLook(value);
-                DebugLogger.Log("look at", value.ToString());
-            }
-
-            var calcArg = new LocomotionArgument(
-                moveInput,
-                currentVelocity,
-                frontHit,
-                deltaTime
-            );
-
-            var calculatedVelocity = LocomotionLogic.CalcVelocity(calcArg);
-            DebugLogger.Log("move input", moveInput.ToString());
-            DebugLogger.Log("calculated velocity", calculatedVelocity.ToString());
-
-            PlayerView.ApplyVelocity(calculatedVelocity * deltaTime);
-
-            var walkValue = calculatedVelocity.magnitude / LocomotionModel.MaxSpeed;
-
-            PlayerAnimatorView.SetFloat(PlayerAnimationParameterKeyModel.Key, walkValue);
-        }
-
-
-        private void UpdatePawnDetectorPosition()
-        {
-            var detectorPosition = PlayerView.Position + CurrentLookModel.LookTo;
-            var refinedPosition = MapCoordinateView.AlignToMapPosition(0, detectorPosition);
-            DetectPositionView.SetPosition(refinedPosition);
-        }
-
+        private CompositeDisposable CompositeDisposable { get; }
         private IPlayerView PlayerView { get; }
-        private IDetectPositionView DetectPositionView { get; }
-        private IInput_MoveVectorView MoveVectorView { get; }
         private IInput_ActionEventView ActionEventView { get; }
         private IMapCoordinateView MapCoordinateView { get; }
-        private ICurrentLookModel CurrentLookModel { get; }
-        private ILocomotionModel LocomotionModel { get; }
-        private ILocomotionLogic LocomotionLogic { get; }
-        private CompositeDisposable CompositeDisposable { get; }
-        private IPlayerAnimatorView PlayerAnimatorView { get; }
-        private IPlayerAnimationParameterKeyModel PlayerAnimationParameterKeyModel { get; }
-        private IStageFloorModel StageFloorModel { get; }
-        private IGridCastLogic GridCastLogic { get; }
         private IHpModel HpModel { get; }
+        private IStageFloorModel StageFloorModel { get; }
+        private IPlayerLockModel PlayerLockModel { get; }
+        private IGridCastLogic GridCastLogic { get; }
+        private LocomotionConnection LocomotionConnection { get; }
     }
 }

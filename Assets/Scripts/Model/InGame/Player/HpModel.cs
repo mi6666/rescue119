@@ -1,16 +1,19 @@
-using System;
 using Interface.ModelInterface.InGame;
-using UnityEngine;
+using R3;
 
 namespace Model.InGame.Player
 {
-    [Serializable]
     public class HpModel: IHpModel
     {
-        public int CurrentHp => _currentHp;
-        public int MaxHp => maxHp;
+        public HpModel(IHpSetting hpSetting)
+        {
+            HpSetting = hpSetting;
+            Hp.Value = hpSetting.MaxHp;
+        }
 
-        [SerializeField] private int maxHp;
-        private int _currentHp;
+        public int CurrentHp => Hp.CurrentValue;
+
+        private ReactiveProperty<int> Hp { get; } = new ();
+        private IHpSetting HpSetting { get; }
     }
 }

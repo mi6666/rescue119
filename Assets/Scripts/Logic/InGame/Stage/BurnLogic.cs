@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
 using Structure.InGame.Stage;
@@ -11,10 +12,10 @@ namespace Logic.InGame.Stage
     public class BurnLogic : IBurnLogic
     {
         public BurnLogic
-            (
-                IStageTileMapModel stageTileMapModel,
-                IGridCastLogic gridCastLogic
-                )
+        (
+            IStageTileMapModel stageTileMapModel,
+            IGridCastLogic gridCastLogic
+        )
         {
             StageTileMapModel = stageTileMapModel;
             GridCastLogic = gridCastLogic;
@@ -29,17 +30,22 @@ namespace Logic.InGame.Stage
 
             foreach (var (position, tipBase) in aroundTip)
             {
+                var builder = new StringBuilder();
+                // マップチップは燃えるものか
                 if (tipBase is not ITipBurnable burnable) continue;
-                
+
+                // そこにある`Pawn`は燃え広がるものか
                 var castResult = GridCastLogic.CastGrid(floor, position, Vector2Int.one, CastTargetType.Pawn);
                 var isBurning = false;
                 foreach (var collider in castResult)
                 {
-                    if (collider.PawnType == PawnType.Fire)
+                    if (collider.PawnType.IsBlock() | collider.PawnType == PawnType.Fire)
                     {
                         isBurning = true;
                         break;
                     }
+
+                    builder.AppendLine(collider.PawnType.ToString());
                 }
 
                 if (isBurning) continue;
@@ -56,7 +62,6 @@ namespace Logic.InGame.Stage
             return SpawnCommands.AsSpan(0, count);
         }
 
-        private FeedBackCommand[] CommandBuffer { get; } = new FeedBackCommand[8];
         private SpawnCommand[] SpawnCommands { get; } = new SpawnCommand[8];
         private IStageTileMapModel StageTileMapModel { get; }
         private IGridCastLogic GridCastLogic { get; }

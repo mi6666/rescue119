@@ -1,4 +1,5 @@
 using System;
+using Controller.InGame.Common;
 using Cysharp.Threading.Tasks;
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
@@ -9,13 +10,11 @@ using Structure.InGame;
 using Structure.InGame.Stage;
 using Structure.InGame.Stage.Pawn;
 using UnityEngine;
-using VContainer;
 
 namespace Controller.InGame.Player
 {
     public class ActionStateController : PlayerStateBehaviourBase
     {
-        [Inject]
         public ActionStateController
         (
             IPlayerView playerView,
@@ -23,15 +22,13 @@ namespace Controller.InGame.Player
             IHoldingPawnView holdingPawnView,
             IDetectPositionView detectPositionView,
             IMapCoordinateView mapCoordinateView,
-            IActionLengthModel actionLengthModel,
+            IActionSetting actionSetting,
             IStageFloorModel stageFloorModel,
             ICurrentLookModel currentLookModel,
             IStageTileMapModel stageTileMapModel,
             IGridCastLogic gridCastLogic,
-            IFloorPawnView floorPawnView,
-            IPawnPoolView pawnPoolView,
-            IStagePawnModel stagePawnModel,
             IPlayerLockModel playerLockModel,
+            PawnConnection pawnConnection,
             IMutStateType<PlayerStateType> innerState
         ) : base(PlayerStateType.Action, innerState)
         {
@@ -40,15 +37,13 @@ namespace Controller.InGame.Player
             HoldingPawnView = holdingPawnView;
             DetectPositionView = detectPositionView;
             MapCoordinateView = mapCoordinateView;
-            ActionLengthModel = actionLengthModel;
+            ActionSetting = actionSetting;
             StageFloorModel = stageFloorModel;
             CurrentLookModel = currentLookModel;
             StageTileMapModel = stageTileMapModel;
             GridCastLogic = gridCastLogic;
-            FloorPawnView = floorPawnView;
-            PawnPoolView = pawnPoolView;
-            StagePawnModel = stagePawnModel;
             PlayerLockModel = playerLockModel;
+            PawnConnection = pawnConnection;
         }
 
         public override void OnEnter()
@@ -58,7 +53,6 @@ namespace Controller.InGame.Player
             var castResult =
                 GridCastLogic.CastGridFirst(currentFloor, detectGridPosition, Vector2Int.one, CastTargetType.Pawn);
 
-            Debug.Log(castResult);
             if (castResult.TryGetValue(out var value))
             {
                 if (value.PawnType.IsHoldable())
@@ -77,7 +71,7 @@ namespace Controller.InGame.Player
             var frontPosition = DetectPositionView.DetectPosition;
             var lookAt = Vector2Int.FloorToInt(CurrentLookModel.LookTo);
             WaterView.SpawnWater(frontPosition, lookAt, waterLength);
-            var duration = ActionLengthModel.SplashWater;
+            var duration = ActionSetting.SplashWater;
 
             await UniTask.Delay(TimeSpan.FromSeconds(duration));
 
@@ -86,6 +80,7 @@ namespace Controller.InGame.Player
         }
 
         private const string HoldingAnimationLock = "Holding Animation Lock";
+
         private async UniTask Hold()
         {
             // 他の動作を受け付けない
@@ -98,8 +93,8 @@ namespace Controller.InGame.Player
             var holdPawn = GridCastLogic
                 .CastGridFirst(floor, detectIndex, Vector2Int.one, CastTargetType.Pawn)
                 .Unwrap();
-            var holdPawnView = FloorPawnView.GetPawn(holdPawn.PawnId, floor);
-            StagePawnModel.RemovePawn(holdPawnView.InstanceId);
+            
+            var holdPawnView = PawnConnection.TakePawn(holdPawn);
 
             // `Pawn`を保持する
             await HoldingPawnView.HoldPawn(holdPawnView);
@@ -113,7 +108,7 @@ namespace Controller.InGame.Player
             var lookAt = Vector2Int.FloorToInt(CurrentLookModel.LookTo);
             var currentFloor = StageFloorModel.CurrentFloor;
 
-            for (frontCount = 0; frontCount < ActionLengthModel.WaterLength; frontCount++)
+            for (frontCount = 0; frontCount < ActionSetting.WaterLengthMax; frontCount++)
             {
                 var castPosition = frontPosition + lookAt * frontCount;
 
@@ -142,9 +137,7 @@ namespace Controller.InGame.Player
 
                     if (collider.PawnType == PawnType.Fire)
                     {
-                        var floorPawnView = FloorPawnView.TakePawn(collider.PawnId, collider.Floor);
-                        PawnPoolView.Despawn(floorPawnView);
-                        StagePawnModel.RemovePawn(collider.PawnId);
+                        PawnConnection.SendPawnPool(collider);
                     }
                 }
             }
@@ -164,14 +157,12 @@ namespace Controller.InGame.Player
         private IHoldingPawnView HoldingPawnView { get; }
         private IDetectPositionView DetectPositionView { get; }
         private IMapCoordinateView MapCoordinateView { get; }
-        private IActionLengthModel ActionLengthModel { get; }
+        private IActionSetting ActionSetting { get; }
         private IStageFloorModel StageFloorModel { get; }
         private IStageTileMapModel StageTileMapModel { get; }
         private ICurrentLookModel CurrentLookModel { get; }
         private IGridCastLogic GridCastLogic { get; }
-        private IFloorPawnView FloorPawnView { get; }
-        private IPawnPoolView PawnPoolView { get; }
-        private IStagePawnModel StagePawnModel { get; }
         private IPlayerLockModel PlayerLockModel { get; }
+        private PawnConnection PawnConnection { get; }
     }
 }

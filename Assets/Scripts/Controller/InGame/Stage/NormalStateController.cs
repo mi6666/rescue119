@@ -69,10 +69,17 @@ namespace Controller.InGame.Stage
                 var position = MapCoordinateView.PositionToMapIndex(floor, pawn.Position);
                 var arg = new UpdateArgument(new Vector2Int(position.x, position.y));
 
-                var result = BurnLogic.Update(floor, arg);
-                foreach (var command in result)
+                switch (pawn.Type)
                 {
-                    SpawnPawn(command.MapIndex, command.Type);
+                    case PawnType.Fire:
+                    {
+                        var result = BurnLogic.Update(floor, arg);
+                        foreach (var command in result)
+                        {
+                            SpawnPawn(command.MapIndex, command.Type);
+                        }
+                        break;
+                    }
                 }
             }
         }

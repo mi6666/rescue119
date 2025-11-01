@@ -71,7 +71,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2032591867116242720}
   - component: {fileID: 7887787716489876258}
-  - component: {fileID: 4336241860680960669}
   - component: {fileID: 2583464649292206259}
   m_Layer: 3
   m_Name: Detect
@@ -149,52 +148,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &4336241860680960669
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2110082829031006526}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!114 &2583464649292206259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,48 +371,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Installer.InGame.Player.PlayerInstaller
   parentReference:
-    TypeName: 
+    TypeName: Installer.InGame.StageInstaller
   autoRun: 1
   autoInjectGameObjects: []
   playerView: {fileID: 8256654763027665143}
   holdingPawnView: {fileID: 6359994066902468029}
   playerAnimatorView: {fileID: 7010527418245181741}
   detectPositionView: {fileID: 2583464649292206259}
-  waterView: {fileID: 5745911544867117455}
-  locomotionModel:
-    maxSpeed: 5
-    accelerationDuration: 0.125
-    directionChangeSpeed: 25
-    speedCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    wallFriction: 0.8
-    reverseAngleThreshold: 100
-  actionModel:
-    actionLength: 0.25
-    waterLength: 3
-    holdMotionLength: 0
+  waterTileView: {fileID: 5745911544867117455}
   playerMasterData: {fileID: 11400000, guid: f0e3005afa8e61f45b2949deae8e0059, type: 2}
 --- !u!114 &7049297621115034803
 MonoBehaviour:

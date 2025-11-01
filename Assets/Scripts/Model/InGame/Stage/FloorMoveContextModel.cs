@@ -1,5 +1,4 @@
 ﻿using Interface.ModelInterface.InGame;
-using PlasticPipe.PlasticProtocol.Messages;
 using Structure.InGame;
 
 namespace Model.InGame.Stage
