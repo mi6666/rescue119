@@ -6,12 +6,13 @@ using UnityEngine;
 
 namespace View.InGame.Stage
 {
-    public class EventCompositeView: MonoBehaviour, IStairEventView, IGameClearEventView
+    public class EventCompositeView: MonoBehaviour, IStairEventView, IGameClearEventView, IGameOverEventView
     {
         private Subject<IEventContext> GimmickSubject { get; } = new ();
         private Subject<Unit> ClearSubject { get; } = new ();
         public Observable<IEventContext> GimmickEventObservable => GimmickSubject;
         public Observable<Unit> GameClearObservable => ClearSubject;
+        public Observable<Unit> GameOverEvent => Observable.Empty<Unit>();
         
         public void Invoke(IEventContext context)
         {
@@ -20,7 +21,14 @@ namespace View.InGame.Stage
 
         public void InvokeClear()
         {
+            Debug.Log("clear");
             ClearSubject.OnNext(Unit.Default);
+        }
+
+        private void OnDestroy()
+        {
+            GimmickSubject.Dispose();
+            ClearSubject.Dispose();
         }
     }
 }

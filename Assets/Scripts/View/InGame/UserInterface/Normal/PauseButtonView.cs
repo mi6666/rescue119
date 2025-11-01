@@ -22,6 +22,7 @@ namespace View.InGame.UserInterface.Normal
 
         private void Invoke()
         {
+            Debug.Log("VAR");
             _pauseSubject.OnNext(Unit.Default);
         }
     }

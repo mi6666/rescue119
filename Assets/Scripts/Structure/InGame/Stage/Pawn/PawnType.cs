@@ -64,6 +64,7 @@ namespace Structure.InGame.Stage.Pawn
                 PawnType.Fire => false,
                 PawnType.Rubble => true,
                 PawnType.Static => true,
+                PawnType.Exit => false,
                 _ => throw new NotImplementedException("you don't have to arrive here.")
             };
         }
@@ -79,6 +80,7 @@ namespace Structure.InGame.Stage.Pawn
                 PawnType.Fire => false,
                 PawnType.Rubble => true,
                 PawnType.Static => false,
+                PawnType.Exit => false,
                 _ => throw new NotImplementedException("you don't have to arrive here.")
             };
         }

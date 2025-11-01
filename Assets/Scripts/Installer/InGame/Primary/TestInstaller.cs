@@ -6,6 +6,7 @@ using Structure.InGame;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using View.InGame.Stage;
 using View.InGame.UserInterface.FloorMove;
 using View.InGame.UserInterface.GameClear;
 using View.InGame.UserInterface.GameOver;
@@ -16,8 +17,7 @@ namespace Installer.InGame.Primary
 {
     public class TestInstaller : LifetimeScope
     {
-        [SerializeField] private ClearButtonView clearButtonView;
-        [SerializeField] private GameOverButtonView gameOverButtonView;
+        [SerializeField] private EventCompositeView eventCompositeView;
         [SerializeField] private StageMasterModel stageMasterModel;
         [SerializeField] private ExitGameSceneModel exitGameSceneModel;
         [SerializeField] private NormalUiFadeView normalUiFadeView;
@@ -26,10 +26,12 @@ namespace Installer.InGame.Primary
         [SerializeField] private GameClearUiFadeView gameClearUiFadeView;
         [SerializeField] private FloorMoveUiFadeView floorMoveUiFadeView;
         [SerializeField] private PlayerMasterData playerMasterData;
+        [SerializeField] private PrimaryMasterData primaryMasterData;
         
         protected override void Configure(IContainerBuilder builder)
         {
             // View
+            builder.RegisterInstance(eventCompositeView).AsImplementedInterfaces();
             builder.RegisterInstance(normalUiFadeView).AsImplementedInterfaces();
             builder.RegisterInstance(normalUiFadeView.TimerView).AsImplementedInterfaces();
             builder.RegisterInstance(normalUiFadeView.HpUiView).AsImplementedInterfaces();
@@ -39,15 +41,16 @@ namespace Installer.InGame.Primary
             builder.RegisterInstance(pauseUiFadeView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.Pause);
             builder.RegisterInstance(gameClearUiFadeView).AsImplementedInterfaces();
             builder.RegisterInstance(gameClearUiFadeView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameClear);
-            builder.RegisterInstance(clearButtonView).AsImplementedInterfaces();
             builder.RegisterInstance(gameOverUiFadeView).AsImplementedInterfaces();
             builder.RegisterInstance(gameOverUiFadeView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameOver);
-            builder.RegisterInstance(gameOverButtonView).AsImplementedInterfaces();
+            builder.RegisterInstance(floorMoveUiFadeView).AsImplementedInterfaces();
+            builder.RegisterInstance(floorMoveUiFadeView.FloorMoveTextView).AsImplementedInterfaces();
             
             // Model
             builder.RegisterInstance(stageMasterModel).AsImplementedInterfaces();
             builder.RegisterInstance(exitGameSceneModel).AsImplementedInterfaces();
             builder.RegisterInstance(playerMasterData).AsImplementedInterfaces();
+            builder.RegisterInstance(primaryMasterData).AsImplementedInterfaces();
             builder.Register<HpModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<TimeModel>(Lifetime.Singleton).AsImplementedInterfaces();
             
@@ -58,6 +61,7 @@ namespace Installer.InGame.Primary
             builder.Register<PauseStateController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<GameClearStateController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<GameOverStateController>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<FloorTransitionStateController>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a4b99d3de8943709adb561212babc88, type: 3}
-  m_Name: SceneGroup
-  m_EditorClassIdentifier: SceneReference::Module.SceneReference.Runtime.SceneGroup
-  primaryScene: 3
-  subScenes: 
+  m_Script: {fileID: 11500000, guid: a5b84360753644809ca13d04d1993ff6, type: 3}
+  m_Name: StageMasterModel
+  m_EditorClassIdentifier: 
+  timeLength: 0
+  maxFloorNum: 0
+  pawnTickInterval: 0.25

@@ -43,7 +43,7 @@ namespace Installer.InGame.Primary
             builder.RegisterInstance(gameClearUiView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameClear);
             builder.RegisterInstance(gameOverUiView).AsImplementedInterfaces();
             builder.RegisterInstance(gameOverUiView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameOver);
-            builder.RegisterInstance(gameOverButtonView).AsImplementedInterfaces();
+            if (gameOverButtonView is not null) builder.RegisterInstance(gameOverButtonView).AsImplementedInterfaces();
             builder.RegisterInstance(floorMoveUiView).AsImplementedInterfaces();
             builder.RegisterInstance(floorMoveUiView.FloorMoveTextView).AsImplementedInterfaces();
             

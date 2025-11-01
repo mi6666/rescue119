@@ -33,12 +33,17 @@ namespace Controller.InGame.Primary
             Wait().Forget();
         }
 
+        public override void OnExit()
+        {
+            FloorMoveUiView.Hide().Forget();
+        }
+
         private async UniTask Wait()
         {
             var currentFloor = StageFloorModel.CurrentFloor;
-            StageFloorModel.SetFloor(currentFloor);
             await FloorMoveUiView.Show();
             var context = FloorMoveContextModel.StairType;
+            FloorMoveTextView.SetFloorMove(currentFloor, context);
 
             if (context == StairType.Up)
             {
@@ -50,7 +55,6 @@ namespace Controller.InGame.Primary
             }
 
             StageFloorModel.SetFloor(currentFloor);
-            FloorMoveTextView.SetFloorMove(currentFloor);
 
             await UniTask.Delay(TimeSpan.FromSeconds(FloorMoveTime.FloorTime));
 
