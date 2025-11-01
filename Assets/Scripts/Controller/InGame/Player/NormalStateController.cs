@@ -65,8 +65,24 @@ namespace Controller.InGame.Player
         public override void StateUpdate(float deltaTime)
         {
             if (PlayerLockModel.IsLocked()) return;
-            
-            LocomotionConnection.Update(deltaTime);
+
+            var currentFloor = StageFloorModel.CurrentFloor;
+            var currentPosition = PlayerView.Position;
+            var mapIndex =
+                MapCoordinateView.PositionToMapIndex(currentFloor, currentPosition);
+            var castResult =
+                GridCastLogic.CastGrid(currentFloor, mapIndex, Vector2Int.one, CastTargetType.Pawn);
+            bool onFire = false;
+            foreach (var collider in castResult)
+            {
+                if (collider.PawnType == PawnType.Fire)
+                {
+                    onFire = true;
+                    break;
+                }
+            }
+
+            LocomotionConnection.Update(deltaTime, onFire ? 0.5f : 1);
         }
 
         private void FireDamage()
@@ -81,7 +97,7 @@ namespace Controller.InGame.Player
             {
                 if (collider.PawnType == PawnType.Fire)
                 {
-                    HpModel.DecHp(1);   // FIXME
+                    HpModel.DecHp(1); // FIXME
                 }
             }
         }

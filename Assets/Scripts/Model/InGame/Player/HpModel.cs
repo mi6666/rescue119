@@ -14,7 +14,7 @@ namespace Model.InGame.Player
         public int CurrentHp => Hp.CurrentValue;
         public void DecHp(int value)
         {
-            Hp.Value--;
+            Hp.Value -= value;
         }
 
         public Observable<bool> IsDeadObservable => Hp.Select(x => x <= 0).AsObservable();

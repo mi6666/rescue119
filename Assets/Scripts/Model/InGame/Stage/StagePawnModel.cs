@@ -8,7 +8,7 @@ namespace Model.InGame.Stage
 {
     public class StagePawnModel : IStagePawnModel
     {
-        private GridCollider[] PawnArray { get; } = new GridCollider[256];
+        private GridCollider[] PawnArray { get; } = new GridCollider[512];
         private int _length;
 
         public ReadOnlySpan<GridCollider> Pawns => PawnArray.AsSpan(0, _length);

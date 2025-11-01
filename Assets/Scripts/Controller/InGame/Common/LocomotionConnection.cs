@@ -38,13 +38,13 @@ namespace Controller.InGame.Common
             LocomotionLogic = locomotionLogic;
         }
 
-        public void Update(float deltaTime)
+        public void Update(float deltaTime, float ratio)
         {
-            Locomotion(deltaTime);
+            Locomotion(deltaTime, ratio);
             UpdatePawnDetectorPosition();
         }
 
-        private void Locomotion(float deltaTime)
+        private void Locomotion(float deltaTime, float ratio)
         {
             var moveInput = MoveVectorView.Pool();
             var currentVelocity = PlayerView.CurrentVelocity;
@@ -63,7 +63,7 @@ namespace Controller.InGame.Common
                 deltaTime
             );
 
-            var calculatedVelocity = LocomotionLogic.CalcVelocity(calcArg);
+            var calculatedVelocity = LocomotionLogic.CalcVelocity(calcArg) * ratio;
             DebugLogger.Log("move input", moveInput.ToString());
             DebugLogger.Log("calculated velocity", calculatedVelocity.ToString());
 

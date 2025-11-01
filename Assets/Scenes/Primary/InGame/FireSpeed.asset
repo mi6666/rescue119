@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeLength: 0
   maxFloorNum: 2
-  pawnTickInterval: 1.5
+  pawnTickInterval: 1

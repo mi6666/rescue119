@@ -46,7 +46,8 @@ namespace Logic.InGame.Stage
             return FoundColliders.AsSpan(0, count);
         }
 
-        public Option<GridCollider> CastGridFirst(int floor, Vector2Int position, Vector2Int size, CastTargetType castTarget)
+        public Option<GridCollider> CastGridFirst(int floor, Vector2Int position, Vector2Int size,
+            CastTargetType castTarget)
         {
             Debug.Assert(castTarget == CastTargetType.Pawn, "Not Implemented");
 
