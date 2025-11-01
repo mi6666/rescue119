@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace View.InGame.Stage
 {
-    public class EventCompositeView: MonoBehaviour, IStairEventView, IGameClearEventView
+    public class EventCompositeView: MonoBehaviour, IStairEventView, IGameClearEventView, IGameOverEventView
     {
         private Subject<IEventContext> GimmickSubject { get; } = new ();
         private Subject<Unit> ClearSubject { get; } = new ();
@@ -22,5 +22,7 @@ namespace View.InGame.Stage
         {
             ClearSubject.OnNext(Unit.Default);
         }
+
+        public Observable<Unit> GameOverEvent => Observable.Empty<Unit>();
     }
 }
