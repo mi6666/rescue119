@@ -26,6 +26,7 @@ namespace Installer.InGame.Primary
         [SerializeField] private GameClearUiFadeView gameClearUiFadeView;
         [SerializeField] private FloorMoveUiFadeView floorMoveUiFadeView;
         [SerializeField] private PlayerMasterData playerMasterData;
+        [SerializeField] private PrimaryMasterData primaryMasterData;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -42,11 +43,14 @@ namespace Installer.InGame.Primary
             builder.RegisterInstance(gameClearUiFadeView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameClear);
             builder.RegisterInstance(gameOverUiFadeView).AsImplementedInterfaces();
             builder.RegisterInstance(gameOverUiFadeView.ExitStageButtonView).AsImplementedInterfaces().Keyed(PrimaryStateType.GameOver);
+            builder.RegisterInstance(floorMoveUiFadeView).AsImplementedInterfaces();
+            builder.RegisterInstance(floorMoveUiFadeView.FloorMoveTextView).AsImplementedInterfaces();
             
             // Model
             builder.RegisterInstance(stageMasterModel).AsImplementedInterfaces();
             builder.RegisterInstance(exitGameSceneModel).AsImplementedInterfaces();
             builder.RegisterInstance(playerMasterData).AsImplementedInterfaces();
+            builder.RegisterInstance(primaryMasterData).AsImplementedInterfaces();
             builder.Register<HpModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<TimeModel>(Lifetime.Singleton).AsImplementedInterfaces();
             
@@ -57,6 +61,7 @@ namespace Installer.InGame.Primary
             builder.Register<PauseStateController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<GameClearStateController>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<GameOverStateController>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<FloorTransitionStateController>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

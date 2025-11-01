@@ -14,7 +14,7 @@ namespace View.InGame.UserInterface.FloorMove
 
         public async UniTask Show()
         {
-            FloorMoveTextView.gameObject.SetActive((true));
+            FloorMoveTextView.gameObject.SetActive(true);
             await fadeContainer.FadeIn();
         }
 

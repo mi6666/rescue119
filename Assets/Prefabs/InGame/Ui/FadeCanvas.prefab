@@ -1495,6 +1495,7 @@ MonoBehaviour:
   gameClearUiFadeView: {fileID: 3997314093921581739}
   floorMoveUiFadeView: {fileID: 5530046875350454080}
   playerMasterData: {fileID: 11400000, guid: f0e3005afa8e61f45b2949deae8e0059, type: 2}
+  primaryMasterData: {fileID: 11400000, guid: 43c46952538d72ee18e5ef990bdef408, type: 2}
 --- !u!114 &7993253969529169588
 MonoBehaviour:
   m_ObjectHideFlags: 0
