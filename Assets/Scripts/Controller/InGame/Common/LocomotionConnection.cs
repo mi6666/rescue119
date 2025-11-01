@@ -6,6 +6,8 @@ using Interface.ViewInterface.InGame.Stage;
 using Module.EditorExtension.Runtime;
 using Structure.Global;
 using Structure.InGame;
+using Structure.InGame.Stage.Pawn;
+using UnityEngine;
 
 namespace Controller.InGame.Common
 {
@@ -24,7 +26,9 @@ namespace Controller.InGame.Common
             ICurrentLookModel currentLookModel,
             ILocomotionSetting locomotionSetting,
             IAnimationKeyModel animationKeyModel,
-            ILocomotionLogic locomotionLogic
+            IStageFloorModel stageFloorModel,
+            ILocomotionLogic locomotionLogic,
+            IGridCastLogic gridCastLogic
         )
         {
             PlayerView = playerView;
@@ -34,12 +38,31 @@ namespace Controller.InGame.Common
             PlayerAnimatorView = playerAnimatorView;
             CurrentLookModel = currentLookModel;
             LocomotionSetting = locomotionSetting;
+            StageFloorModel = stageFloorModel;
             AnimationKeyModel = animationKeyModel;
             LocomotionLogic = locomotionLogic;
+            GridCastLogic = gridCastLogic;
         }
 
-        public void Update(float deltaTime, float ratio)
+        public void Update(float deltaTime)
         {
+            var currentFloor = StageFloorModel.CurrentFloor;
+            var currentPosition = PlayerView.Position;
+            var mapIndex =
+                MapCoordinateView.PositionToMapIndex(currentFloor, currentPosition);
+            var castResult =
+                GridCastLogic.CastGrid(currentFloor, mapIndex, Vector2Int.one, CastTargetType.Pawn);
+            var onFire = false;
+            foreach (var collider in castResult)
+            {
+                if (collider.PawnType == PawnType.Fire)
+                {
+                    onFire = true;
+                    break;
+                }
+            }
+
+            var ratio = onFire ? LocomotionSetting.FireDeceleration : 1f;
             Locomotion(deltaTime, ratio);
             UpdatePawnDetectorPosition();
         }
@@ -86,9 +109,11 @@ namespace Controller.InGame.Common
         private IInput_MoveVectorView MoveVectorView { get; }
         private IMapCoordinateView MapCoordinateView { get; }
         private IPlayerAnimatorView PlayerAnimatorView { get; }
+        private IStageFloorModel StageFloorModel { get; }
         private ICurrentLookModel CurrentLookModel { get; }
         private ILocomotionSetting LocomotionSetting { get; }
         private IAnimationKeyModel AnimationKeyModel { get; }
         private ILocomotionLogic LocomotionLogic { get; }
+        private IGridCastLogic GridCastLogic { get; }
     }
 }

@@ -17,6 +17,7 @@ namespace Model.InGame.Player
     {
         public float MaxSpeed => 10;
         public float AccelerationDuration => 0;
+        public float FireDeceleration => 0f;
         public float DirectionChangeSpeed => 0;
 
         public float GetSpeedCurve(float ratio)

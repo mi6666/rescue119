@@ -22,6 +22,12 @@ namespace Interface.ModelInterface.InGame
         /// 加速にかかる時間
         /// </summary>
         public float AccelerationDuration { get; }
+        
+        
+        /// <summary>
+        /// 炎の上での減速効果(0~1f)
+        /// </summary>
+        public float FireDeceleration { get; }
 
         /// <summary>
         /// 移動方向の変化速度

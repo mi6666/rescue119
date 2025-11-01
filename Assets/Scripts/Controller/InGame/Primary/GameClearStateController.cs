@@ -6,7 +6,6 @@ using JetBrains.Annotations;
 using Module.StateMachine;
 using R3;
 using Structure.InGame;
-using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -52,7 +51,6 @@ namespace Controller.InGame.Primary
 
         private void GameClear()
         {
-            Debug.Log("a");
             InnerState.ChangeState(PrimaryStateType.GameClear);
         }
 

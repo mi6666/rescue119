@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e65b7ce1d64578894e6b1147144267, type: 3}
   m_Name: PrimaryMasterData
   m_EditorClassIdentifier: 
-  floorMovePanelTime: 1
+  floorMovePanelTime: 2
   stageSelectScene: {fileID: 11400000, guid: de84e3bc2b5afdcd49c5d00fd05fbbf7, type: 2}

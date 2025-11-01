@@ -22,7 +22,6 @@ namespace View.InGame.Stage.Pawn
         {
             if (other.CompareTag(casualty))
             {
-                Debug.Log("clear");
                 _eventCompositeView.InvokeClear();
             }
         }

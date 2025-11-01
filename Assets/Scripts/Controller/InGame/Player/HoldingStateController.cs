@@ -116,23 +116,7 @@ namespace Controller.InGame.Player
         {
             if (PlayerLockModel.IsLocked()) return;
 
-            var currentFloor = StageFloorModel.CurrentFloor;
-            var currentPosition = PlayerView.Position;
-            var mapIndex =
-                MapCoordinateView.PositionToMapIndex(currentFloor, currentPosition);
-            var castResult =
-                GridCastLogic.CastGrid(currentFloor, mapIndex, Vector2Int.one, CastTargetType.Pawn);
-            bool onFire = false;
-            foreach (var collider in castResult)
-            {
-                if (collider.PawnType == PawnType.Fire)
-                {
-                    onFire = true;
-                    break;
-                }
-            }
-
-            LocomotionConnection.Update(deltaTime, onFire ? 0.5f : 1);
+            LocomotionConnection.Update(deltaTime);
         }
 
         private CompositeDisposable CompositeDisposable { get; }

@@ -40,8 +40,8 @@ namespace Controller.InGame.Primary
 
         private async UniTask Wait()
         {
-            var currentFloor = StageFloorModel.CurrentFloor;
             await FloorMoveUiView.Show();
+            var currentFloor = StageFloorModel.CurrentFloor;
             var context = FloorMoveContextModel.StairType;
             FloorMoveTextView.SetFloorMove(currentFloor, context);
 
@@ -58,7 +58,6 @@ namespace Controller.InGame.Primary
 
             await UniTask.Delay(TimeSpan.FromSeconds(FloorMoveTime.FloorTime));
 
-            await FloorMoveUiView.Hide();
             InnerState.ChangeState(PrimaryStateType.Normal);
         }
 

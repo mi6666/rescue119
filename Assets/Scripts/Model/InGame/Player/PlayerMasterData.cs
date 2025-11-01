@@ -15,6 +15,7 @@ namespace Model.InGame.Player
         
         public float MaxSpeed => locomotionSetting.MaxSpeed;
         public float AccelerationDuration => locomotionSetting.AccelerationDuration;
+        public float FireDeceleration => locomotionSetting.FireDeceleration;
         public float DirectionChangeSpeed => locomotionSetting.DirectionChangeSpeed;
         public float GetSpeedCurve(float ratio)
         {

@@ -9,6 +9,7 @@ namespace Model.InGame.Player
     {
         [SerializeField] private float maxSpeed;
         [SerializeField] private float accelerationDuration;
+        [SerializeField, Range(0f, 1f)] private float fireDeceleration;
         [SerializeField] private float directionChangeSpeed;
         [SerializeField] private AnimationCurve speedCurve;
         [SerializeField] private float wallFriction;
@@ -16,6 +17,7 @@ namespace Model.InGame.Player
 
         public float MaxSpeed => maxSpeed;
         public float AccelerationDuration => accelerationDuration;
+        public float FireDeceleration => fireDeceleration;
         public float DirectionChangeSpeed => directionChangeSpeed;
         public float WallFriction => wallFriction;
         public float ReverseAngleThreshold => reverseAngleThreshold;

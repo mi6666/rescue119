@@ -16,6 +16,7 @@ MonoBehaviour:
   locomotionSetting:
     maxSpeed: 5
     accelerationDuration: 0.125
+    fireDeceleration: 0.5
     directionChangeSpeed: 25
     speedCurve:
       serializedVersion: 2
