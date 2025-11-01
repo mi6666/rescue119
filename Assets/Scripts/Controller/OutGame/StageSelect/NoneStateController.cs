@@ -9,8 +9,6 @@ using VContainer.Unity;
 
 namespace Controller.OutGame.StageSelect
 {
-    /// todo
-    /// ステージ選択
     public class NoneStateController : StageSelectBehaviourBase, IStartable
     {
         public NoneStateController

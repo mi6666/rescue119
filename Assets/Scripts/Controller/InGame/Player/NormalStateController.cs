@@ -1,3 +1,4 @@
+using System;
 using Controller.InGame.Common;
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
@@ -23,6 +24,7 @@ namespace Controller.InGame.Player
             IHpModel hpModel,
             IStageFloorModel stageFloorModel,
             IPlayerLockModel playerLockModel,
+            IStageMasterModel stageMasterModel,
             IGridCastLogic gridCastLogic,
             LocomotionConnection locomotionConnection,
             CompositeDisposable compositeDisposable,
@@ -35,6 +37,7 @@ namespace Controller.InGame.Player
             HpModel = hpModel;
             StageFloorModel = stageFloorModel;
             PlayerLockModel = playerLockModel;
+            StageMasterModel = stageMasterModel;
             GridCastLogic = gridCastLogic;
             LocomotionConnection = locomotionConnection;
             CompositeDisposable = compositeDisposable;
@@ -45,6 +48,12 @@ namespace Controller.InGame.Player
             ActionEventView.ActionObservable
                 .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (_, controller) => controller.OnAction())
+                .AddTo(CompositeDisposable);
+            Observable
+                .Interval(TimeSpan.FromSeconds(StageMasterModel.PawnTickInterval))
+                .ObserveOnMainThread() // これがないと乱数がきちんと動かない
+                .Where(this, (_, controller) => controller.IsInState())
+                .Subscribe(this, (_, controller) => controller.FireDamage())
                 .AddTo(CompositeDisposable);
         }
 
@@ -60,10 +69,6 @@ namespace Controller.InGame.Player
             LocomotionConnection.Update(deltaTime);
         }
 
-        private void HpDecrease()
-        {
-        }
-
         private void FireDamage()
         {
             var currentFloor = StageFloorModel.CurrentFloor;
@@ -72,12 +77,11 @@ namespace Controller.InGame.Player
                 MapCoordinateView.PositionToMapIndex(currentFloor, currentPosition);
             var castResult =
                 GridCastLogic.CastGrid(currentFloor, mapIndex, Vector2Int.one, CastTargetType.Pawn);
-            foreach (var variable in castResult)
+            foreach (var collider in castResult)
             {
-                if (variable.PawnType == PawnType.Fire)
+                if (collider.PawnType == PawnType.Fire)
                 {
-                    // todo 
-                    // Hpが減るメソッドでHpを減らす
+                    HpModel.DecHp(1);   // FIXME
                 }
             }
         }
@@ -89,6 +93,7 @@ namespace Controller.InGame.Player
         private IHpModel HpModel { get; }
         private IStageFloorModel StageFloorModel { get; }
         private IPlayerLockModel PlayerLockModel { get; }
+        private IStageMasterModel StageMasterModel { get; }
         private IGridCastLogic GridCastLogic { get; }
         private LocomotionConnection LocomotionConnection { get; }
     }

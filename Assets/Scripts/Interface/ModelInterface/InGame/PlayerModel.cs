@@ -1,4 +1,5 @@
 using Module.Option.Runtime;
+using R3;
 using UnityEngine;
 
 namespace Interface.ModelInterface.InGame
@@ -87,6 +88,8 @@ namespace Interface.ModelInterface.InGame
     public interface IHpModel
     {
         public int CurrentHp { get; }
+        public void DecHp(int value);
+        public Observable<bool> IsDeadObservable { get; }
     }
 
     /// <summary>

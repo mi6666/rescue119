@@ -1,11 +1,16 @@
-using System;
 using Interface.ModelInterface.InGame;
+using R3;
 
 namespace Model.InGame.Player
 {
     public class EmptyHpModel : IHpModel
     {
         public int CurrentHp => 1;
+        public void DecHp(int value)
+        {
+        }
+
+        public Observable<bool> IsDeadObservable => Observable.Return(true);
     }
 
     public class EmptyLocomotionSetting : ILocomotionSetting
