@@ -5,6 +5,7 @@ using Interface.ViewInterface.OutGame.StageSelect;
 using Module.StateMachine;
 using R3;
 using Structure.OutGame;
+using UnityEngine.SceneManagement;
 using VContainer.Unity;
 
 namespace Controller.OutGame.StageSelect
@@ -65,7 +66,7 @@ namespace Controller.OutGame.StageSelect
         {
             var selectedStage = SelectedStageModel.GetSelectedStage();
 
-            ScenePresenter.LoadScene(selectedStage).Forget();
+            SceneManager.LoadScene(selectedStage.PrimaryScene);
         }
 
         public override void OnEnter()

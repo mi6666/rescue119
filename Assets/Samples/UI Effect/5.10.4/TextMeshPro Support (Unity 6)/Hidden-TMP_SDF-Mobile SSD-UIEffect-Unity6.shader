@@ -3,14 +3,14 @@
 Shader "Hidden/TextMeshPro/Mobile/Distance Field SSD (UIEffect)" {
 
 Properties {
-	[HDR]_FaceColor		("Face Color", Color) = (1,1,1,1)
+	_FaceColor		    ("Face Color", Color) = (1,1,1,1)
 	_FaceDilate			("Face Dilate", Range(-1,1)) = 0
 
-	[HDR]_OutlineColor	("Outline Color", Color) = (0,0,0,1)
+	_OutlineColor	    ("Outline Color", Color) = (0,0,0,1)
 	_OutlineWidth		("Outline Thickness", Range(0,1)) = 0
 	_OutlineSoftness	("Outline Softness", Range(0,1)) = 0
 
-	[HDR]_UnderlayColor		("Border Color", Color) = (0,0,0,.5)
+	_UnderlayColor		("Border Color", Color) = (0,0,0,.5)
 	_UnderlayOffsetX 	("Border OffsetX", Range(-1,1)) = 0
 	_UnderlayOffsetY 	("Border OffsetY", Range(-1,1)) = 0
 	_UnderlayDilate		("Border Dilate", Range(-1,1)) = 0
@@ -143,12 +143,12 @@ SubShader {
 			// ==== UIEFFECT START ====
 		    float4 uvMask			: TEXCOORD4;
 		    float4 worldPosition	: TEXCOORD5;
-			fixed  alpha			: TEXCOORD6;
+		    fixed  alpha			: TEXCOORD6;
 			// ==== UIEFFECT END ====
 		};
 
 		float _UIMaskSoftnessX;
-        float _UIMaskSoftnessY;
+		float _UIMaskSoftnessY;
 
 		float4 SRGBToLinear(float4 rgba) {
 		    return float4(lerp(rgba.rgb / 12.92f, pow((rgba.rgb + 0.055f) / 1.055f, 2.4f), step(0.04045f, rgba.rgb)), rgba.a);
@@ -291,13 +291,13 @@ SubShader {
 			_fragInput = input;
 			half4 faceColor = uieffect(input.texcoord0, input.uvMask, input.worldPosition);
 			faceColor *= input.alpha;
-
+			
 	    // Alternative implementation to UnityGet2DClipping with support for softness
 	    #if UNITY_UI_CLIP_RECT
-			float2 UV = input.texcoord0.xy;
-			float scale = rsqrt(abs(ddx(UV.x) * ddy(UV.y) - ddy(UV.x) * ddx(UV.y))) * input.param.y;
+		    float2 UV = input.texcoord0.xy;
+		    float scale = rsqrt(abs(ddx(UV.x) * ddy(UV.y) - ddy(UV.x) * ddx(UV.y))) * input.param.y;
 		    scale /= 1 + (_OutlineSoftness * _ScaleRatioA * scale);
-		    float2 maskZW = 0.25 / (0.25 * half2(max(_UIMaskSoftnessX, _MaskSoftnessX), max(_UIMaskSoftnessY, _MaskSoftnessY)) + (1 / scale));
+		    float2 maskZW = 0.25 / (0.25 * half2(_UIMaskSoftnessX, _UIMaskSoftnessY) + (1 / scale));
 		    float2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(input.mask.xy)) * maskZW);
 		    faceColor *= m.x * m.y;
 		#endif

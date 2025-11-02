@@ -49,17 +49,19 @@ namespace Installer.OutGame.StageSelect
             Vector3 moveDir = new Vector3(input.x, 0f, input.y).normalized;
 
             // 速度制限
-            Vector3 horizontalVel = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
-            // var ratio = horizontalVel.magnitude / maxSpeed;
-            // DebugLogger.Log("ratio", ratio.ToString("F1"));
-            // playerAnimatorView.SetFloat("Walk", ratio);
-            // if (ratio < 1)
-            // {
-            //     _rigidbody.AddForce(moveDir * moveForce * Time.fixedDeltaTime, ForceMode.VelocityChange);
-            // }
-            if (horizontalVel.magnitude < maxSpeed)
+            var velocity = _rigidbody.velocity;
+            var ratio = velocity.magnitude / maxSpeed;
+            var force = moveDir * moveForce;
+            DebugLogger.Log("ratio", ratio.ToString("F1"));
+            DebugLogger.Log("vel", velocity.ToString("F1"));
+            DebugLogger.Log("max speed", maxSpeed.ToString("F1"));
+            DebugLogger.Log("max speed", force.ToString("F1"));
+            
+            
+            playerAnimatorView.SetFloat("Walk", ratio);
+            if (ratio < 1)
             {
-                _rigidbody.AddForce(moveDir * moveForce * Time.fixedDeltaTime, ForceMode.VelocityChange);
+                _rigidbody.AddForce(force , ForceMode.Force);
             }
 
             // 摩擦（Drag）の調整

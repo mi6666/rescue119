@@ -5,12 +5,15 @@
 public enum SceneEnum
 {
     Env_Stage,
-    Env_Map,
+    Map,
     Pri_Stage1,
     Stage1,
+    Stage2,
+    Stage3,
     Test_3dStage,
     Test_Game,
     Test_Player,
+    Test_PlayerController,
     Test_Stage,
     Test_StageSelect,
     Test_Ui_InGame,

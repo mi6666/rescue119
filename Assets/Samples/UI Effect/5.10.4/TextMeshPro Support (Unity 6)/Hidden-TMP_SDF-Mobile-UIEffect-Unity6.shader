@@ -3,14 +3,14 @@
 Shader "Hidden/TextMeshPro/Mobile/Distance Field (UIEffect)" {
 
 Properties {
-	[HDR]_FaceColor     ("Face Color", Color) = (1,1,1,1)
+	_FaceColor          ("Face Color", Color) = (1,1,1,1)
 	_FaceDilate			("Face Dilate", Range(-1,1)) = 0
 
-	[HDR]_OutlineColor	("Outline Color", Color) = (0,0,0,1)
+	_OutlineColor	    ("Outline Color", Color) = (0,0,0,1)
 	_OutlineWidth		("Outline Thickness", Range(0,1)) = 0
 	_OutlineSoftness	("Outline Softness", Range(0,1)) = 0
 
-	[HDR]_UnderlayColor	("Border Color", Color) = (0,0,0,.5)
+	_UnderlayColor	    ("Border Color", Color) = (0,0,0,.5)
 	_UnderlayOffsetX 	("Border OffsetX", Range(-1,1)) = 0
 	_UnderlayOffsetY 	("Border OffsetY", Range(-1,1)) = 0
 	_UnderlayDilate		("Border Dilate", Range(-1,1)) = 0
@@ -80,6 +80,7 @@ SubShader {
 
 	Pass {
 		CGPROGRAM
+		#pragma enable_d3d11_debug_symbols
 		#pragma vertex VertShader
 		#pragma fragment PixShader
 		#pragma shader_feature __ OUTLINE_ON
@@ -111,14 +112,13 @@ SubShader {
 		#include "UnityCG.cginc"
 		#include "UnityUI.cginc"
 		#include "Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc"
-		#include "Assets/TextMesh Pro/Shaders/TMPro.cginc"
 
 		struct vertex_t {
 			UNITY_VERTEX_INPUT_INSTANCE_ID
 			float4	vertex			: POSITION;
 			float3	normal			: NORMAL;
 			fixed4	color			: COLOR;
-			float2	texcoord0		: TEXCOORD0;
+			float4	texcoord0		: TEXCOORD0;
 			// ==== UIEFFECT START ====
 			float2	texcoord1		: TEXCOORD1;
 			float4	texcoord2		: TEXCOORD2;
@@ -140,13 +140,14 @@ SubShader {
 			#endif
 			// ==== UIEFFECT START ====
 		    float4 uvMask			: TEXCOORD5;
-			float4 worldPosition : TEXCOORD6;
+		    float4 worldPosition	: TEXCOORD6;
 		    fixed  alpha			: TEXCOORD7;
 			// ==== UIEFFECT END ====
 		};
 
 		float _UIMaskSoftnessX;
         float _UIMaskSoftnessY;
+        int _UIVertexColorAlwaysGammaSpace;
 
 		pixel_t VertShader(vertex_t input)
 		{
@@ -157,7 +158,7 @@ SubShader {
 			UNITY_TRANSFER_INSTANCE_ID(input, output);
 			UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
-			float bold = step(input.texcoord1.y, 0);
+			float bold = step(input.texcoord0.w, 0);
 
 			float4 vert = input.vertex;
 			vert.x += _VertexOffsetX;
@@ -168,7 +169,7 @@ SubShader {
 			pixelSize /= float2(_ScaleX, _ScaleY) * abs(mul((float2x2)UNITY_MATRIX_P, _ScreenParams.xy));
 
 			float scale = rsqrt(dot(pixelSize, pixelSize));
-			scale *= abs(input.texcoord1.y) * _GradientScale * (_Sharpness + 1);
+			scale *= abs(input.texcoord0.w) * _GradientScale * (_Sharpness + 1);
 			if(UNITY_MATRIX_P[3][3] == 0) scale = lerp(abs(scale) * (1 - _PerspectiveFilter), scale, abs(dot(UnityObjectToWorldNormal(input.normal.xyz), normalize(WorldSpaceViewDir(vert)))));
 
 			float weight = lerp(_WeightNormal, _WeightBold, bold) / 4.0;
@@ -180,7 +181,11 @@ SubShader {
 			float bias = (0.5 - weight) * scale - 0.5;
 			float outline = _OutlineWidth * _ScaleRatioA * 0.5 * scale;
 
-			float opacity = 1;
+            if (_UIVertexColorAlwaysGammaSpace && !IsGammaSpace())
+            {
+                input.color.rgb = UIGammaToLinear(input.color.rgb);
+            }
+            float opacity = 1;
 			#if (UNDERLAY_ON | UNDERLAY_INNER)
 			opacity = 1.0;
 			#endif
@@ -212,6 +217,7 @@ SubShader {
 			output.outlineColor = outlineColor;
 			output.texcoord0 = float4(input.texcoord0.x, input.texcoord0.y, maskUV.x, maskUV.y);
 			output.param = half4(scale, bias - outline, bias + outline, bias);
+
 			const half2 maskSoftness = half2(max(_UIMaskSoftnessX, _MaskSoftnessX), max(_UIMaskSoftnessY, _MaskSoftnessY));
 			output.mask = half4(vert.xy * 2 - clampedRect.xy - clampedRect.zw, 0.25 / (0.25 * maskSoftness + pixelSize.xy));
 			#if (UNDERLAY_ON || UNDERLAY_INNER)
@@ -234,6 +240,7 @@ SubShader {
 		{
 			pixel_t input = _fragInput;
 			float2 uvMove = uv - input.texcoord0.xy;
+
 			half d = tex2D(_MainTex, input.texcoord0.xy + uvMove).a * input.param.x;
 			half4 c = input.faceColor * saturate(d - input.param.w);
 
@@ -264,13 +271,14 @@ SubShader {
 		#include "Packages/com.coffee.ui-effect/Shaders/UIEffect.cginc"
 		// ==== UIEFFECT END ====
 
+		// PIXEL SHADER
 		fixed4 PixShader(pixel_t input) : SV_Target
 		{
 			UNITY_SETUP_INSTANCE_ID(input);
 			_fragInput = input;
 			half4 c = uieffect(input.texcoord0.xy, input.uvMask, input.worldPosition);
 			c *= input.alpha;
-			
+
 			// Alternative implementation to UnityGet2DClipping with support for softness.
 			#if UNITY_UI_CLIP_RECT
 			half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(input.mask.xy)) * input.mask.zw);

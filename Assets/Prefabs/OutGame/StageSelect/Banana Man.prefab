@@ -141,8 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a2941edfe8b4c2b8ef034fc2c24ce3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveForce: 50
-  maxSpeed: 6
+  moveForce: 16
+  maxSpeed: 0.5
   groundDrag: 5
   airDrag: 0.5
   playerAnimatorView: {fileID: 4407391125291355980}
@@ -165,7 +165,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5593506237060267464}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3f829be43fb0a0d42ab24758c2b95c7c, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
