@@ -10,6 +10,7 @@ namespace Installer.Empty
         {
             // Stage
             builder.Register<EmptyTileMapModel>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<EmptyStageMasterModel>(Lifetime.Singleton).AsImplementedInterfaces();
             
             // Player
             builder.Register<EmptyHpModel>(Lifetime.Singleton).AsImplementedInterfaces();

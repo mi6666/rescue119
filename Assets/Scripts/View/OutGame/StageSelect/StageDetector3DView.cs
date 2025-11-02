@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace View.OutGame.StageSelect
 {
-    [RequireComponent(typeof(BoxCollider))]
     public class StageDetector3DView : MonoBehaviour, ISelectStageEventView
     {
         private readonly Subject<SceneGroup> _selectSubject = new();

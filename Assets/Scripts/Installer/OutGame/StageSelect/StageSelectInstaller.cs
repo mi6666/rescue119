@@ -9,13 +9,13 @@ namespace Installer.OutGame.StageSelect
 {
     public class StageSelectInstaller : LifetimeScope
     {
-        [SerializeField] private StageDetectorView stageDetectorView;
+        [SerializeField] private StageDetector3DView stageDetector3DView;
         [SerializeField] private SomeStateUiView someStateUiView;
 
         protected override void Configure(IContainerBuilder builder)
         {
             // View
-            builder.RegisterInstance(stageDetectorView).AsImplementedInterfaces();
+            builder.RegisterInstance(stageDetector3DView).AsImplementedInterfaces();
             builder.RegisterInstance(someStateUiView).AsImplementedInterfaces();
             builder.RegisterInstance(someStateUiView.DifficultyLevelView).AsImplementedInterfaces();
             builder.RegisterInstance(someStateUiView.StartGameButtonView).AsImplementedInterfaces();

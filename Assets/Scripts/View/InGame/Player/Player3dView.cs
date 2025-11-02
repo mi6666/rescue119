@@ -10,6 +10,7 @@ namespace View.InGame.Player
     public class Player3dView : MonoBehaviour, IPlayerView
     {
         [SerializeField, AutoAssign] private Transform selfTransform;
+        [SerializeField] private Transform raycastPosition;
         [SerializeField] private Transform lookAtObject;
         [SerializeField] private float raycastSize = 1f;
         [SerializeField] private float rayCastDistance;
@@ -38,7 +39,7 @@ namespace View.InGame.Player
         public ReadOnlySpan<CastHit> RayCast(Vector2 castTo)
         {
             var direction = new Vector3(castTo.x, 0, castTo.y);
-            Vector2 position = selfTransform!.position;
+            Vector2 position = raycastPosition!.position;
             var hitCount = Physics.SphereCastNonAlloc
             (
                 position,
@@ -55,8 +56,8 @@ namespace View.InGame.Player
             for (int i = 0; i < hitCount; i++)
             {
                 RaycastPool[i] = result[i];
-
-                DebugLogger.Log($"normal{i}", result[i].Normal.ToString());
+                DebugLogger.Log($"normal{i}, obj: {RaycastHits[i].collider.gameObject.name}",
+                    result[i].Normal.ToString());
             }
 
             return RaycastPool.AsSpan(0, hitCount);
