@@ -37,6 +37,11 @@ namespace Installer.OutGame.StageSelect
             }
 
             Vector2 input = InputProvider.Pool();
+            Vector3 moveDir = new Vector3(input.x, 0f, input.y).normalized;
+            var velocity = _rigidbody.velocity;
+            var ratio = velocity.magnitude / maxSpeed;
+            var force = moveDir * moveForce;
+            playerAnimatorView.SetFloat("Walk", ratio);
 
             // 入力がない場合は水平速度を徐々に落とす
             if (input.sqrMagnitude < 0.0001f)
@@ -46,19 +51,14 @@ namespace Installer.OutGame.StageSelect
             }
 
             // XZ平面での移動方向
-            Vector3 moveDir = new Vector3(input.x, 0f, input.y).normalized;
 
             // 速度制限
-            var velocity = _rigidbody.velocity;
-            var ratio = velocity.magnitude / maxSpeed;
-            var force = moveDir * moveForce;
             DebugLogger.Log("ratio", ratio.ToString("F1"));
             DebugLogger.Log("vel", velocity.ToString("F1"));
             DebugLogger.Log("max speed", maxSpeed.ToString("F1"));
             DebugLogger.Log("max speed", force.ToString("F1"));
             
             
-            playerAnimatorView.SetFloat("Walk", ratio);
             if (ratio < 1)
             {
                 _rigidbody.AddForce(force , ForceMode.Force);

@@ -79,9 +79,14 @@ namespace Logic.InGame.Player
         [BurstCompile]
         private static float2 PostProcess(float2 moveTo, float wallFriction, LocomotionArgument argument)
         {
-            if (argument.FrontObjects.Length == 0)
+            if (argument.FrontObjects.IsEmpty)
             {
                 return moveTo;
+            }
+
+            if (argument.FrontObjects.Length >= 2)
+            {
+                return float2.zero;
             }
 
             var frontObject = argument.FrontObjects[0];

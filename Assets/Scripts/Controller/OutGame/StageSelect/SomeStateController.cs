@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Interface.ModelInterface.OutGame.StageSelect;
 using Interface.PresenterInterface.Global;
+using Interface.ViewInterface.Global;
 using Interface.ViewInterface.OutGame.StageSelect;
 using Module.StateMachine;
 using R3;
@@ -19,6 +20,7 @@ namespace Controller.OutGame.StageSelect
         public SomeStateController
         (
             ISomeStateUiView someStateUiView,
+            IInput_ActionEventView actionEventView,
             ISelectStageEventView selectStageEventView,
             IDifficultyLevelView difficultyLevelView,
             IGameStartEventView gameStartEventView,
@@ -30,6 +32,7 @@ namespace Controller.OutGame.StageSelect
         ) : base(StageSelectState.Some, innerState)
         {
             SomeStateUiView = someStateUiView;
+            ActionEventView = actionEventView;
             SelectStageEventView = selectStageEventView;
             DifficultyLevelView = difficultyLevelView;
             GameStartEventView = gameStartEventView;
@@ -46,6 +49,9 @@ namespace Controller.OutGame.StageSelect
                 .AddTo(CompositeDisposable);
             SelectStageEventView.UnSelectObservable
                 .Subscribe(this, (_, controller) => controller.ExitSomeState())
+                .AddTo(CompositeDisposable);
+            GameStartEventView.StartObservable
+                .Subscribe(this, (_, controller) => controller.StartGame())
                 .AddTo(CompositeDisposable);
             GameStartEventView.StartObservable
                 .Subscribe(this, (_, controller) => controller.StartGame())
@@ -82,6 +88,7 @@ namespace Controller.OutGame.StageSelect
 
         private CompositeDisposable CompositeDisposable { get; }
         private ISomeStateUiView SomeStateUiView { get; }
+        private IInput_ActionEventView ActionEventView { get; }
         private ISelectStageEventView SelectStageEventView { get; }
         private IDifficultyLevelView DifficultyLevelView { get; }
         private IGameStartEventView GameStartEventView { get; }

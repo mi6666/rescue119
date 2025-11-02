@@ -342,7 +342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: View::View.InGame.Player.PlayerView
   selfTransform: {fileID: 5660081905995857540}
   lookAtObject: {fileID: 7441224461804906150}
-  raycastSize: 0.5
+  raycastSize: 0.45
   rayCastDistance: 0.0625
   rayCastFilter:
     useTriggers: 0

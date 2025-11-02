@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 8aa3bd597fbf7ab4299392a8c0cae2c0, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 81bb9eea30387e442899949a80011e55, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -141,8 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a2941edfe8b4c2b8ef034fc2c24ce3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveForce: 16
-  maxSpeed: 0.5
+  moveForce: 50
+  maxSpeed: 3
   groundDrag: 5
   airDrag: 0.5
   playerAnimatorView: {fileID: 4407391125291355980}

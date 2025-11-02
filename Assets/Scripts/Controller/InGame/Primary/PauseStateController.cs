@@ -6,6 +6,7 @@ using Module.StateMachine;
 using R3;
 using Structure.InGame;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
 
@@ -64,7 +65,7 @@ namespace Controller.InGame.Primary
 
         private void Retire()
         {
-            ScenePresenter.LoadScene(ExitGameSceneModel.StageSelect).Forget();
+            SceneManager.LoadScene(ExitGameSceneModel.StageSelect.PrimaryScene);
         }
 
         private CompositeDisposable CompositeDisposable { get; }
