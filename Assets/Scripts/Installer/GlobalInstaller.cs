@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Controller.InGame.Common;
 using Installer.Empty;
 using Logic.InGame.Stage;
@@ -21,6 +22,7 @@ namespace Installer
             builder.Register<InputSystem_Actions>(Lifetime.Singleton);
             builder.Register(_ => new CompositeDisposable(), Lifetime.Scoped)
                 .As<CompositeDisposable, IDisposable>();
+            builder.Register(_ => new CancellationTokenSource(), Lifetime.Transient);
             
             // View
             builder.Register<InputWrapper>(Lifetime.Singleton).AsImplementedInterfaces();

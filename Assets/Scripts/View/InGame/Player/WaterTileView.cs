@@ -5,7 +5,7 @@ using UnityEngine.Pool;
 
 namespace View.InGame.Player
 {
-    public class WaterTileView :  MonoBehaviour, IWaterView
+    public class WaterTileView : MonoBehaviour, IWaterView
     {
         [SerializeField] private GameObject waterPrefab;
         [SerializeField] private int initialPoolSize = 50;
@@ -41,7 +41,13 @@ namespace View.InGame.Player
             {
                 _pool.Release(obj);
             }
+
             _activeWaters.Clear();
+        }
+
+        private void OnDestroy()
+        {
+            _pool.Dispose();
         }
     }
 }

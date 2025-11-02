@@ -53,7 +53,7 @@ namespace Controller.OutGame.StageSelect
             GameStartEventView.StartObservable
                 .Subscribe(this, (_, controller) => controller.StartGame())
                 .AddTo(CompositeDisposable);
-            GameStartEventView.StartObservable
+            ActionEventView.ActionObservable
                 .Subscribe(this, (_, controller) => controller.StartGame())
                 .AddTo(CompositeDisposable);
         }

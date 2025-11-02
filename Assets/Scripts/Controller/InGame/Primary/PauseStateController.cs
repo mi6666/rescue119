@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using Interface.ModelInterface.InGame;
 using Interface.PresenterInterface.Global;
 using Interface.ViewInterface.InGame.UserInterface;
@@ -15,7 +16,7 @@ namespace Controller.InGame.Primary
     /// todo
     /// リタイア
     /// ポーズ終了
-    public class PauseStateController : PrimaryStateBehaviour, IStartable
+    public class PauseStateController : PrimaryStateBehaviour, IStartable, IDisposable
     {
         public PauseStateController
         (
@@ -74,5 +75,10 @@ namespace Controller.InGame.Primary
         private IScenePresenter ScenePresenter { get; }
         private IExitGameSceneModel ExitGameSceneModel { get; }
         private IExitStageEventView ExitStageEventView { get; }
+
+        public void Dispose()
+        {
+            Time.timeScale = 1;
+        }
     }
 }

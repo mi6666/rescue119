@@ -3,6 +3,7 @@ using Module.Option.Runtime;
 using R3;
 using Structure.InGame;
 using Structure.InGame.Stage;
+using Structure.OutGame;
 using UnityEngine;
 
 namespace Interface.ModelInterface.InGame
@@ -18,6 +19,7 @@ namespace Interface.ModelInterface.InGame
         public float TimeLength { get; }
         public int MaxFloorNum { get; }
         public float PawnTickInterval { get; }
+        public float TickInterval(DifficultyLevel difficultyLevel);
     }
 
     // ============================================================================================

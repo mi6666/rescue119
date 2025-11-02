@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PrimaryMasterData
   m_EditorClassIdentifier: 
   floorMovePanelTime: 2
-  stageSelectScene: {fileID: 11400000, guid: de84e3bc2b5afdcd49c5d00fd05fbbf7, type: 2}
+  stageSelectScene: {fileID: 11400000, guid: 53b387c68c65d184eadd7e6f24d0429c, type: 2}

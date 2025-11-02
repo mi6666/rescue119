@@ -34,6 +34,6 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 8945227226940260667, guid: 795567d0828712042b51856e5fe9c677, type: 3}
   m_Flags: 1
   m_ColliderType: 1
-  stageTileType: 0
+  stageTileType: 1
   isBurning: 0
   objectHealth: 0

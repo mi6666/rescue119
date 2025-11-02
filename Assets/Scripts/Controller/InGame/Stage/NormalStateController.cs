@@ -1,6 +1,7 @@
 using System;
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
+using Interface.ModelInterface.OutGame.StageSelect;
 using Interface.ViewInterface.InGame.Stage;
 using Module.StateMachine;
 using R3;
@@ -27,6 +28,7 @@ namespace Controller.InGame.Stage
             IStagePawnModel stagePawnModel,
             IStageFloorModel stageFloorModel,
             IStageMasterModel stageMasterModel,
+            IStageInfoModel stageInfoModel,
             IBurnLogic burnLogic,
             CompositeDisposable compositeDisposable,
             IMutStateType<StageStateType> innerState
@@ -39,6 +41,7 @@ namespace Controller.InGame.Stage
             StagePawnModel = stagePawnModel;
             StageFloorModel = stageFloorModel;
             StageMasterModel = stageMasterModel;
+            StageInfoModel = stageInfoModel;
             BurnLogic = burnLogic;
             CompositeDisposable = compositeDisposable;
         }
@@ -49,7 +52,7 @@ namespace Controller.InGame.Stage
                 .Subscribe(this, (context, controller) => controller.SpawnRubble(context))
                 .AddTo(CompositeDisposable);
             Observable
-                .Interval(TimeSpan.FromSeconds(StageMasterModel.PawnTickInterval))
+                .Interval(TimeSpan.FromSeconds(StageMasterModel.TickInterval(StageInfoModel.DifficultyLevel)))
                 .ObserveOnMainThread() // これがないと乱数がきちんと動かない
                 .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (_, controller) => controller.UpdatePawnLogic())
@@ -118,6 +121,7 @@ namespace Controller.InGame.Stage
         private IStagePawnModel StagePawnModel { get; }
         private IStageFloorModel StageFloorModel { get; }
         private IStageMasterModel StageMasterModel { get; }
+        private IStageInfoModel StageInfoModel { get; }
         private IBurnLogic BurnLogic { get; }
     }
 }

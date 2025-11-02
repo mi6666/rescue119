@@ -39,11 +39,6 @@ namespace Logic.InGame.Player
             var midSpeed = moveTo * speed;
             var result = PostProcess(midSpeed, LocomotionSetting.WallFriction, argument);
 
-            DebugLogger.Log("move to", moveTo.ToString());
-            DebugLogger.Log("speed", speed.ToString("F1"));
-            DebugLogger.Log("mid speed", midSpeed.ToString());
-            DebugLogger.Log("result speed", result.ToString());
-
             return result;
         }
 
@@ -84,10 +79,6 @@ namespace Logic.InGame.Player
                 return moveTo;
             }
 
-            if (argument.FrontObjects.Length >= 2)
-            {
-                return float2.zero;
-            }
 
             var frontObject = argument.FrontObjects[0];
             float2 normal = frontObject.Normal;
@@ -97,6 +88,11 @@ namespace Logic.InGame.Player
             if (dotProduct >= 0)
             {
                 return moveTo;
+            }
+
+            if (argument.FrontObjects.Length >= 2)
+            {
+                return float2.zero;
             }
 
             // 壁方向の速度成分を打ち消す

@@ -2,6 +2,7 @@ using System;
 using Controller.InGame.Common;
 using Interface.LogicInterface.InGame;
 using Interface.ModelInterface.InGame;
+using Interface.ModelInterface.OutGame.StageSelect;
 using Interface.ViewInterface.Global;
 using Interface.ViewInterface.InGame;
 using Interface.ViewInterface.InGame.Stage;
@@ -25,6 +26,7 @@ namespace Controller.InGame.Player
             IStageFloorModel stageFloorModel,
             IPlayerLockModel playerLockModel,
             IStageMasterModel stageMasterModel,
+            IStageInfoModel stageInfoModel,
             IGridCastLogic gridCastLogic,
             LocomotionConnection locomotionConnection,
             CompositeDisposable compositeDisposable,
@@ -38,6 +40,7 @@ namespace Controller.InGame.Player
             StageFloorModel = stageFloorModel;
             PlayerLockModel = playerLockModel;
             StageMasterModel = stageMasterModel;
+            StageInfoModel = stageInfoModel;
             GridCastLogic = gridCastLogic;
             LocomotionConnection = locomotionConnection;
             CompositeDisposable = compositeDisposable;
@@ -50,7 +53,7 @@ namespace Controller.InGame.Player
                 .Subscribe(this, (_, controller) => controller.OnAction())
                 .AddTo(CompositeDisposable);
             Observable
-                .Interval(TimeSpan.FromSeconds(StageMasterModel.PawnTickInterval))
+                .Interval(TimeSpan.FromSeconds(StageMasterModel.TickInterval(StageInfoModel.DifficultyLevel)))
                 .ObserveOnMainThread() // これがないと乱数がきちんと動かない
                 .Where(this, (_, controller) => controller.IsInState())
                 .Subscribe(this, (_, controller) => controller.FireDamage())
@@ -91,6 +94,7 @@ namespace Controller.InGame.Player
         private IInput_ActionEventView ActionEventView { get; }
         private IMapCoordinateView MapCoordinateView { get; }
         private IHpModel HpModel { get; }
+        private IStageInfoModel StageInfoModel { get; }
         private IStageFloorModel StageFloorModel { get; }
         private IPlayerLockModel PlayerLockModel { get; }
         private IStageMasterModel StageMasterModel { get; }

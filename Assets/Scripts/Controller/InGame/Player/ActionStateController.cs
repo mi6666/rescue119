@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Controller.InGame.Common;
 using Cysharp.Threading.Tasks;
 using Interface.LogicInterface.InGame;
@@ -6,6 +7,7 @@ using Interface.ModelInterface.InGame;
 using Interface.ViewInterface.InGame;
 using Interface.ViewInterface.InGame.Stage;
 using Module.StateMachine;
+using R3;
 using Structure.InGame;
 using Structure.InGame.Stage;
 using Structure.InGame.Stage.Pawn;
@@ -29,6 +31,8 @@ namespace Controller.InGame.Player
             IGridCastLogic gridCastLogic,
             IPlayerLockModel playerLockModel,
             PawnConnection pawnConnection,
+            CompositeDisposable compositeDisposable,
+            CancellationTokenSource　cancellationTokenSource,
             IMutStateType<PlayerStateType> innerState
         ) : base(PlayerStateType.Action, innerState)
         {
@@ -44,6 +48,9 @@ namespace Controller.InGame.Player
             GridCastLogic = gridCastLogic;
             PlayerLockModel = playerLockModel;
             PawnConnection = pawnConnection;
+            CancellationTokenSource = cancellationTokenSource;
+            
+            compositeDisposable.Add(cancellationTokenSource);
         }
 
         public override void OnEnter()
@@ -73,10 +80,15 @@ namespace Controller.InGame.Player
             WaterView.SpawnWater(frontPosition, lookAt, waterLength);
             var duration = ActionSetting.SplashWater;
 
-            await UniTask.Delay(TimeSpan.FromSeconds(duration));
-
-            WaterView.DespawnWater();
-            InnerState.ChangeState(PlayerStateType.Normal);
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(duration), cancellationToken: CancellationTokenSource.Token);
+            }
+            finally
+            {
+                WaterView.DespawnWater();
+                InnerState.ChangeState(PlayerStateType.Normal);
+            }
         }
 
         private const string HoldingAnimationLock = "Holding Animation Lock";
@@ -164,5 +176,6 @@ namespace Controller.InGame.Player
         private IGridCastLogic GridCastLogic { get; }
         private IPlayerLockModel PlayerLockModel { get; }
         private PawnConnection PawnConnection { get; }
+        private CancellationTokenSource CancellationTokenSource { get; }
     }
 }

@@ -15,3 +15,8 @@ MonoBehaviour:
   timeLength: 0
   maxFloorNum: 1
   pawnTickInterval: 0.375
+  tickIntervalRatio:
+    array:
+    - 1.25
+    - 1
+    - 0.8

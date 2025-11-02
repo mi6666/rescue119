@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Module.Option.Runtime;
 using R3;
+using UnityEngine;
 
 namespace Module.StateMachine
 {
@@ -82,6 +83,7 @@ namespace Module.StateMachine
 
         public void ChangeState(TState next)
         {
+            Debug.Log($"state change: {nameof(TState)}, (prev, next) => ({CurrentState}, {next})");
             StateExitSubject.OnNext(CurrentState);
 
             CurrentState = next;

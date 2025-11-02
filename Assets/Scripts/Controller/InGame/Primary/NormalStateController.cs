@@ -72,6 +72,12 @@ namespace Controller.InGame.Primary
             var maxHp = HpSetting.MaxHp;
             var remainTime = TimeModel.TimeLength - TimeModel.CurrentTime;
 
+            if (remainTime < 0)
+            {
+                TimerView.SetTime(0);
+                InnerState.ChangeState(PrimaryStateType.GameOver);
+            }
+
             HpUiView.SetHp(currentHp, maxHp);
             TimerView.SetTime(remainTime);
         }
